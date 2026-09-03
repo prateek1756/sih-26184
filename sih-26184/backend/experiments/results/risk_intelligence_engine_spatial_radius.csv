@@ -1,0 +1,5 @@
+spatial_radius_km,pos_cutoff_hit5_pct,pos_cutoff_hit10_pct,pos_cutoff_hit20_pct,events_recovered_top10,events_recovered_top20,pos_cutoff_mean_p5,pos_cutoff_mean_p10,pos_cutoff_mean_p20,all_cutoff_mean_p5,all_cutoff_mean_p10,all_cutoff_mean_p20
+0.5,6.67,13.33,26.67,2/16,4/16,0.013333,0.013333,0.013333,0.003922,0.003922,0.003922
+1.0,6.67,13.33,26.67,2/16,4/16,0.013333,0.013333,0.013333,0.003922,0.003922,0.003922
+2.0,6.67,13.33,26.67,2/16,4/16,0.013333,0.013333,0.013333,0.003922,0.003922,0.003922
+5.0,6.67,13.33,26.67,2/16,4/16,0.013333,0.013333,0.013333,0.003922,0.003922,0.003922

@@ -1,0 +1,541 @@
+=== FORENSIC RUNTIME EXEC: rc=0 elapsed=46.8s ===
+CMD: C:\Python314\python.exe forensic_runtime.py
+
+=== STDOUT (all) ===
+=== [SETUP] Seeding test users ===
+  ML_ENGINEER: mle_259e86@hermes.gov.in
+  ADMIN:       admin_259e86@hermes.gov.in
+2026-09-03 09:47:44,766 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+2026-09-03 09:47:44,767 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-09-03 09:47:44,779 INFO sqlalchemy.engine.Engine select current_schema()
+2026-09-03 09:47:44,779 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-09-03 09:47:44,784 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+2026-09-03 09:47:44,784 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-09-03 09:47:44,789 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:47:44,804 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.email = $1::VARCHAR
+2026-09-03 09:47:44,805 INFO sqlalchemy.engine.Engine [generated in 0.00078s] ('mle_259e86@hermes.gov.in',)
+2026-09-03 09:47:45,810 INFO sqlalchemy.engine.Engine INSERT INTO audit_events (id, event_type, actor_id, actor_role, resource_type, resource_id, action_details, ip_address, occurred_at, blockchain_hash) VALUES ($1::UUID, $2::VARCHAR, $3::UUID, $4::VARCHAR, $5::VARCHAR, $6::UUID, $7::JSON, $8::VARCHAR, $9::TIMESTAMP WITH TIME ZONE, $10::VARCHAR)
+2026-09-03 09:47:45,810 INFO sqlalchemy.engine.Engine [generated in 0.00162s] (UUID('9cd60f6e-04e6-4ad5-a70d-8fa698e9ae60'), 'USER_LOGIN', UUID('26ac49bf-33fe-4e54-924a-9730c162f275'), 'ML_ENGINEER', 'User', UUID('26ac49bf-33fe-4e54-924a-9730c162f275'), '{"action": "login_success"}', '127.0.0.1', datetime.datetime(2026, 9, 3, 4, 17, 45, 801942, tzinfo=datetime.timezone.utc), '6cc4385dc928a287423bc969e524b906fa743da8aa1f142d711bf5189d30e67d')
+2026-09-03 09:47:45,817 INFO sqlalchemy.engine.Engine COMMIT
+2026-09-03 09:47:46,122 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:47:46,123 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.email = $1::VARCHAR
+2026-09-03 09:47:46,124 INFO sqlalchemy.engine.Engine [cached since 1.32s ago] ('admin_259e86@hermes.gov.in',)
+2026-09-03 09:47:46,956 INFO sqlalchemy.engine.Engine INSERT INTO audit_events (id, event_type, actor_id, actor_role, resource_type, resource_id, action_details, ip_address, occurred_at, blockchain_hash) VALUES ($1::UUID, $2::VARCHAR, $3::UUID, $4::VARCHAR, $5::VARCHAR, $6::UUID, $7::JSON, $8::VARCHAR, $9::TIMESTAMP WITH TIME ZONE, $10::VARCHAR)
+2026-09-03 09:47:46,957 INFO sqlalchemy.engine.Engine [cached since 1.148s ago] (UUID('904407c7-a969-49bb-9d74-b90eac1dd5b1'), 'USER_LOGIN', UUID('595de38c-411a-4220-a49f-74899ecc945f'), 'ADMIN', 'User', UUID('595de38c-411a-4220-a49f-74899ecc945f'), '{"action": "login_success"}', '127.0.0.1', datetime.datetime(2026, 9, 3, 4, 17, 46, 955405, tzinfo=datetime.timezone.utc), 'ffe155585cf81bbeacddd17d6d581de42f71a8f4c9f59cf620b9b7e875f95670')
+2026-09-03 09:47:46,963 INFO sqlalchemy.engine.Engine COMMIT
+
+  Predictions before run: 130
+
+=== [P0] POST /api/v1/predictions/run (ML_ENGINEER) ===
+2026-09-03 09:47:47,444 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:47:47,447 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:47:47,447 INFO sqlalchemy.engine.Engine [generated in 0.00052s] (UUID('26ac49bf-33fe-4e54-924a-9730c162f275'),)
+2026-09-03 09:47:47,470 INFO sqlalchemy.engine.Engine SELECT model_runs.id, model_runs.model_name, model_runs.model_version, model_runs.trained_at, model_runs.precision_score, model_runs.recall_score, model_runs.f1_score, model_runs.pr_auc, model_runs.roc_auc, model_runs.precision_at_k, model_runs.parameters, model_runs.feature_importances, model_runs.artifact_path, model_runs.is_production, model_runs.notes 
+FROM model_runs 
+WHERE model_runs.is_production = true
+2026-09-03 09:47:47,470 INFO sqlalchemy.engine.Engine [generated in 0.00056s] ()
+2026-09-03 09:47:47,601 INFO sqlalchemy.engine.Engine SELECT atm_locations.id, atm_locations.atm_code, atm_locations.bank_name, atm_locations.address, atm_locations.city, atm_locations.district, atm_locations.state, atm_locations.latitude, atm_locations.longitude, ST_AsEWKB(atm_locations.location) AS location, atm_locations.is_active, atm_locations.created_at 
+FROM atm_locations 
+WHERE atm_locations.is_active = true
+2026-09-03 09:47:47,601 INFO sqlalchemy.engine.Engine [generated in 0.00061s] ()
+2026-09-03 09:47:47,644 INFO sqlalchemy.engine.Engine SELECT suspicious_transactions.id, suspicious_transactions.complaint_id, suspicious_transactions.account_id, suspicious_transactions.amount, suspicious_transactions.transaction_type, suspicious_transactions.occurred_at, suspicious_transactions.latitude, suspicious_transactions.longitude, ST_AsEWKB(suspicious_transactions.location) AS location, suspicious_transactions.velocity_score, suspicious_transactions.is_flagged, suspicious_transactions.is_cash_out, suspicious_transactions.atm_id, suspicious_transactions.created_at 
+FROM suspicious_transactions 
+WHERE suspicious_transactions.occurred_at >= $1::TIMESTAMP WITH TIME ZONE AND suspicious_transactions.occurred_at < $2::TIMESTAMP WITH TIME ZONE
+2026-09-03 09:47:47,644 INFO sqlalchemy.engine.Engine [generated in 0.00063s] (datetime.datetime(2026, 8, 4, 4, 17, 47, 463923, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 9, 3, 4, 17, 47, 463923, tzinfo=datetime.timezone.utc))
+2026-09-03 09:47:53,785 INFO sqlalchemy.engine.Engine INSERT INTO risk_predictions (id, predicted_at, model_version, location_id, latitude, longitude, risk_score, severity, confidence, predicted_window_start, predicted_window_end, risk_zone, reasons, model_run_id, is_active) VALUES ($1::UUID, $2::TIMEST ... 23718 characters truncated ... , $1256::TIMESTAMP WITH TIME ZONE, ST_GeomFromEWKT($1257), $1258::JSON, $1259::UUID, $1260::BOOLEAN)
+2026-09-03 09:47:53,786 INFO sqlalchemy.engine.Engine [generated in 0.00440s (insertmanyvalues) 1/1 (unordered)] (UUID('5f0c576d-b03e-459a-b245-1de58829ec93'), datetime.datetime(2026, 9, 3, 4, 17, 53, 780392, tzinfo=datetime.timezone.utc), 'rf-v1.0', UUID('2392ef62-262e-40c6-bc3f-7a5b8a3f9e84'), 28.633769, 77.203469, 0.4553, 'MEDIUM', 0.7814, datetime.datetime(2026, 9, 3, 4, 17, 47, 463923, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 9, 4, 4, 17, 47, 463923, tzinfo=datetime.timezone.utc), None, '["Elevated velocity: 10 transactions linked within last 24h", "Flagged mule account network detected in financial transaction path", "Temporal and MO signature aligns with previous confirmed cash-out campaigns", "High-risk time window (late night / weekend cash-out window)"]', UUID('1cc6f7d1-f379-4f52-b631-5ab149c85af8'), True, UUID('5d9f472b-3317-4b9d-8000-553a3c881729'), datetime.datetime(2026, 9, 3, 4, 17, 53, 780416, tzinfo=datetime.timezone.utc), 'rf-v1.0', UUID('e98ab337-55b9-4087-b714-c1b56ea6a3f0'), 28.639808, 77.269921, 0.2562, 'LOW', 0.8523, datetime.datetime(2026, 9, 3, 4, 17, 47, 463923, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 9, 4, 4, 17, 47, 463923, tzinfo=datetime.timezone.utc), None, '["Historical incident cluster (3 incidents within 500m)", "Temporal and MO signature aligns with previous confirmed cash-out campaigns", "High-risk time window (late night / weekend cash-out window)"]', UUID('1cc6f7d1-f379-4f52-b631-5ab149c85af8'), True, UUID('741061d2-cb3d-4a6b-af03-08fcf25c9ec3'), datetime.datetime(2026, 9, 3, 4, 17, 53, 780433, tzinfo=datetime.timezone.utc), 'rf-v1.0', UUID('faf8688b-552f-4a37-8f29-2e4caa1ab8f0'), 28.604534, 77.199635, 0.4355, 'MEDIUM', 0.7902, datetime.datetime(2026, 9, 3, 4, 17, 47, 463923, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 9, 4, 4, 17, 47, 463923, tzinfo=datetime.timezone.utc), None, '["Flagged mule account network detected in financial transaction path", "Historical incident cluster (6 incidents within 500m)", "Temporal and MO signature aligns with previous confirmed cash-out campaigns", "High-risk time window (late night / weekend cash-out window)"]', UUID('1cc6f7d1-f379-4f52-b631-5ab149c85af8'), True, UUID('909a7790-181e-4423-8cf5-0240bd310ef7'), datetime.datetime(2026, 9, 3, 4, 17, 53, 780443, tzinfo=datetime.timezone.utc), 'rf-v1.0', UUID('6a9fe77d-0e89-44e7-99bc-714b44c3a779'), 28.677069 ... 1160 parameters truncated ... datetime.datetime(2026, 9, 4, 4, 17, 47, 463923, tzinfo=datetime.timezone.utc), None, '["Elevated velocity: 15 transactions linked within last 24h", "Flagged mule account network detected in financial transaction path", "Historical inci ... (34 characters truncated) ... 00m)", "Temporal and MO signature aligns with previous confirmed cash-out campaigns", "High-risk time window (late night / weekend cash-out window)"]', UUID('1cc6f7d1-f379-4f52-b631-5ab149c85af8'), True, UUID('e7b7d6a2-7b7f-4972-97d3-049955ae833b'), datetime.datetime(2026, 9, 3, 4, 17, 53, 781087, tzinfo=datetime.timezone.utc), 'rf-v1.0', UUID('df8d65cb-97b0-467f-8393-3b9c9a8f4edc'), 28.6315, 77.2167, 0.4847, 'MEDIUM', 0.8324, datetime.datetime(2026, 9, 3, 4, 17, 47, 463923, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 9, 4, 4, 17, 47, 463923, tzinfo=datetime.timezone.utc), None, '["Elevated velocity: 10 transactions linked within last 24h", "Flagged mule account network detected in financial transaction path", "Historical inci ... (35 characters truncated) ... 00m)", "Temporal and MO signature aligns with previous confirmed cash-out campaigns", "High-risk time window (late night / weekend cash-out window)"]', UUID('1cc6f7d1-f379-4f52-b631-5ab149c85af8'), True, UUID('cfe16efc-5272-41bd-b7f1-4becf3a1c522'), datetime.datetime(2026, 9, 3, 4, 17, 53, 781096, tzinfo=datetime.timezone.utc), 'rf-v1.0', UUID('ed1fde2d-cd8f-4b0e-818f-93f3353358c6'), 28.627, 77.218, 0.5206, 'MEDIUM', 0.7733, datetime.datetime(2026, 9, 3, 4, 17, 47, 463923, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 9, 4, 4, 17, 47, 463923, tzinfo=datetime.timezone.utc), None, '["Elevated velocity: 15 transactions linked within last 24h", "Flagged mule account network detected in financial transaction path", "Historical inci ... (34 characters truncated) ... 00m)", "Temporal and MO signature aligns with previous confirmed cash-out campaigns", "High-risk time window (late night / weekend cash-out window)"]', UUID('1cc6f7d1-f379-4f52-b631-5ab149c85af8'), True, UUID('a75c5412-53f6-4909-a3ce-bc896732d79e'), datetime.datetime(2026, 9, 3, 4, 17, 53, 781103, tzinfo=datetime.timezone.utc), 'rf-v1.0', UUID('a57b482b-dc5b-4069-801a-16bdb66d3fba'), 28.6139, 77.209, 0.4437, 'MEDIUM', 0.7764, datetime.datetime(2026, 9, 3, 4, 17, 47, 463923, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 9, 4, 4, 17, 47, 463923, tzinfo=datetime.timezone.utc), None, '["Flagged mule account network detected in financial transaction path", "Historical incident cluster (10 incidents within 500m)", "Temporal and MO signature aligns with previous confirmed cash-out campaigns", "High-risk time window (late night / weekend cash-out window)"]', UUID('1cc6f7d1-f379-4f52-b631-5ab149c85af8'), True)
+2026-09-03 09:47:53,837 INFO sqlalchemy.engine.Engine COMMIT
+2026-09-03 09:47:54,126 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:47:54,127 INFO sqlalchemy.engine.Engine INSERT INTO audit_events (id, event_type, actor_id, actor_role, resource_type, resource_id, action_details, ip_address, occurred_at, blockchain_hash) VALUES ($1::UUID, $2::VARCHAR, $3::UUID, $4::VARCHAR, $5::VARCHAR, $6::UUID, $7::JSON, $8::VARCHAR, $9::TIMESTAMP WITH TIME ZONE, $10::VARCHAR)
+2026-09-03 09:47:54,128 INFO sqlalchemy.engine.Engine [cached since 8.319s ago] (UUID('a4d63f73-c6da-478a-b410-6300c05fd7b6'), 'PREDICTION_BATCH_RUN', UUID('26ac49bf-33fe-4e54-924a-9730c162f275'), 'ML_ENGINEER', 'RiskPrediction', None, '{"generated_count": 84, "window_hours": 24}', '127.0.0.1', datetime.datetime(2026, 9, 3, 4, 17, 53, 856295, tzinfo=datetime.timezone.utc), '89e24b7ad8f7d14330b9d0547291009edc6987e0e6e708724b73241f953b2b96')
+2026-09-03 09:47:54,134 INFO sqlalchemy.engine.Engine COMMIT
+  Status: 200
+  Response envelope: ['data', 'error', 'meta', 'status']
+  predictions returned: 50
+  Pred[0] keys: ['atm_code', 'bank_name', 'city', 'confidence', 'id', 'is_active', 'latitude', 'location_id', 'longitude', 'model_version', 'predicted_at', 'predicted_window_end', 'predicted_window_start', 'reasons', 'risk_score', 'severity']
+    risk_score: 0.4553
+    severity:   MEDIUM
+    confidence: 0.7814
+    reasons:    ['Elevated velocity: 10 transactions linked within last 24h', 'Flagged mule account network detected in financial transaction path', 'Temporal and MO signature aligns with previous confirmed cash-out campaigns']
+    model_ver:  rf-v1.0
+
+  Predictions after run: 214 (delta +84)
+  risk_zone ALL NULL:    214/214  ->  True
+    id=a75c5412... score=0.4437 sev=MEDIUM   conf=0.7764 ver=rf-v1.0 active=True first_reason=Flagged mule account network detected in
+    id=cfe16efc... score=0.5206 sev=MEDIUM   conf=0.7733 ver=rf-v1.0 active=True first_reason=Elevated velocity: 15 transactions linke
+    id=e7b7d6a2... score=0.4847 sev=MEDIUM   conf=0.8324 ver=rf-v1.0 active=True first_reason=Elevated velocity: 10 transactions linke
+    id=51c346ba... score=0.5206 sev=MEDIUM   conf=0.7733 ver=rf-v1.0 active=True first_reason=Elevated velocity: 15 transactions linke
+    id=dd6fcea7... score=0.4847 sev=MEDIUM   conf=0.8324 ver=rf-v1.0 active=True first_reason=Elevated velocity: 10 transactions linke
+
+  risk_predictions SCHEMA columns: [('id', 'uuid'), ('predicted_at', 'timestamp with time zone'), ('model_version', 'character varying'), ('location_id', 'uuid'), ('latitude', 'double precision'), ('longitude', 'double precision'), ('risk_score', 'numeric'), ('severity', 'character varying'), ('confidence', 'numeric'), ('predicted_window_start', 'timestamp with time zone'), ('predicted_window_end', 'timestamp with time zone'), ('risk_zone', 'USER-DEFINED'), ('reasons', 'json'), ('model_run_id', 'uuid'), ('is_active', 'boolean')]
+  ORM declares: id, predicted_at, model_version, location_id, lat, lon, risk_score, severity, confidence, win_start, win_end, risk_zone, reasons, model_run_id, is_active
+2026-09-03 09:47:54,582 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:47:54,583 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:47:54,583 INFO sqlalchemy.engine.Engine [cached since 7.137s ago] (UUID('595de38c-411a-4220-a49f-74899ecc945f'),)
+2026-09-03 09:47:54,600 INFO sqlalchemy.engine.Engine SELECT count(*) AS count_1 
+FROM (SELECT complaints.id AS id, complaints.complaint_number AS complaint_number, complaints.filed_at AS filed_at, complaints.category AS category, complaints.subcategory AS subcategory, complaints.reported_amount AS reported_amount, complaints.victim_state AS victim_state, complaints.victim_city AS victim_city, complaints.status AS status, complaints.description AS description, complaints.created_at AS created_at 
+FROM complaints) AS anon_1
+2026-09-03 09:47:54,601 INFO sqlalchemy.engine.Engine [generated in 0.00060s] ()
+2026-09-03 09:47:54,614 INFO sqlalchemy.engine.Engine SELECT complaints.id, complaints.complaint_number, complaints.filed_at, complaints.category, complaints.subcategory, complaints.reported_amount, complaints.victim_state, complaints.victim_city, complaints.status, complaints.description, complaints.created_at 
+FROM complaints ORDER BY complaints.filed_at DESC 
+ LIMIT $1::INTEGER OFFSET $2::INTEGER
+2026-09-03 09:47:54,615 INFO sqlalchemy.engine.Engine [generated in 0.00070s] (20, 0)
+2026-09-03 09:47:54,623 INFO sqlalchemy.engine.Engine ROLLBACK
+2026-09-03 09:47:55,143 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:47:55,144 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:47:55,144 INFO sqlalchemy.engine.Engine [cached since 7.698s ago] (UUID('26ac49bf-33fe-4e54-924a-9730c162f275'),)
+2026-09-03 09:47:55,160 INFO sqlalchemy.engine.Engine SELECT count(*) AS count_1 
+FROM (SELECT model_runs.id AS id, model_runs.model_name AS model_name, model_runs.model_version AS model_version, model_runs.trained_at AS trained_at, model_runs.precision_score AS precision_score, model_runs.recall_score AS recall_score, model_runs.f1_score AS f1_score, model_runs.pr_auc AS pr_auc, model_runs.roc_auc AS roc_auc, model_runs.precision_at_k AS precision_at_k, model_runs.parameters AS parameters, model_runs.feature_importances AS feature_importances, model_runs.artifact_path AS artifact_path, model_runs.is_production AS is_production, model_runs.notes AS notes 
+FROM model_runs) AS anon_1
+2026-09-03 09:47:55,160 INFO sqlalchemy.engine.Engine [generated in 0.00120s] ()
+2026-09-03 09:47:55,170 INFO sqlalchemy.engine.Engine SELECT model_runs.id, model_runs.model_name, model_runs.model_version, model_runs.trained_at, model_runs.precision_score, model_runs.recall_score, model_runs.f1_score, model_runs.pr_auc, model_runs.roc_auc, model_runs.precision_at_k, model_runs.parameters, model_runs.feature_importances, model_runs.artifact_path, model_runs.is_production, model_runs.notes 
+FROM model_runs ORDER BY model_runs.trained_at DESC 
+ LIMIT $1::INTEGER OFFSET $2::INTEGER
+2026-09-03 09:47:55,170 INFO sqlalchemy.engine.Engine [generated in 0.00064s] (20, 0)
+2026-09-03 09:47:55,180 INFO sqlalchemy.engine.Engine ROLLBACK
+
+=== ALL CONTRACT ENDPOINTS TESTED ===
+  ~ [422] POST  /api/v1/auth/refresh                                                      # auth refresh [422] 
+2026-09-03 09:47:55,487 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:47:55,488 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:47:55,488 INFO sqlalchemy.engine.Engine [cached since 8.042s ago] (UUID('595de38c-411a-4220-a49f-74899ecc945f'),)
+2026-09-03 09:47:55,514 INFO sqlalchemy.engine.Engine INSERT INTO complaints (id, complaint_number, filed_at, category, subcategory, reported_amount, victim_state, victim_city, status, description, created_at) VALUES ($1::UUID, $2::VARCHAR, $3::TIMESTAMP WITH TIME ZONE, $4::VARCHAR, $5::VARCHAR, $6::NUMERIC(18, 2), $7::VARCHAR, $8::VARCHAR, $9::VARCHAR, $10::VARCHAR, $11::TIMESTAMP WITH TIME ZONE)
+2026-09-03 09:47:55,515 INFO sqlalchemy.engine.Engine [generated in 0.00177s] (UUID('1b7cb48e-7548-483e-8d70-068daac6cd9c'), 'NCRP-AUD2-259e86', datetime.datetime(2025, 3, 18, 10, 0, tzinfo=TzInfo(0)), 'ATM Fraud', 'Skimming', Decimal('50000.00'), 'Delhi', 'New Delhi', 'open', 'Forensic.', datetime.datetime(2026, 9, 3, 4, 17, 55, 514170, tzinfo=datetime.timezone.utc))
+2026-09-03 09:47:55,524 INFO sqlalchemy.engine.Engine INSERT INTO audit_events (id, event_type, actor_id, actor_role, resource_type, resource_id, action_details, ip_address, occurred_at, blockchain_hash) VALUES ($1::UUID, $2::VARCHAR, $3::UUID, $4::VARCHAR, $5::VARCHAR, $6::UUID, $7::JSON, $8::VARCHAR, $9::TIMESTAMP WITH TIME ZONE, $10::VARCHAR)
+2026-09-03 09:47:55,525 INFO sqlalchemy.engine.Engine [cached since 9.716s ago] (UUID('6347c41d-1f65-4982-8563-1a3b81212420'), 'COMPLAINT_CREATE', UUID('595de38c-411a-4220-a49f-74899ecc945f'), 'ADMIN', 'Complaint', UUID('1b7cb48e-7548-483e-8d70-068daac6cd9c'), '{"complaint_number": "NCRP-AUD2-259e86", "category": "ATM Fraud"}', '127.0.0.1', datetime.datetime(2026, 9, 3, 4, 17, 55, 523383, tzinfo=datetime.timezone.utc), '285b5751f3c590acacf860c55eafa56aaaa3210c31a59b82964982df6053ea22')
+2026-09-03 09:47:55,529 INFO sqlalchemy.engine.Engine COMMIT
+2026-09-03 09:47:55,811 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:47:55,815 INFO sqlalchemy.engine.Engine SELECT complaints.id, complaints.complaint_number, complaints.filed_at, complaints.category, complaints.subcategory, complaints.reported_amount, complaints.victim_state, complaints.victim_city, complaints.status, complaints.description, complaints.created_at 
+FROM complaints 
+WHERE complaints.id = $1::UUID
+2026-09-03 09:47:55,815 INFO sqlalchemy.engine.Engine [generated in 0.00074s] (UUID('1b7cb48e-7548-483e-8d70-068daac6cd9c'),)
+2026-09-03 09:47:55,824 INFO sqlalchemy.engine.Engine ROLLBACK
+  + [200] POST  /api/v1/complaints                                                        # create complaint (ADMIN)
+2026-09-03 09:47:56,108 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:47:56,109 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:47:56,110 INFO sqlalchemy.engine.Engine [cached since 8.663s ago] (UUID('26ac49bf-33fe-4e54-924a-9730c162f275'),)
+2026-09-03 09:47:56,131 INFO sqlalchemy.engine.Engine SELECT count(*) AS count_1 
+FROM (SELECT risk_predictions.id AS id, risk_predictions.predicted_at AS predicted_at, risk_predictions.model_version AS model_version, risk_predictions.location_id AS location_id, risk_predictions.latitude AS latitude, risk_predictions.longitude AS longitude, risk_predictions.risk_score AS risk_score, risk_predictions.severity AS severity, risk_predictions.confidence AS confidence, risk_predictions.predicted_window_start AS predicted_window_start, risk_predictions.predicted_window_end AS predicted_window_end, risk_predictions.risk_zone AS risk_zone, risk_predictions.reasons AS reasons, risk_predictions.model_run_id AS model_run_id, risk_predictions.is_active AS is_active 
+FROM risk_predictions JOIN atm_locations ON atm_locations.id = risk_predictions.location_id 
+WHERE risk_predictions.is_active = true) AS anon_1
+2026-09-03 09:47:56,132 INFO sqlalchemy.engine.Engine [generated in 0.00137s] ()
+2026-09-03 09:47:56,159 INFO sqlalchemy.engine.Engine SELECT risk_predictions.id, risk_predictions.predicted_at, risk_predictions.model_version, risk_predictions.location_id, risk_predictions.latitude, risk_predictions.longitude, risk_predictions.risk_score, risk_predictions.severity, risk_predictions.confidence, risk_predictions.predicted_window_start, risk_predictions.predicted_window_end, ST_AsEWKB(risk_predictions.risk_zone) AS risk_zone, risk_predictions.reasons, risk_predictions.model_run_id, risk_predictions.is_active 
+FROM risk_predictions JOIN atm_locations ON atm_locations.id = risk_predictions.location_id 
+WHERE risk_predictions.is_active = true ORDER BY risk_predictions.risk_score DESC 
+ LIMIT $1::INTEGER OFFSET $2::INTEGER
+2026-09-03 09:47:56,160 INFO sqlalchemy.engine.Engine [generated in 0.00139s] (20, 0)
+2026-09-03 09:47:56,183 INFO sqlalchemy.engine.Engine SELECT atm_locations.id AS atm_locations_id, atm_locations.atm_code AS atm_locations_atm_code, atm_locations.bank_name AS atm_locations_bank_name, atm_locations.address AS atm_locations_address, atm_locations.city AS atm_locations_city, atm_locations.district AS atm_locations_district, atm_locations.state AS atm_locations_state, atm_locations.latitude AS atm_locations_latitude, atm_locations.longitude AS atm_locations_longitude, ST_AsEWKB(atm_locations.location) AS atm_locations_location, atm_locations.is_active AS atm_locations_is_active, atm_locations.created_at AS atm_locations_created_at 
+FROM atm_locations 
+WHERE atm_locations.id IN ($1::UUID, $2::UUID, $3::UUID, $4::UUID, $5::UUID, $6::UUID, $7::UUID, $8::UUID, $9::UUID, $10::UUID, $11::UUID, $12::UUID)
+2026-09-03 09:47:56,183 INFO sqlalchemy.engine.Engine [generated in 0.00121s] (UUID('1d103ac4-bcff-4fa7-94fe-4e158d3cac95'), UUID('2392ef62-262e-40c6-bc3f-7a5b8a3f9e84'), UUID('2f29b2e3-154e-40be-85d1-de0126e826ac'), UUID('68e8568a-e8c7-4b0e-ba96-fce078e33c16'), UUID('a57b482b-dc5b-4069-801a-16bdb66d3fba'), UUID('df8d65cb-97b0-467f-8393-3b9c9a8f4edc'), UUID('ed1fde2d-cd8f-4b0e-818f-93f3353358c6'), UUID('f78a5ec5-c8e6-40f7-af86-20bb4826e875'), UUID('fbf869fe-6c11-47a7-9e7f-f91ca56d7a4b'), UUID('fd0e0926-602a-43a7-9c44-bc3f0f95757f'), UUID('fea251d4-9208-4e9a-b66f-ab6d5b809280'), UUID('fecb56b8-ad66-4cc0-b226-830a6011a94a'))
+2026-09-03 09:47:56,195 INFO sqlalchemy.engine.Engine ROLLBACK
+  + [200] GET   /api/v1/predictions                                                       # list predictions
+2026-09-03 09:47:56,503 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:47:56,504 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:47:56,504 INFO sqlalchemy.engine.Engine [cached since 9.058s ago] (UUID('26ac49bf-33fe-4e54-924a-9730c162f275'),)
+2026-09-03 09:47:56,527 INFO sqlalchemy.engine.Engine ROLLBACK
+  ~ [422] GET   /api/v1/predictions/hotspots                                              # hotspots GeoJSON [422] 
+2026-09-03 09:47:56,833 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:47:56,834 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:47:56,835 INFO sqlalchemy.engine.Engine [cached since 9.388s ago] (UUID('26ac49bf-33fe-4e54-924a-9730c162f275'),)
+2026-09-03 09:47:56,841 INFO sqlalchemy.engine.Engine ROLLBACK
+  ~ [422] GET   /api/v1/predictions/top-k?k=10                                            # top-k [422] 
+2026-09-03 09:47:57,095 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:47:57,096 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:47:57,096 INFO sqlalchemy.engine.Engine [cached since 9.649s ago] (UUID('26ac49bf-33fe-4e54-924a-9730c162f275'),)
+2026-09-03 09:47:57,112 INFO sqlalchemy.engine.Engine SELECT count(*) AS count_1 
+FROM (SELECT alerts.id AS id, alerts.prediction_id AS prediction_id, alerts.severity AS severity, alerts.status AS status, alerts.assigned_to AS assigned_to, alerts.created_at AS created_at, alerts.resolved_at AS resolved_at, alerts.resolution_notes AS resolution_notes 
+FROM alerts) AS anon_1
+2026-09-03 09:47:57,112 INFO sqlalchemy.engine.Engine [generated in 0.00063s] ()
+2026-09-03 09:47:57,124 INFO sqlalchemy.engine.Engine SELECT alerts.id, alerts.prediction_id, alerts.severity, alerts.status, alerts.assigned_to, alerts.created_at, alerts.resolved_at, alerts.resolution_notes 
+FROM alerts ORDER BY alerts.created_at DESC 
+ LIMIT $1::INTEGER OFFSET $2::INTEGER
+2026-09-03 09:47:57,125 INFO sqlalchemy.engine.Engine [generated in 0.00067s] (20, 0)
+2026-09-03 09:47:57,135 INFO sqlalchemy.engine.Engine SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.badge_number AS users_badge_number, users.agency AS users_agency, users.role AS users_role, users.is_active AS users_is_active, users.created_at AS users_created_at, users.updated_at AS users_updated_at 
+FROM users 
+WHERE users.id IN ($1::UUID, $2::UUID, $3::UUID, $4::UUID)
+2026-09-03 09:47:57,135 INFO sqlalchemy.engine.Engine [generated in 0.00101s] (UUID('41a64464-56c0-4dbf-9e7e-2ca5771b5328'), UUID('4e090eb6-a569-4541-9177-bab3021b37fd'), UUID('9d7ebc1f-16ab-47bf-8213-c1dc3d6bc072'), UUID('a17c04c9-5061-47fe-aa04-01e51db48487'))
+2026-09-03 09:47:57,147 INFO sqlalchemy.engine.Engine SELECT risk_predictions.id AS risk_predictions_id, risk_predictions.predicted_at AS risk_predictions_predicted_at, risk_predictions.model_version AS risk_predictions_model_version, risk_predictions.location_id AS risk_predictions_location_id, risk_predictions.latitude AS risk_predictions_latitude, risk_predictions.longitude AS risk_predictions_longitude, risk_predictions.risk_score AS risk_predictions_risk_score, risk_predictions.severity AS risk_predictions_severity, risk_predictions.confidence AS risk_predictions_confidence, risk_predictions.predicted_window_start AS risk_predictions_predicted_window_start, risk_predictions.predicted_window_end AS risk_predictions_predicted_window_end, ST_AsEWKB(risk_predictions.risk_zone) AS risk_predictions_risk_zone, risk_predictions.reasons AS risk_predictions_reasons, risk_predictions.model_run_id AS risk_predictions_model_run_id, risk_predictions.is_active AS risk_predictions_is_active 
+FROM risk_predictions 
+WHERE risk_predictions.id IN ($1::UUID, $2::UUID, $3::UUID, $4::UUID)
+2026-09-03 09:47:57,148 INFO sqlalchemy.engine.Engine [generated in 0.00089s] (UUID('3a368607-a1ea-4b1b-b6c6-b3b457fa3c55'), UUID('3ff3eff8-e973-43f9-a053-5493de5fc9f7'), UUID('620cd0b2-6357-491d-a47e-a449440f48bb'), UUID('cb0df2d6-e414-4bdd-abd9-cc927fdda990'))
+2026-09-03 09:47:57,179 INFO sqlalchemy.engine.Engine ROLLBACK
+  + [200] GET   /api/v1/alerts                                                            # list alerts
+2026-09-03 09:47:57,500 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:47:57,501 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:47:57,502 INFO sqlalchemy.engine.Engine [cached since 10.05s ago] (UUID('26ac49bf-33fe-4e54-924a-9730c162f275'),)
+2026-09-03 09:47:57,513 INFO sqlalchemy.engine.Engine SELECT atm_locations.id, atm_locations.atm_code, atm_locations.bank_name, atm_locations.address, atm_locations.city, atm_locations.district, atm_locations.state, atm_locations.latitude, atm_locations.longitude, ST_AsEWKB(atm_locations.location) AS location, atm_locations.is_active, atm_locations.created_at 
+FROM atm_locations 
+WHERE atm_locations.is_active = true 
+ LIMIT $1::INTEGER
+2026-09-03 09:47:57,513 INFO sqlalchemy.engine.Engine [generated in 0.00064s] (1000,)
+2026-09-03 09:47:57,540 INFO sqlalchemy.engine.Engine ROLLBACK
+  + [200] GET   /api/v1/geo/atms                                                          # geo/atms GeoJSON
+2026-09-03 09:47:57,838 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:47:57,839 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:47:57,839 INFO sqlalchemy.engine.Engine [cached since 10.39s ago] (UUID('26ac49bf-33fe-4e54-924a-9730c162f275'),)
+2026-09-03 09:47:57,850 INFO sqlalchemy.engine.Engine SELECT suspicious_transactions.latitude, suspicious_transactions.longitude 
+FROM suspicious_transactions 
+ LIMIT $1::INTEGER
+2026-09-03 09:47:57,850 INFO sqlalchemy.engine.Engine [generated in 0.00068s] (1000,)
+2026-09-03 09:47:57,924 INFO sqlalchemy.engine.Engine ROLLBACK
+  + [200] GET   /api/v1/geo/clusters?min_samples=2                                        # geo/clusters
+2026-09-03 09:47:58,196 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:47:58,197 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:47:58,197 INFO sqlalchemy.engine.Engine [cached since 10.75s ago] (UUID('595de38c-411a-4220-a49f-74899ecc945f'),)
+2026-09-03 09:47:58,213 INFO sqlalchemy.engine.Engine SELECT count(*) AS count_1 
+FROM (SELECT investigations.id AS id, investigations.case_number AS case_number, investigations.title AS title, investigations.alert_id AS alert_id, investigations.lead_investigator_id AS lead_investigator_id, investigations.status AS status, investigations.priority AS priority, investigations.findings AS findings, investigations.created_at AS created_at, investigations.updated_at AS updated_at 
+FROM investigations) AS anon_1
+2026-09-03 09:47:58,214 INFO sqlalchemy.engine.Engine [generated in 0.00064s] ()
+2026-09-03 09:47:58,226 INFO sqlalchemy.engine.Engine SELECT investigations.id, investigations.case_number, investigations.title, investigations.alert_id, investigations.lead_investigator_id, investigations.status, investigations.priority, investigations.findings, investigations.created_at, investigations.updated_at 
+FROM investigations ORDER BY investigations.created_at DESC 
+ LIMIT $1::INTEGER OFFSET $2::INTEGER
+2026-09-03 09:47:58,226 INFO sqlalchemy.engine.Engine [generated in 0.00085s] (20, 0)
+2026-09-03 09:47:58,236 INFO sqlalchemy.engine.Engine SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.badge_number AS users_badge_number, users.agency AS users_agency, users.role AS users_role, users.is_active AS users_is_active, users.created_at AS users_created_at, users.updated_at AS users_updated_at 
+FROM users 
+WHERE users.id IN ($1::UUID, $2::UUID, $3::UUID, $4::UUID, $5::UUID, $6::UUID)
+2026-09-03 09:47:58,237 INFO sqlalchemy.engine.Engine [generated in 0.00168s] (UUID('41a64464-56c0-4dbf-9e7e-2ca5771b5328'), UUID('4e090eb6-a569-4541-9177-bab3021b37fd'), UUID('9d7ebc1f-16ab-47bf-8213-c1dc3d6bc072'), UUID('a17c04c9-5061-47fe-aa04-01e51db48487'), UUID('a77440d1-3d9a-4394-a825-24d07b3af306'), UUID('e0f88125-c4d0-441a-acfd-31a6ac8dc528'))
+2026-09-03 09:47:58,251 INFO sqlalchemy.engine.Engine SELECT investigation_notes.investigation_id AS investigation_notes_investigation_id, investigation_notes.id AS investigation_notes_id, investigation_notes.author_id AS investigation_notes_author_id, investigation_notes.note AS investigation_notes_note, investigation_notes.created_at AS investigation_notes_created_at 
+FROM investigation_notes 
+WHERE investigation_notes.investigation_id IN ($1::UUID, $2::UUID, $3::UUID, $4::UUID, $5::UUID, $6::UUID)
+2026-09-03 09:47:58,251 INFO sqlalchemy.engine.Engine [generated in 0.00100s] (UUID('37eaf819-2712-4f4d-aebc-f5783cfeadac'), UUID('98bca9b7-f1d8-4296-b8cb-70fcedb18019'), UUID('d53ab3ef-0932-464e-9e12-72fff8537678'), UUID('8efae0b6-a88f-4db9-bb70-d47422cf4adf'), UUID('150210e5-55ad-4384-951d-e2fb26232fc4'), UUID('c0ef6829-2c57-4ac0-8022-f3b9ce7b1905'))
+2026-09-03 09:47:58,262 INFO sqlalchemy.engine.Engine SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.badge_number AS users_badge_number, users.agency AS users_agency, users.role AS users_role, users.is_active AS users_is_active, users.created_at AS users_created_at, users.updated_at AS users_updated_at 
+FROM users 
+WHERE users.id IN ($1::UUID, $2::UUID, $3::UUID, $4::UUID, $5::UUID, $6::UUID)
+2026-09-03 09:47:58,263 INFO sqlalchemy.engine.Engine [generated in 0.00090s] (UUID('41a64464-56c0-4dbf-9e7e-2ca5771b5328'), UUID('4e090eb6-a569-4541-9177-bab3021b37fd'), UUID('9d7ebc1f-16ab-47bf-8213-c1dc3d6bc072'), UUID('a17c04c9-5061-47fe-aa04-01e51db48487'), UUID('a77440d1-3d9a-4394-a825-24d07b3af306'), UUID('e0f88125-c4d0-441a-acfd-31a6ac8dc528'))
+2026-09-03 09:47:58,275 INFO sqlalchemy.engine.Engine ROLLBACK
+  + [200] GET   /api/v1/investigations                                                    # list investigations
+2026-09-03 09:47:58,592 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:47:58,593 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:47:58,594 INFO sqlalchemy.engine.Engine [cached since 11.15s ago] (UUID('595de38c-411a-4220-a49f-74899ecc945f'),)
+2026-09-03 09:47:58,607 INFO sqlalchemy.engine.Engine INSERT INTO investigations (id, case_number, title, alert_id, lead_investigator_id, status, priority, findings, created_at, updated_at) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::UUID, $5::UUID, $6::VARCHAR, $7::VARCHAR, $8::VARCHAR, $9::TIMESTAMP WITH TIME ZONE, $10::TIMESTAMP WITH TIME ZONE)
+2026-09-03 09:47:58,608 INFO sqlalchemy.engine.Engine [generated in 0.00169s] (UUID('929249b7-da72-45e3-b7dc-c836a0c66cac'), 'HERMES-2026-345CACC4', 'Forensic Case', None, UUID('595de38c-411a-4220-a49f-74899ecc945f'), 'active', 'MEDIUM', None, datetime.datetime(2026, 9, 3, 4, 17, 58, 607060, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 9, 3, 4, 17, 58, 607070, tzinfo=datetime.timezone.utc))
+2026-09-03 09:47:58,616 INFO sqlalchemy.engine.Engine INSERT INTO audit_events (id, event_type, actor_id, actor_role, resource_type, resource_id, action_details, ip_address, occurred_at, blockchain_hash) VALUES ($1::UUID, $2::VARCHAR, $3::UUID, $4::VARCHAR, $5::VARCHAR, $6::UUID, $7::JSON, $8::VARCHAR, $9::TIMESTAMP WITH TIME ZONE, $10::VARCHAR)
+2026-09-03 09:47:58,617 INFO sqlalchemy.engine.Engine [cached since 12.81s ago] (UUID('2ef1ccf5-5940-4bd0-b954-4e9ded9afd5f'), 'INVESTIGATION_CREATE', UUID('595de38c-411a-4220-a49f-74899ecc945f'), 'ADMIN', 'Investigation', UUID('929249b7-da72-45e3-b7dc-c836a0c66cac'), '{"case_number": "HERMES-2026-345CACC4", "alert_id": null}', '127.0.0.1', datetime.datetime(2026, 9, 3, 4, 17, 58, 615379, tzinfo=datetime.timezone.utc), 'db4a7bc4172b2dde23cd49901850f1a86621e48c015c91b929aafc6ef153c6bf')
+2026-09-03 09:47:58,622 INFO sqlalchemy.engine.Engine COMMIT
+2026-09-03 09:47:58,950 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:47:58,954 INFO sqlalchemy.engine.Engine SELECT investigations.id, investigations.case_number, investigations.title, investigations.alert_id, investigations.lead_investigator_id, investigations.status, investigations.priority, investigations.findings, investigations.created_at, investigations.updated_at 
+FROM investigations 
+WHERE investigations.id = $1::UUID
+2026-09-03 09:47:58,954 INFO sqlalchemy.engine.Engine [generated in 0.00060s] (UUID('929249b7-da72-45e3-b7dc-c836a0c66cac'),)
+2026-09-03 09:47:58,969 INFO sqlalchemy.engine.Engine SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.badge_number AS users_badge_number, users.agency AS users_agency, users.role AS users_role, users.is_active AS users_is_active, users.created_at AS users_created_at, users.updated_at AS users_updated_at 
+FROM users 
+WHERE users.id IN ($1::UUID)
+2026-09-03 09:47:58,969 INFO sqlalchemy.engine.Engine [generated in 0.00085s] (UUID('595de38c-411a-4220-a49f-74899ecc945f'),)
+2026-09-03 09:47:58,978 INFO sqlalchemy.engine.Engine SELECT investigation_notes.investigation_id AS investigation_notes_investigation_id, investigation_notes.id AS investigation_notes_id, investigation_notes.author_id AS investigation_notes_author_id, investigation_notes.note AS investigation_notes_note, investigation_notes.created_at AS investigation_notes_created_at 
+FROM investigation_notes 
+WHERE investigation_notes.investigation_id IN ($1::UUID)
+2026-09-03 09:47:58,978 INFO sqlalchemy.engine.Engine [generated in 0.00079s] (UUID('929249b7-da72-45e3-b7dc-c836a0c66cac'),)
+2026-09-03 09:47:58,985 INFO sqlalchemy.engine.Engine ROLLBACK
+  + [200] POST  /api/v1/investigations                                                    # create investigation
+2026-09-03 09:47:59,276 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:47:59,278 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:47:59,278 INFO sqlalchemy.engine.Engine [cached since 11.83s ago] (UUID('595de38c-411a-4220-a49f-74899ecc945f'),)
+2026-09-03 09:47:59,291 INFO sqlalchemy.engine.Engine SELECT count(*) AS count_1 
+FROM (SELECT audit_events.id AS id, audit_events.event_type AS event_type, audit_events.actor_id AS actor_id, audit_events.actor_role AS actor_role, audit_events.resource_type AS resource_type, audit_events.resource_id AS resource_id, audit_events.action_details AS action_details, audit_events.ip_address AS ip_address, audit_events.occurred_at AS occurred_at, audit_events.blockchain_hash AS blockchain_hash 
+FROM audit_events) AS anon_1
+2026-09-03 09:47:59,292 INFO sqlalchemy.engine.Engine [generated in 0.00105s] ()
+2026-09-03 09:47:59,300 INFO sqlalchemy.engine.Engine SELECT audit_events.id, audit_events.event_type, audit_events.actor_id, audit_events.actor_role, audit_events.resource_type, audit_events.resource_id, audit_events.action_details, audit_events.ip_address, audit_events.occurred_at, audit_events.blockchain_hash 
+FROM audit_events ORDER BY audit_events.occurred_at DESC 
+ LIMIT $1::INTEGER OFFSET $2::INTEGER
+2026-09-03 09:47:59,300 INFO sqlalchemy.engine.Engine [generated in 0.00069s] (50, 0)
+2026-09-03 09:47:59,325 INFO sqlalchemy.engine.Engine ROLLBACK
+  + [200] GET   /api/v1/audit/events                                                      # audit events (SUP+)
+2026-09-03 09:47:59,612 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:47:59,613 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:47:59,614 INFO sqlalchemy.engine.Engine [cached since 12.17s ago] (UUID('26ac49bf-33fe-4e54-924a-9730c162f275'),)
+2026-09-03 09:47:59,623 INFO sqlalchemy.engine.Engine SELECT count(*) AS count_1 
+FROM (SELECT model_runs.id AS id, model_runs.model_name AS model_name, model_runs.model_version AS model_version, model_runs.trained_at AS trained_at, model_runs.precision_score AS precision_score, model_runs.recall_score AS recall_score, model_runs.f1_score AS f1_score, model_runs.pr_auc AS pr_auc, model_runs.roc_auc AS roc_auc, model_runs.precision_at_k AS precision_at_k, model_runs.parameters AS parameters, model_runs.feature_importances AS feature_importances, model_runs.artifact_path AS artifact_path, model_runs.is_production AS is_production, model_runs.notes AS notes 
+FROM model_runs) AS anon_1
+2026-09-03 09:47:59,624 INFO sqlalchemy.engine.Engine [cached since 4.465s ago] ()
+2026-09-03 09:47:59,631 INFO sqlalchemy.engine.Engine SELECT model_runs.id, model_runs.model_name, model_runs.model_version, model_runs.trained_at, model_runs.precision_score, model_runs.recall_score, model_runs.f1_score, model_runs.pr_auc, model_runs.roc_auc, model_runs.precision_at_k, model_runs.parameters, model_runs.feature_importances, model_runs.artifact_path, model_runs.is_production, model_runs.notes 
+FROM model_runs ORDER BY model_runs.trained_at DESC 
+ LIMIT $1::INTEGER OFFSET $2::INTEGER
+2026-09-03 09:47:59,633 INFO sqlalchemy.engine.Engine [generated in 0.00216s] (20, 0)
+2026-09-03 09:47:59,639 INFO sqlalchemy.engine.Engine ROLLBACK
+  + [200] GET   /api/v1/models                                                            # list ml models
+2026-09-03 09:47:59,910 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:47:59,911 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:47:59,912 INFO sqlalchemy.engine.Engine [cached since 12.46s ago] (UUID('595de38c-411a-4220-a49f-74899ecc945f'),)
+2026-09-03 09:47:59,924 INFO sqlalchemy.engine.Engine SELECT complaints.id, complaints.complaint_number, complaints.filed_at, complaints.category, complaints.subcategory, complaints.reported_amount, complaints.victim_state, complaints.victim_city, complaints.status, complaints.description, complaints.created_at 
+FROM complaints 
+WHERE complaints.id = $1::UUID
+2026-09-03 09:47:59,924 INFO sqlalchemy.engine.Engine [generated in 0.00125s] (UUID('e8d1b824-4f7f-43da-96e1-7368703dbcba'),)
+2026-09-03 09:47:59,931 INFO sqlalchemy.engine.Engine ROLLBACK
+  + [200] GET   /api/v1/complaints/e8d1b824-4f7f-43da-96e1-7368703dbcba                   # complaint by id
+2026-09-03 09:48:00,263 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:48:00,264 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:48:00,265 INFO sqlalchemy.engine.Engine [cached since 12.82s ago] (UUID('595de38c-411a-4220-a49f-74899ecc945f'),)
+2026-09-03 09:48:00,273 INFO sqlalchemy.engine.Engine SELECT complaints.id, complaints.complaint_number, complaints.filed_at, complaints.category, complaints.subcategory, complaints.reported_amount, complaints.victim_state, complaints.victim_city, complaints.status, complaints.description, complaints.created_at 
+FROM complaints 
+WHERE complaints.id = $1::UUID
+2026-09-03 09:48:00,273 INFO sqlalchemy.engine.Engine [cached since 0.3501s ago] (UUID('e8d1b824-4f7f-43da-96e1-7368703dbcba'),)
+2026-09-03 09:48:00,281 INFO sqlalchemy.engine.Engine INSERT INTO audit_events (id, event_type, actor_id, actor_role, resource_type, resource_id, action_details, ip_address, occurred_at, blockchain_hash) VALUES ($1::UUID, $2::VARCHAR, $3::UUID, $4::VARCHAR, $5::VARCHAR, $6::UUID, $7::JSON, $8::VARCHAR, $9::TIMESTAMP WITH TIME ZONE, $10::VARCHAR)
+2026-09-03 09:48:00,281 INFO sqlalchemy.engine.Engine [cached since 14.47s ago] (UUID('fbc42e97-6d20-463e-a750-6d80198b8a6f'), 'COMPLAINT_UPDATE', UUID('595de38c-411a-4220-a49f-74899ecc945f'), 'ADMIN', 'Complaint', UUID('e8d1b824-4f7f-43da-96e1-7368703dbcba'), '{"updated_fields": {"status": "under_investigation"}}', '127.0.0.1', datetime.datetime(2026, 9, 3, 4, 18, 0, 279140, tzinfo=datetime.timezone.utc), 'd6f6693fee6201a97d29d8b750d227952e46909c77b21b4970618bcac2683422')
+2026-09-03 09:48:00,289 INFO sqlalchemy.engine.Engine UPDATE complaints SET status=$1::VARCHAR WHERE complaints.id = $2::UUID
+2026-09-03 09:48:00,289 INFO sqlalchemy.engine.Engine [generated in 0.00056s] ('under_investigation', UUID('e8d1b824-4f7f-43da-96e1-7368703dbcba'))
+2026-09-03 09:48:00,294 INFO sqlalchemy.engine.Engine COMMIT
+2026-09-03 09:48:00,587 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:48:00,588 INFO sqlalchemy.engine.Engine SELECT complaints.id, complaints.complaint_number, complaints.filed_at, complaints.category, complaints.subcategory, complaints.reported_amount, complaints.victim_state, complaints.victim_city, complaints.status, complaints.description, complaints.created_at 
+FROM complaints 
+WHERE complaints.id = $1::UUID
+2026-09-03 09:48:00,588 INFO sqlalchemy.engine.Engine [cached since 4.773s ago] (UUID('e8d1b824-4f7f-43da-96e1-7368703dbcba'),)
+2026-09-03 09:48:00,595 INFO sqlalchemy.engine.Engine ROLLBACK
+  + [200] PATCH /api/v1/complaints/e8d1b824-4f7f-43da-96e1-7368703dbcba                   # patch complaint
+2026-09-03 09:48:00,863 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:48:00,864 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:48:00,864 INFO sqlalchemy.engine.Engine [cached since 13.42s ago] (UUID('26ac49bf-33fe-4e54-924a-9730c162f275'),)
+2026-09-03 09:48:00,876 INFO sqlalchemy.engine.Engine SELECT risk_predictions.id, risk_predictions.predicted_at, risk_predictions.model_version, risk_predictions.location_id, risk_predictions.latitude, risk_predictions.longitude, risk_predictions.risk_score, risk_predictions.severity, risk_predictions.confidence, risk_predictions.predicted_window_start, risk_predictions.predicted_window_end, ST_AsEWKB(risk_predictions.risk_zone) AS risk_zone, risk_predictions.reasons, risk_predictions.model_run_id, risk_predictions.is_active 
+FROM risk_predictions 
+WHERE risk_predictions.id = $1::UUID
+2026-09-03 09:48:00,876 INFO sqlalchemy.engine.Engine [generated in 0.00056s] (UUID('3a368607-a1ea-4b1b-b6c6-b3b457fa3c55'),)
+2026-09-03 09:48:00,892 INFO sqlalchemy.engine.Engine SELECT atm_locations.id AS atm_locations_id, atm_locations.atm_code AS atm_locations_atm_code, atm_locations.bank_name AS atm_locations_bank_name, atm_locations.address AS atm_locations_address, atm_locations.city AS atm_locations_city, atm_locations.district AS atm_locations_district, atm_locations.state AS atm_locations_state, atm_locations.latitude AS atm_locations_latitude, atm_locations.longitude AS atm_locations_longitude, ST_AsEWKB(atm_locations.location) AS atm_locations_location, atm_locations.is_active AS atm_locations_is_active, atm_locations.created_at AS atm_locations_created_at 
+FROM atm_locations 
+WHERE atm_locations.id IN ($1::UUID)
+2026-09-03 09:48:00,892 INFO sqlalchemy.engine.Engine [cached since 4.71s ago] (UUID('f78a5ec5-c8e6-40f7-af86-20bb4826e875'),)
+2026-09-03 09:48:00,898 INFO sqlalchemy.engine.Engine ROLLBACK
+  + [200] GET   /api/v1/predictions/3a368607-a1ea-4b1b-b6c6-b3b457fa3c55                  # pred by id
+2026-09-03 09:48:01,194 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:48:01,195 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:48:01,196 INFO sqlalchemy.engine.Engine [cached since 13.75s ago] (UUID('26ac49bf-33fe-4e54-924a-9730c162f275'),)
+2026-09-03 09:48:01,205 INFO sqlalchemy.engine.Engine SELECT alerts.id, alerts.prediction_id, alerts.severity, alerts.status, alerts.assigned_to, alerts.created_at, alerts.resolved_at, alerts.resolution_notes 
+FROM alerts 
+WHERE alerts.id = $1::UUID
+2026-09-03 09:48:01,206 INFO sqlalchemy.engine.Engine [generated in 0.00065s] (UUID('932d3692-a213-4bdf-b9d6-10607ee8f082'),)
+2026-09-03 09:48:01,214 INFO sqlalchemy.engine.Engine SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.badge_number AS users_badge_number, users.agency AS users_agency, users.role AS users_role, users.is_active AS users_is_active, users.created_at AS users_created_at, users.updated_at AS users_updated_at 
+FROM users 
+WHERE users.id IN ($1::UUID)
+2026-09-03 09:48:01,214 INFO sqlalchemy.engine.Engine [cached since 4.08s ago] (UUID('9d7ebc1f-16ab-47bf-8213-c1dc3d6bc072'),)
+2026-09-03 09:48:01,223 INFO sqlalchemy.engine.Engine SELECT risk_predictions.id AS risk_predictions_id, risk_predictions.predicted_at AS risk_predictions_predicted_at, risk_predictions.model_version AS risk_predictions_model_version, risk_predictions.location_id AS risk_predictions_location_id, risk_predictions.latitude AS risk_predictions_latitude, risk_predictions.longitude AS risk_predictions_longitude, risk_predictions.risk_score AS risk_predictions_risk_score, risk_predictions.severity AS risk_predictions_severity, risk_predictions.confidence AS risk_predictions_confidence, risk_predictions.predicted_window_start AS risk_predictions_predicted_window_start, risk_predictions.predicted_window_end AS risk_predictions_predicted_window_end, ST_AsEWKB(risk_predictions.risk_zone) AS risk_predictions_risk_zone, risk_predictions.reasons AS risk_predictions_reasons, risk_predictions.model_run_id AS risk_predictions_model_run_id, risk_predictions.is_active AS risk_predictions_is_active 
+FROM risk_predictions 
+WHERE risk_predictions.id IN ($1::UUID)
+2026-09-03 09:48:01,224 INFO sqlalchemy.engine.Engine [cached since 4.077s ago] (UUID('3ff3eff8-e973-43f9-a053-5493de5fc9f7'),)
+2026-09-03 09:48:01,241 INFO sqlalchemy.engine.Engine ROLLBACK
+  + [200] GET   /api/v1/alerts/932d3692-a213-4bdf-b9d6-10607ee8f082                       # alert by id
+2026-09-03 09:48:01,509 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:48:01,509 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:48:01,510 INFO sqlalchemy.engine.Engine [cached since 14.06s ago] (UUID('595de38c-411a-4220-a49f-74899ecc945f'),)
+2026-09-03 09:48:01,518 INFO sqlalchemy.engine.Engine SELECT alerts.id, alerts.prediction_id, alerts.severity, alerts.status, alerts.assigned_to, alerts.created_at, alerts.resolved_at, alerts.resolution_notes 
+FROM alerts 
+WHERE alerts.id = $1::UUID
+2026-09-03 09:48:01,519 INFO sqlalchemy.engine.Engine [cached since 0.3133s ago] (UUID('932d3692-a213-4bdf-b9d6-10607ee8f082'),)
+2026-09-03 09:48:01,525 INFO sqlalchemy.engine.Engine SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.badge_number AS users_badge_number, users.agency AS users_agency, users.role AS users_role, users.is_active AS users_is_active, users.created_at AS users_created_at, users.updated_at AS users_updated_at 
+FROM users 
+WHERE users.id IN ($1::UUID)
+2026-09-03 09:48:01,525 INFO sqlalchemy.engine.Engine [cached since 4.391s ago] (UUID('9d7ebc1f-16ab-47bf-8213-c1dc3d6bc072'),)
+2026-09-03 09:48:01,530 INFO sqlalchemy.engine.Engine SELECT risk_predictions.id AS risk_predictions_id, risk_predictions.predicted_at AS risk_predictions_predicted_at, risk_predictions.model_version AS risk_predictions_model_version, risk_predictions.location_id AS risk_predictions_location_id, risk_predictions.latitude AS risk_predictions_latitude, risk_predictions.longitude AS risk_predictions_longitude, risk_predictions.risk_score AS risk_predictions_risk_score, risk_predictions.severity AS risk_predictions_severity, risk_predictions.confidence AS risk_predictions_confidence, risk_predictions.predicted_window_start AS risk_predictions_predicted_window_start, risk_predictions.predicted_window_end AS risk_predictions_predicted_window_end, ST_AsEWKB(risk_predictions.risk_zone) AS risk_predictions_risk_zone, risk_predictions.reasons AS risk_predictions_reasons, risk_predictions.model_run_id AS risk_predictions_model_run_id, risk_predictions.is_active AS risk_predictions_is_active 
+FROM risk_predictions 
+WHERE risk_predictions.id IN ($1::UUID)
+2026-09-03 09:48:01,531 INFO sqlalchemy.engine.Engine [cached since 4.384s ago] (UUID('3ff3eff8-e973-43f9-a053-5493de5fc9f7'),)
+2026-09-03 09:48:01,549 INFO sqlalchemy.engine.Engine INSERT INTO audit_events (id, event_type, actor_id, actor_role, resource_type, resource_id, action_details, ip_address, occurred_at, blockchain_hash) VALUES ($1::UUID, $2::VARCHAR, $3::UUID, $4::VARCHAR, $5::VARCHAR, $6::UUID, $7::JSON, $8::VARCHAR, $9::TIMESTAMP WITH TIME ZONE, $10::VARCHAR)
+2026-09-03 09:48:01,549 INFO sqlalchemy.engine.Engine [cached since 15.74s ago] (UUID('f56dcabb-f12b-4469-a7c7-44ac92a24ff8'), 'ALERT_ACKNOWLEDGE', UUID('595de38c-411a-4220-a49f-74899ecc945f'), 'ADMIN', 'Alert', UUID('932d3692-a213-4bdf-b9d6-10607ee8f082'), '{"acknowledged_by": "595de38c-411a-4220-a49f-74899ecc945f", "status": "assigned"}', '127.0.0.1', datetime.datetime(2026, 9, 3, 4, 18, 1, 546416, tzinfo=datetime.timezone.utc), '0268bb37799453055fcb7f2216438b6a9de69572f6d43adb2166b4a30cd25e5f')
+2026-09-03 09:48:01,561 INFO sqlalchemy.engine.Engine UPDATE alerts SET status=$1::VARCHAR WHERE alerts.id = $2::UUID
+2026-09-03 09:48:01,562 INFO sqlalchemy.engine.Engine [generated in 0.00094s] ('assigned', UUID('932d3692-a213-4bdf-b9d6-10607ee8f082'))
+2026-09-03 09:48:01,567 INFO sqlalchemy.engine.Engine COMMIT
+2026-09-03 09:48:01,861 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:48:01,864 INFO sqlalchemy.engine.Engine SELECT alerts.id, alerts.prediction_id, alerts.severity, alerts.status, alerts.assigned_to, alerts.created_at, alerts.resolved_at, alerts.resolution_notes 
+FROM alerts 
+WHERE alerts.id = $1::UUID
+2026-09-03 09:48:01,864 INFO sqlalchemy.engine.Engine [generated in 0.00047s] (UUID('932d3692-a213-4bdf-b9d6-10607ee8f082'),)
+2026-09-03 09:48:01,879 INFO sqlalchemy.engine.Engine SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.badge_number AS users_badge_number, users.agency AS users_agency, users.role AS users_role, users.is_active AS users_is_active, users.created_at AS users_created_at, users.updated_at AS users_updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:48:01,880 INFO sqlalchemy.engine.Engine [generated in 0.00062s] (UUID('9d7ebc1f-16ab-47bf-8213-c1dc3d6bc072'),)
+2026-09-03 09:48:01,892 INFO sqlalchemy.engine.Engine SELECT risk_predictions.id AS risk_predictions_id, risk_predictions.predicted_at AS risk_predictions_predicted_at, risk_predictions.model_version AS risk_predictions_model_version, risk_predictions.location_id AS risk_predictions_location_id, risk_predictions.latitude AS risk_predictions_latitude, risk_predictions.longitude AS risk_predictions_longitude, risk_predictions.risk_score AS risk_predictions_risk_score, risk_predictions.severity AS risk_predictions_severity, risk_predictions.confidence AS risk_predictions_confidence, risk_predictions.predicted_window_start AS risk_predictions_predicted_window_start, risk_predictions.predicted_window_end AS risk_predictions_predicted_window_end, ST_AsEWKB(risk_predictions.risk_zone) AS risk_predictions_risk_zone, risk_predictions.reasons AS risk_predictions_reasons, risk_predictions.model_run_id AS risk_predictions_model_run_id, risk_predictions.is_active AS risk_predictions_is_active 
+FROM risk_predictions 
+WHERE risk_predictions.id = $1::UUID
+2026-09-03 09:48:01,892 INFO sqlalchemy.engine.Engine [generated in 0.00066s] (UUID('3ff3eff8-e973-43f9-a053-5493de5fc9f7'),)
+2026-09-03 09:48:01,918 INFO sqlalchemy.engine.Engine ROLLBACK
+  + [200] POST  /api/v1/alerts/932d3692-a213-4bdf-b9d6-10607ee8f082/acknowledge           # ack alert
+  ! [405] PATCH /api/v1/alerts/assign                                                     # assign alert (body-ok expected 422 if incomplete) detail=Method Not Allowed
+2026-09-03 09:48:02,248 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:48:02,249 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:48:02,250 INFO sqlalchemy.engine.Engine [cached since 14.8s ago] (UUID('595de38c-411a-4220-a49f-74899ecc945f'),)
+2026-09-03 09:48:02,263 INFO sqlalchemy.engine.Engine SELECT investigations.id, investigations.case_number, investigations.title, investigations.alert_id, investigations.lead_investigator_id, investigations.status, investigations.priority, investigations.findings, investigations.created_at, investigations.updated_at 
+FROM investigations 
+WHERE investigations.id = $1::UUID
+2026-09-03 09:48:02,263 INFO sqlalchemy.engine.Engine [generated in 0.00063s] (UUID('8efae0b6-a88f-4db9-bb70-d47422cf4adf'),)
+2026-09-03 09:48:02,271 INFO sqlalchemy.engine.Engine SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.badge_number AS users_badge_number, users.agency AS users_agency, users.role AS users_role, users.is_active AS users_is_active, users.created_at AS users_created_at, users.updated_at AS users_updated_at 
+FROM users 
+WHERE users.id IN ($1::UUID)
+2026-09-03 09:48:02,272 INFO sqlalchemy.engine.Engine [cached since 4.036s ago] (UUID('9d7ebc1f-16ab-47bf-8213-c1dc3d6bc072'),)
+2026-09-03 09:48:02,277 INFO sqlalchemy.engine.Engine SELECT investigation_notes.investigation_id AS investigation_notes_investigation_id, investigation_notes.id AS investigation_notes_id, investigation_notes.author_id AS investigation_notes_author_id, investigation_notes.note AS investigation_notes_note, investigation_notes.created_at AS investigation_notes_created_at 
+FROM investigation_notes 
+WHERE investigation_notes.investigation_id IN ($1::UUID)
+2026-09-03 09:48:02,278 INFO sqlalchemy.engine.Engine [cached since 4.027s ago] (UUID('8efae0b6-a88f-4db9-bb70-d47422cf4adf'),)
+2026-09-03 09:48:02,284 INFO sqlalchemy.engine.Engine SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.badge_number AS users_badge_number, users.agency AS users_agency, users.role AS users_role, users.is_active AS users_is_active, users.created_at AS users_created_at, users.updated_at AS users_updated_at 
+FROM users 
+WHERE users.id IN ($1::UUID)
+2026-09-03 09:48:02,284 INFO sqlalchemy.engine.Engine [cached since 4.022s ago] (UUID('9d7ebc1f-16ab-47bf-8213-c1dc3d6bc072'),)
+2026-09-03 09:48:02,290 INFO sqlalchemy.engine.Engine ROLLBACK
+  + [200] GET   /api/v1/investigations/8efae0b6-a88f-4db9-bb70-d47422cf4adf               # inv by id
+2026-09-03 09:48:02,657 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:48:02,660 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:48:02,660 INFO sqlalchemy.engine.Engine [cached since 15.21s ago] (UUID('595de38c-411a-4220-a49f-74899ecc945f'),)
+2026-09-03 09:48:02,675 INFO sqlalchemy.engine.Engine SELECT investigations.id, investigations.case_number, investigations.title, investigations.alert_id, investigations.lead_investigator_id, investigations.status, investigations.priority, investigations.findings, investigations.created_at, investigations.updated_at 
+FROM investigations 
+WHERE investigations.id = $1::UUID
+2026-09-03 09:48:02,676 INFO sqlalchemy.engine.Engine [cached since 3.722s ago] (UUID('8efae0b6-a88f-4db9-bb70-d47422cf4adf'),)
+2026-09-03 09:48:02,686 INFO sqlalchemy.engine.Engine SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.badge_number AS users_badge_number, users.agency AS users_agency, users.role AS users_role, users.is_active AS users_is_active, users.created_at AS users_created_at, users.updated_at AS users_updated_at 
+FROM users 
+WHERE users.id IN ($1::UUID)
+2026-09-03 09:48:02,686 INFO sqlalchemy.engine.Engine [cached since 3.718s ago] (UUID('9d7ebc1f-16ab-47bf-8213-c1dc3d6bc072'),)
+2026-09-03 09:48:02,693 INFO sqlalchemy.engine.Engine SELECT investigation_notes.investigation_id AS investigation_notes_investigation_id, investigation_notes.id AS investigation_notes_id, investigation_notes.author_id AS investigation_notes_author_id, investigation_notes.note AS investigation_notes_note, investigation_notes.created_at AS investigation_notes_created_at 
+FROM investigation_notes 
+WHERE investigation_notes.investigation_id IN ($1::UUID)
+2026-09-03 09:48:02,693 INFO sqlalchemy.engine.Engine [cached since 3.716s ago] (UUID('8efae0b6-a88f-4db9-bb70-d47422cf4adf'),)
+2026-09-03 09:48:02,703 INFO sqlalchemy.engine.Engine INSERT INTO audit_events (id, event_type, actor_id, actor_role, resource_type, resource_id, action_details, ip_address, occurred_at, blockchain_hash) VALUES ($1::UUID, $2::VARCHAR, $3::UUID, $4::VARCHAR, $5::VARCHAR, $6::UUID, $7::JSON, $8::VARCHAR, $9::TIMESTAMP WITH TIME ZONE, $10::VARCHAR)
+2026-09-03 09:48:02,704 INFO sqlalchemy.engine.Engine [cached since 16.89s ago] (UUID('102b8806-dd9a-485a-827d-d93c84b4a770'), 'INVESTIGATION_UPDATE', UUID('595de38c-411a-4220-a49f-74899ecc945f'), 'ADMIN', 'Investigation', UUID('8efae0b6-a88f-4db9-bb70-d47422cf4adf'), '{"updated_fields": {"status": "active"}}', '127.0.0.1', datetime.datetime(2026, 9, 3, 4, 18, 2, 699965, tzinfo=datetime.timezone.utc), '27a7e93c2707bfadf668416529715ef610b069c8c7122e124f61adbef577b10a')
+2026-09-03 09:48:02,719 INFO sqlalchemy.engine.Engine UPDATE investigations SET status=$1::VARCHAR, updated_at=$2::TIMESTAMP WITH TIME ZONE WHERE investigations.id = $3::UUID
+2026-09-03 09:48:02,719 INFO sqlalchemy.engine.Engine [generated in 0.00078s] ('active', datetime.datetime(2026, 9, 3, 4, 18, 2, 719234, tzinfo=datetime.timezone.utc), UUID('8efae0b6-a88f-4db9-bb70-d47422cf4adf'))
+2026-09-03 09:48:02,731 INFO sqlalchemy.engine.Engine COMMIT
+2026-09-03 09:48:03,030 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:48:03,035 INFO sqlalchemy.engine.Engine SELECT investigations.id, investigations.case_number, investigations.title, investigations.alert_id, investigations.lead_investigator_id, investigations.status, investigations.priority, investigations.findings, investigations.created_at, investigations.updated_at 
+FROM investigations 
+WHERE investigations.id = $1::UUID
+2026-09-03 09:48:03,036 INFO sqlalchemy.engine.Engine [generated in 0.00166s] (UUID('8efae0b6-a88f-4db9-bb70-d47422cf4adf'),)
+2026-09-03 09:48:03,047 INFO sqlalchemy.engine.Engine SELECT users.id AS users_id, users.email AS users_email, users.hashed_password AS users_hashed_password, users.full_name AS users_full_name, users.badge_number AS users_badge_number, users.agency AS users_agency, users.role AS users_role, users.is_active AS users_is_active, users.created_at AS users_created_at, users.updated_at AS users_updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:48:03,047 INFO sqlalchemy.engine.Engine [generated in 0.00079s] (UUID('9d7ebc1f-16ab-47bf-8213-c1dc3d6bc072'),)
+2026-09-03 09:48:03,060 INFO sqlalchemy.engine.Engine SELECT investigation_notes.id AS investigation_notes_id, investigation_notes.investigation_id AS investigation_notes_investigation_id, investigation_notes.author_id AS investigation_notes_author_id, investigation_notes.note AS investigation_notes_note, investigation_notes.created_at AS investigation_notes_created_at 
+FROM investigation_notes 
+WHERE $1::UUID = investigation_notes.investigation_id
+2026-09-03 09:48:03,061 INFO sqlalchemy.engine.Engine [generated in 0.00081s] (UUID('8efae0b6-a88f-4db9-bb70-d47422cf4adf'),)
+2026-09-03 09:48:03,070 INFO sqlalchemy.engine.Engine ROLLBACK
+  + [200] PATCH /api/v1/investigations/8efae0b6-a88f-4db9-bb70-d47422cf4adf               # patch inv
+2026-09-03 09:48:03,334 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:48:03,335 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:48:03,335 INFO sqlalchemy.engine.Engine [cached since 15.89s ago] (UUID('595de38c-411a-4220-a49f-74899ecc945f'),)
+2026-09-03 09:48:03,346 INFO sqlalchemy.engine.Engine SELECT investigations.id, investigations.case_number, investigations.title, investigations.alert_id, investigations.lead_investigator_id, investigations.status, investigations.priority, investigations.findings, investigations.created_at, investigations.updated_at 
+FROM investigations 
+WHERE investigations.id = $1::UUID
+2026-09-03 09:48:03,347 INFO sqlalchemy.engine.Engine [generated in 0.00119s] (UUID('8efae0b6-a88f-4db9-bb70-d47422cf4adf'),)
+2026-09-03 09:48:03,356 INFO sqlalchemy.engine.Engine INSERT INTO investigation_notes (id, investigation_id, author_id, note, created_at) VALUES ($1::UUID, $2::UUID, $3::UUID, $4::VARCHAR, $5::TIMESTAMP WITH TIME ZONE)
+2026-09-03 09:48:03,358 INFO sqlalchemy.engine.Engine [generated in 0.00160s] (UUID('ca9be996-95a3-43f9-83b2-caa74ba8a881'), UUID('8efae0b6-a88f-4db9-bb70-d47422cf4adf'), UUID('595de38c-411a-4220-a49f-74899ecc945f'), 'Forensic note.', datetime.datetime(2026, 9, 3, 4, 18, 3, 356601, tzinfo=datetime.timezone.utc))
+2026-09-03 09:48:03,368 INFO sqlalchemy.engine.Engine INSERT INTO audit_events (id, event_type, actor_id, actor_role, resource_type, resource_id, action_details, ip_address, occurred_at, blockchain_hash) VALUES ($1::UUID, $2::VARCHAR, $3::UUID, $4::VARCHAR, $5::VARCHAR, $6::UUID, $7::JSON, $8::VARCHAR, $9::TIMESTAMP WITH TIME ZONE, $10::VARCHAR)
+2026-09-03 09:48:03,368 INFO sqlalchemy.engine.Engine [cached since 17.56s ago] (UUID('05fd8052-c968-4bab-ae1f-6ab9d12b0b99'), 'INVESTIGATION_NOTE_ADD', UUID('595de38c-411a-4220-a49f-74899ecc945f'), 'ADMIN', 'InvestigationNote', UUID('ca9be996-95a3-43f9-83b2-caa74ba8a881'), '{"investigation_id": "8efae0b6-a88f-4db9-bb70-d47422cf4adf"}', '127.0.0.1', datetime.datetime(2026, 9, 3, 4, 18, 3, 366497, tzinfo=datetime.timezone.utc), 'a1b8a543003ea90ce0e420ea99a49b90ca0b0fa79c6bca53a50b6edf452ee044')
+2026-09-03 09:48:03,373 INFO sqlalchemy.engine.Engine COMMIT
+2026-09-03 09:48:03,669 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:48:03,671 INFO sqlalchemy.engine.Engine SELECT investigation_notes.id, investigation_notes.investigation_id, investigation_notes.author_id, investigation_notes.note, investigation_notes.created_at 
+FROM investigation_notes 
+WHERE investigation_notes.id = $1::UUID
+2026-09-03 09:48:03,672 INFO sqlalchemy.engine.Engine [generated in 0.00057s] (UUID('ca9be996-95a3-43f9-83b2-caa74ba8a881'),)
+2026-09-03 09:48:03,683 INFO sqlalchemy.engine.Engine ROLLBACK
+  + [200] POST  /api/v1/investigations/8efae0b6-a88f-4db9-bb70-d47422cf4adf/notes         # inv note
+2026-09-03 09:48:03,997 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:48:03,999 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:48:03,999 INFO sqlalchemy.engine.Engine [cached since 16.55s ago] (UUID('26ac49bf-33fe-4e54-924a-9730c162f275'),)
+2026-09-03 09:48:04,012 INFO sqlalchemy.engine.Engine SELECT model_runs.id, model_runs.model_name, model_runs.model_version, model_runs.trained_at, model_runs.precision_score, model_runs.recall_score, model_runs.f1_score, model_runs.pr_auc, model_runs.roc_auc, model_runs.precision_at_k, model_runs.parameters, model_runs.feature_importances, model_runs.artifact_path, model_runs.is_production, model_runs.notes 
+FROM model_runs 
+WHERE model_runs.id = $1::UUID
+2026-09-03 09:48:04,013 INFO sqlalchemy.engine.Engine [generated in 0.00143s] (UUID('1cc6f7d1-f379-4f52-b631-5ab149c85af8'),)
+2026-09-03 09:48:04,019 INFO sqlalchemy.engine.Engine ROLLBACK
+  + [200] GET   /api/v1/models/1cc6f7d1-f379-4f52-b631-5ab149c85af8                       # model by id
+2026-09-03 09:48:04,288 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:48:04,289 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:48:04,289 INFO sqlalchemy.engine.Engine [cached since 16.84s ago] (UUID('595de38c-411a-4220-a49f-74899ecc945f'),)
+2026-09-03 09:48:04,295 INFO sqlalchemy.engine.Engine SELECT model_runs.id, model_runs.model_name, model_runs.model_version, model_runs.trained_at, model_runs.precision_score, model_runs.recall_score, model_runs.f1_score, model_runs.pr_auc, model_runs.roc_auc, model_runs.precision_at_k, model_runs.parameters, model_runs.feature_importances, model_runs.artifact_path, model_runs.is_production, model_runs.notes 
+FROM model_runs 
+WHERE model_runs.id = $1::UUID
+2026-09-03 09:48:04,295 INFO sqlalchemy.engine.Engine [cached since 0.284s ago] (UUID('1cc6f7d1-f379-4f52-b631-5ab149c85af8'),)
+2026-09-03 09:48:04,301 INFO sqlalchemy.engine.Engine UPDATE model_runs SET is_production=$1::BOOLEAN
+2026-09-03 09:48:04,302 INFO sqlalchemy.engine.Engine [generated in 0.00043s] (False,)
+2026-09-03 09:48:04,306 INFO sqlalchemy.engine.Engine INSERT INTO audit_events (id, event_type, actor_id, actor_role, resource_type, resource_id, action_details, ip_address, occurred_at, blockchain_hash) VALUES ($1::UUID, $2::VARCHAR, $3::UUID, $4::VARCHAR, $5::VARCHAR, $6::UUID, $7::JSON, $8::VARCHAR, $9::TIMESTAMP WITH TIME ZONE, $10::VARCHAR)
+2026-09-03 09:48:04,307 INFO sqlalchemy.engine.Engine [cached since 18.5s ago] (UUID('7e8fd143-93ff-42ba-a6a4-a0035114d803'), 'MODEL_PROMOTE_PRODUCTION', UUID('595de38c-411a-4220-a49f-74899ecc945f'), 'ADMIN', 'ModelRun', UUID('1cc6f7d1-f379-4f52-b631-5ab149c85af8'), '{"model_version": "rf-v1.0", "model_name": "RandomForest-Standard"}', '127.0.0.1', datetime.datetime(2026, 9, 3, 4, 18, 4, 304888, tzinfo=datetime.timezone.utc), '7a4593f30ae87c0cba65ce74608b855bb1e7349b6d84953c26ce9fec74626431')
+2026-09-03 09:48:04,312 INFO sqlalchemy.engine.Engine UPDATE model_runs SET is_production=$1::BOOLEAN WHERE model_runs.id = $2::UUID
+2026-09-03 09:48:04,313 INFO sqlalchemy.engine.Engine [generated in 0.00062s] (True, UUID('1cc6f7d1-f379-4f52-b631-5ab149c85af8'))
+2026-09-03 09:48:04,316 INFO sqlalchemy.engine.Engine COMMIT
+2026-09-03 09:48:04,539 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:48:04,543 INFO sqlalchemy.engine.Engine SELECT model_runs.id, model_runs.model_name, model_runs.model_version, model_runs.trained_at, model_runs.precision_score, model_runs.recall_score, model_runs.f1_score, model_runs.pr_auc, model_runs.roc_auc, model_runs.precision_at_k, model_runs.parameters, model_runs.feature_importances, model_runs.artifact_path, model_runs.is_production, model_runs.notes 
+FROM model_runs 
+WHERE model_runs.id = $1::UUID
+2026-09-03 09:48:04,544 INFO sqlalchemy.engine.Engine [generated in 0.00120s] (UUID('1cc6f7d1-f379-4f52-b631-5ab149c85af8'),)
+2026-09-03 09:48:04,551 INFO sqlalchemy.engine.Engine ROLLBACK
+  + [200] POST  /api/v1/models/1cc6f7d1-f379-4f52-b631-5ab149c85af8/promote               # promote model
+2026-09-03 09:48:04,844 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-03 09:48:04,845 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.hashed_password, users.full_name, users.badge_number, users.agency, users.role, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::UUID
+2026-09-03 09:48:04,845 INFO sqlalchemy.engine.Engine [cached since 17.4s ago] (UUID('26ac49bf-33fe-4e54-924a-9730c162f275'),)
+2026-09-03 09:48:04,871 INFO sqlalchemy.engine.Engine SELECT suspicious_transactions.id, suspicious_transactions.complaint_id, suspicious_transactions.account_id, suspicious_transactions.amount, suspicious_transactions.transaction_type, suspicious_transactions.occurred_at, suspicious_transactions.latitude, suspicious_transactions.longitude, ST_AsEWKB(suspicious_transactions.location) AS location, suspicious_transactions.velocity_score, suspicious_transactions.is_flagged, suspicious_transactions.is_cash_out, suspicious_transactions.atm_id, suspicious_transactions.created_at 
+FROM suspicious_transactions 
+WHERE suspicious_transactions.id = $1::UUID
+2026-09-03 09:48:04,872 INFO sqlalchemy.engine.Engine [generated in 0.00082s] (UUID('e4807aaf-5278-4055-8d15-ab123e7dbced'),)
+2026-09-03 09:48:04,917 INFO sqlalchemy.engine.Engine SELECT complaints.id AS complaints_id, complaints.complaint_number AS complaints_complaint_number, complaints.filed_at AS complaints_filed_at, complaints.category AS complaints_category, complaints.subcategory AS complaints_subcategory, complaints.reported_amount AS complaints_reported_amount, complaints.victim_state AS complaints_victim_state, complaints.victim_city AS complaints_victim_city, complaints.status AS complaints_status, complaints.description AS complaints_description, complaints.created_at AS complaints_created_at 
+FROM complaints 
+WHERE complaints.id IN ($1::UUID)
+2026-09-03 09:48:04,917 INFO sqlalchemy.engine.Engine [generated in 0.00318s] (UUID('3c399bd8-d31a-4cc5-9b35-d46ccc98837e'),)
+2026-09-03 09:48:04,939 INFO sqlalchemy.engine.Engine SELECT accounts.id AS accounts_id, accounts.account_hash AS accounts_account_hash, accounts.bank_name AS accounts_bank_name, accounts.account_type AS accounts_account_type, accounts.risk_tier AS accounts_risk_tier, accounts.is_mule_suspected AS accounts_is_mule_suspected, accounts.created_at AS accounts_created_at 
+FROM accounts 
+WHERE accounts.id IN ($1::UUID)
+2026-09-03 09:48:04,940 INFO sqlalchemy.engine.Engine [generated in 0.00157s] (UUID('b56c1874-3573-4d08-89ce-5a9b79fd72dd'),)
+2026-09-03 09:48:04,955 INFO sqlalchemy.engine.Engine ROLLBACK
+  + [200] GET   /api/v1/transactions/e4807aaf-5278-4055-8d15-ab123e7dbced                 # tx by id
+
+=== API FORENSICS SUMMARY ===
+  Endpoints run:  25
+  200/201/204:     21  (works)
+  400-499:        4  (auth/validation expected)
+  500+:           0  (SERVER FAILURES)
+
+  *** 1 UNEXPECTED/CRITICAL FAILURES ***
+    PATCH /api/v1/alerts/assign -> 405: {"detail":"Method Not Allowed"}
+
+=== RUNTIME FORENSICS COMPLETE ===
+
+=== STDERR (all) ===
+C:\Users\Prateek\AppData\Roaming\Python\Python314\site-packages\starlette\_exception_handler.py:59: StarletteDeprecationWarning: 'HTTP_422_UNPROCESSABLE_ENTITY' is deprecated. Use 'HTTP_422_UNPROCESSABLE_CONTENT' instead.
+  response = await handler(conn, exc)  # type: ignore[arg-type]

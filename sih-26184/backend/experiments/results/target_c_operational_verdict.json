@@ -1,0 +1,236 @@
+{
+  "global_pr_auc": 0.03409051915884995,
+  "all_cutoff_mean_p5": 0.003922,
+  "all_cutoff_mean_p10": 0.003922,
+  "all_cutoff_mean_p20": 0.001961,
+  "pos_cutoff_mean_p5": 0.013333,
+  "pos_cutoff_median_p5": 0.0,
+  "pos_cutoff_mean_p10": 0.013333,
+  "pos_cutoff_median_p10": 0.0,
+  "pos_cutoff_mean_p20": 0.006667,
+  "pos_cutoff_median_p20": 0.0,
+  "n_test_cutoffs": 51,
+  "n_pos_cutoffs": 15,
+  "hit_rate_top5_pct": 6.67,
+  "hit_rate_top10_pct": 13.33,
+  "hit_rate_top20_pct": 13.33,
+  "pos_gt_neg_cutoffs": 1,
+  "total_pos_cutoffs": 15,
+  "pos_gt_neg_pct": 6.67,
+  "strongest_baseline": "Random",
+  "strongest_baseline_hit5": 6.67,
+  "tc_beats_baseline": "False",
+  "p5_improvement": 0.0,
+  "hit5_improvement_pct": 0.0,
+  "operational_verdict": "D. NOT OPERATIONALLY USEFUL",
+  "production_modified": false,
+  "baseline_comparison": [
+    {
+      "baseline": "Random",
+      "n_test_cutoffs": 51,
+      "n_pos_cutoffs": 15,
+      "hit_rate_top5_pct": 6.67,
+      "hit_rate_top10_pct": 6.67,
+      "hit_rate_top20_pct": 13.33,
+      "mean_p5": 0.013333,
+      "median_p5": 0.0,
+      "mean_p10": 0.006667,
+      "median_p10": 0.0,
+      "mean_p20": 0.006667,
+      "median_p20": 0.0,
+      "all_mean_p5": 0.003922,
+      "all_mean_p10": 0.001961,
+      "all_mean_p20": 0.001961
+    },
+    {
+      "baseline": "n_txs_atm_30d",
+      "n_test_cutoffs": 51,
+      "n_pos_cutoffs": 15,
+      "hit_rate_top5_pct": 6.67,
+      "hit_rate_top10_pct": 6.67,
+      "hit_rate_top20_pct": 6.67,
+      "mean_p5": 0.013333,
+      "median_p5": 0.0,
+      "mean_p10": 0.006667,
+      "median_p10": 0.0,
+      "mean_p20": 0.003333,
+      "median_p20": 0.0,
+      "all_mean_p5": 0.003922,
+      "all_mean_p10": 0.001961,
+      "all_mean_p20": 0.00098
+    },
+    {
+      "baseline": "n_txs_atm_7d",
+      "n_test_cutoffs": 51,
+      "n_pos_cutoffs": 15,
+      "hit_rate_top5_pct": 0.0,
+      "hit_rate_top10_pct": 6.67,
+      "hit_rate_top20_pct": 13.33,
+      "mean_p5": 0.0,
+      "median_p5": 0.0,
+      "mean_p10": 0.006667,
+      "median_p10": 0.0,
+      "mean_p20": 0.006667,
+      "median_p20": 0.0,
+      "all_mean_p5": 0.0,
+      "all_mean_p10": 0.001961,
+      "all_mean_p20": 0.001961
+    },
+    {
+      "baseline": "Hist fraud rate",
+      "n_test_cutoffs": 51,
+      "n_pos_cutoffs": 15,
+      "hit_rate_top5_pct": 0.0,
+      "hit_rate_top10_pct": 0.0,
+      "hit_rate_top20_pct": 6.67,
+      "mean_p5": 0.0,
+      "median_p5": 0.0,
+      "mean_p10": 0.0,
+      "median_p10": 0.0,
+      "mean_p20": 0.003333,
+      "median_p20": 0.0,
+      "all_mean_p5": 0.0,
+      "all_mean_p10": 0.0,
+      "all_mean_p20": 0.00098
+    },
+    {
+      "baseline": "Target C (XGB E)",
+      "n_test_cutoffs": 51,
+      "n_pos_cutoffs": 15,
+      "hit_rate_top5_pct": 6.67,
+      "hit_rate_top10_pct": 13.33,
+      "hit_rate_top20_pct": 13.33,
+      "mean_p5": 0.013333,
+      "median_p5": 0.0,
+      "mean_p10": 0.013333,
+      "median_p10": 0.0,
+      "mean_p20": 0.006667,
+      "median_p20": 0.0,
+      "all_mean_p5": 0.003922,
+      "all_mean_p10": 0.003922,
+      "all_mean_p20": 0.001961
+    }
+  ],
+  "score_separation": [
+    {
+      "cutoff_time": "2023-01-27",
+      "max_pos_score": 0.00125,
+      "max_neg_score": 0.494252,
+      "med_pos_score": 0.00125,
+      "med_neg_score": 0.001333,
+      "max_pos_gt_max_neg": false
+    },
+    {
+      "cutoff_time": "2023-02-03",
+      "max_pos_score": 0.003679,
+      "max_neg_score": 0.38014,
+      "med_pos_score": 0.003679,
+      "med_neg_score": 0.00107,
+      "max_pos_gt_max_neg": false
+    },
+    {
+      "cutoff_time": "2023-03-10",
+      "max_pos_score": 0.86031,
+      "max_neg_score": 0.273591,
+      "med_pos_score": 0.86031,
+      "med_neg_score": 0.000994,
+      "max_pos_gt_max_neg": true
+    },
+    {
+      "cutoff_time": "2023-04-14",
+      "max_pos_score": 0.109937,
+      "max_neg_score": 0.215696,
+      "med_pos_score": 0.109937,
+      "med_neg_score": 0.000811,
+      "max_pos_gt_max_neg": false
+    },
+    {
+      "cutoff_time": "2023-05-19",
+      "max_pos_score": 0.000869,
+      "max_neg_score": 0.124004,
+      "med_pos_score": 0.000869,
+      "med_neg_score": 0.001358,
+      "max_pos_gt_max_neg": false
+    },
+    {
+      "cutoff_time": "2023-06-09",
+      "max_pos_score": 0.005001,
+      "max_neg_score": 0.474691,
+      "med_pos_score": 0.005001,
+      "med_neg_score": 0.001456,
+      "max_pos_gt_max_neg": false
+    },
+    {
+      "cutoff_time": "2023-06-30",
+      "max_pos_score": 0.000364,
+      "max_neg_score": 0.839727,
+      "med_pos_score": 0.000364,
+      "med_neg_score": 0.000703,
+      "max_pos_gt_max_neg": false
+    },
+    {
+      "cutoff_time": "2023-07-14",
+      "max_pos_score": 0.003811,
+      "max_neg_score": 0.453431,
+      "med_pos_score": 0.003811,
+      "med_neg_score": 0.000639,
+      "max_pos_gt_max_neg": false
+    },
+    {
+      "cutoff_time": "2023-07-21",
+      "max_pos_score": 0.002704,
+      "max_neg_score": 0.221753,
+      "med_pos_score": 0.002704,
+      "med_neg_score": 0.00069,
+      "max_pos_gt_max_neg": false
+    },
+    {
+      "cutoff_time": "2023-09-15",
+      "max_pos_score": 0.000195,
+      "max_neg_score": 0.519146,
+      "med_pos_score": 0.000195,
+      "med_neg_score": 0.001587,
+      "max_pos_gt_max_neg": false
+    },
+    {
+      "cutoff_time": "2023-09-29",
+      "max_pos_score": 0.000391,
+      "max_neg_score": 0.181795,
+      "med_pos_score": 0.000351,
+      "med_neg_score": 0.000945,
+      "max_pos_gt_max_neg": false
+    },
+    {
+      "cutoff_time": "2023-11-03",
+      "max_pos_score": 0.002198,
+      "max_neg_score": 0.200355,
+      "med_pos_score": 0.002198,
+      "med_neg_score": 0.001336,
+      "max_pos_gt_max_neg": false
+    },
+    {
+      "cutoff_time": "2023-11-24",
+      "max_pos_score": 0.000835,
+      "max_neg_score": 0.646906,
+      "med_pos_score": 0.000835,
+      "med_neg_score": 0.00124,
+      "max_pos_gt_max_neg": false
+    },
+    {
+      "cutoff_time": "2023-12-01",
+      "max_pos_score": 0.020735,
+      "max_neg_score": 0.348286,
+      "med_pos_score": 0.020735,
+      "med_neg_score": 0.000759,
+      "max_pos_gt_max_neg": false
+    },
+    {
+      "cutoff_time": "2023-12-08",
+      "max_pos_score": 0.004378,
+      "max_neg_score": 0.21164,
+      "med_pos_score": 0.004378,
+      "med_neg_score": 0.000838,
+      "max_pos_gt_max_neg": false
+    }
+  ]
+}

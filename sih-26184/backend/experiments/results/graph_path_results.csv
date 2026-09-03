@@ -1,0 +1,2 @@
+approach,method,global_pr_auc,global_roc_auc,pos_cutoff_hit5_pct,pos_cutoff_hit10_pct,pos_cutoff_hit20_pct,pos_cutoff_mean_p5,pos_cutoff_mean_p10,pos_cutoff_mean_p20,all_cutoff_mean_p5,all_cutoff_mean_p10,all_cutoff_mean_p20
+Approach 3: Graph Path to Cashout,Deterministic 2-Hop Network Flow & Mule Path,0.002452,0.546146,0.0,0.0,13.33,0.0,0.0,0.006667,0.0,0.0,0.001961

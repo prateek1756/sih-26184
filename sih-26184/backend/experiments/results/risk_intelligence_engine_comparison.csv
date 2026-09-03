@@ -1,0 +1,10 @@
+model_name,global_pr_auc,global_roc_auc,overall_hit5_pct,overall_hit10_pct,overall_hit20_pct,events_recovered_top10,events_recovered_top20,overall_mean_p5,overall_mean_p10,overall_mean_p20,overall_mean_r10,cold_start_hit10_pct (Group B),hist_pos_hit10_pct (Group A)
+Risk Intelligence Engine (Composite),0.002679,0.572001,0.0,6.67,13.33,1/16,2/16,0.0,0.006667,0.006667,0.066667,0.0,16.67
+Benchmark: Approach A1 (Robust Z-Score),0.003273,0.574752,6.67,20.0,26.67,3/16,4/16,0.013333,0.02,0.013333,0.166667,11.11,50.0
+Benchmark: Approach B (Activity Residual),0.002525,0.544701,13.33,13.33,13.33,2/16,2/16,0.026667,0.013333,0.006667,0.1,11.11,33.33
+Benchmark: Combo A+B,0.003169,0.57124,6.67,13.33,26.67,2/16,4/16,0.013333,0.013333,0.013333,0.1,11.11,33.33
+Benchmark: RF-v1.0 (Production Model),0.003273,0.574752,6.67,20.0,26.67,3/16,4/16,0.013333,0.02,0.013333,0.166667,11.11,50.0
+Baseline: Random Ranking,0.003214,0.468709,6.67,13.33,26.67,2/16,4/16,0.013333,0.013333,0.013333,0.133333,0.0,33.33
+Baseline: 30-Day Tx Volume,0.002666,0.569459,6.67,6.67,6.67,1/16,1/16,0.013333,0.006667,0.003333,0.066667,0.0,16.67
+Baseline: 7-Day Withdrawal Count,0.002732,0.599677,0.0,6.67,13.33,1/16,2/16,0.0,0.006667,0.006667,0.066667,11.11,0.0
+Baseline: Historical ATM Fraud Rate,0.002004,0.491334,0.0,0.0,6.67,0/16,1/16,0.0,0.0,0.003333,0.0,0.0,0.0

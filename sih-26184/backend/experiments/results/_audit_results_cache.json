@@ -1,0 +1,136 @@
+{
+  "seed": 99,
+  "pr_auc": 0.03409051915884995,
+  "roc_auc": 0.5880108724128897,
+  "brier": 0.004177303519099951,
+  "p5": 0.2,
+  "p10": 0.1,
+  "p20": 0.05,
+  "r5": 0.0625,
+  "r10": 0.0625,
+  "r20": 0.0625,
+  "tp5": 1,
+  "tp10": 1,
+  "tp20": 1,
+  "prevalence": 0.0020915032679738564,
+  "test_positives": 16,
+  "test_samples": 7650,
+  "e5": 95.625,
+  "e10": 47.8125,
+  "e20": 23.90625,
+  "pos_min": 0.00019479510956443846,
+  "pos_med": 0.0024513709358870983,
+  "pos_max": 0.8603096008300781,
+  "neg_min": 3.1677373044658452e-06,
+  "neg_med": 0.0011377702467143536,
+  "neg_max": 0.8637527823448181,
+  "temporal_top5_hits": 1,
+  "temporal_top10_hits": 1,
+  "temporal_top20_hits": 1,
+  "top5_rows": [
+    {
+      "rank": 1,
+      "atm_id": "41adf9c7-e4f5-56f8-a964-fecf7428833b",
+      "cutoff_time": "2023-01-20 00:00:00",
+      "city": "Jaipur",
+      "prediction_score": 0.8637527823448181,
+      "target_c_48h": 0
+    },
+    {
+      "rank": 2,
+      "atm_id": "644ec086-7a2f-56c1-8890-a0cf1371bb8f",
+      "cutoff_time": "2023-03-10 00:00:00",
+      "city": "Jaipur",
+      "prediction_score": 0.8603096008300781,
+      "target_c_48h": 1
+    },
+    {
+      "rank": 3,
+      "atm_id": "863a1f8a-9358-5d83-a37a-ef1b3af72061",
+      "cutoff_time": "2023-06-30 00:00:00",
+      "city": "New Delhi",
+      "prediction_score": 0.8397270441055298,
+      "target_c_48h": 0
+    },
+    {
+      "rank": 4,
+      "atm_id": "6a5e8429-628a-5a7d-b3da-577e42cb4cd4",
+      "cutoff_time": "2023-01-06 00:00:00",
+      "city": "Bengaluru",
+      "prediction_score": 0.788503885269165,
+      "target_c_48h": 0
+    },
+    {
+      "rank": 5,
+      "atm_id": "1b131b05-4df1-5564-b4fd-6cb5e09cfdd5",
+      "cutoff_time": "2023-11-24 00:00:00",
+      "city": "Kolkata",
+      "prediction_score": 0.646905779838562,
+      "target_c_48h": 0
+    }
+  ],
+  "top15_fi": [
+    {
+      "feature": "base_cw_count_30d",
+      "importance": 0.06127481535077095
+    },
+    {
+      "feature": "recent_cw_count_7d",
+      "importance": 0.05317315086722374
+    },
+    {
+      "feature": "fraud_cashout_atm_24h",
+      "importance": 0.052066002041101456
+    },
+    {
+      "feature": "fraud_cashout_atm_7d",
+      "importance": 0.04977642372250557
+    },
+    {
+      "feature": "fraud_cashout_atm_30d",
+      "importance": 0.04833131656050682
+    },
+    {
+      "feature": "fraud_activity_change",
+      "importance": 0.04782949760556221
+    },
+    {
+      "feature": "fraud_tx_count_atm_30d",
+      "importance": 0.04761795699596405
+    },
+    {
+      "feature": "base_tx_count_30d",
+      "importance": 0.045970648527145386
+    },
+    {
+      "feature": "velocity_surge_24h_vs_7d",
+      "importance": 0.0424552783370018
+    },
+    {
+      "feature": "connected_mule_accounts_7d",
+      "importance": 0.04024359583854675
+    },
+    {
+      "feature": "atm_lon",
+      "importance": 0.0377088263630867
+    },
+    {
+      "feature": "suspicious_density_city_7d",
+      "importance": 0.03736194595694542
+    },
+    {
+      "feature": "activity_ratio_24h",
+      "importance": 0.03688725456595421
+    },
+    {
+      "feature": "atm_cluster_density",
+      "importance": 0.03588690236210823
+    },
+    {
+      "feature": "activity_delta_24h",
+      "importance": 0.034411877393722534
+    }
+  ],
+  "repro_delta": 5.148084115005197e-05,
+  "repro_ok": true
+}

@@ -1,0 +1,43 @@
+{
+  "_comment": "SIH PS 26184 — Alternative Prediction Approaches Experiment Configuration",
+  "_experiment_purpose": "Empirical evaluation of 4 alternative formulations + hybrid scoring on per-cutoff ranking",
+  "_production_modified": false,
+  
+  "data": {
+    "raw_csv": "C:\\Users\\Prateek\\Desktop\\sih\\dataset\\indian_banking_transactions.csv",
+    "parquet_dataset": "experiments/cybercrime_risk/exp_cybercrime_risk_dataset.parquet",
+    "canonical_atms": "data/processed/canonical_atms.parquet",
+    "year_range": [2019, 2023]
+  },
+
+  "evaluation": {
+    "protocol": "per_cutoff_ranking",
+    "target_column": "target_c_48h",
+    "k_values": [5, 10, 20],
+    "candidate_thresholds": [0.10, 0.20, 0.30, 0.50]
+  },
+
+  "approaches": {
+    "approach_a": {
+      "name": "ATM Anomaly / Robust Deviation Detection",
+      "methods": ["zscore_robust", "isolation_forest"]
+    },
+    "approach_b": {
+      "name": "Future Activity Forecasting",
+      "horizons": ["6h", "12h", "24h", "48h"],
+      "model": "xgboost_regressor"
+    },
+    "approach_c": {
+      "name": "Candidate Generation + Priority Ranking",
+      "candidate_rules": ["velocity_surge", "suspicious_density", "prior_fraud", "cluster_density"]
+    },
+    "approach_d": {
+      "name": "Deterministic Graph Risk Scoring",
+      "metrics": ["degree", "mule_fanout", "suspicious_neighbors_2hop", "shortest_path_fraud"]
+    },
+    "approach_e": {
+      "name": "Normalized Equal-Weight Hybrid Risk Score",
+      "components": ["anomaly_score", "graph_score", "suspicious_density", "spatial_cluster", "fraud_history"]
+    }
+  }
+}

@@ -1,0 +1,32 @@
+feature_name,feature_group,source_dataset,transformation,time_window,cutoff_constraint,leakage_status
+base_tx_count_30d,activity,indian_banking_transactions.csv,COUNT(*) per atm_id,[T-30d T),occurred_at < cutoff_time,SAFE
+base_cw_count_30d,activity,indian_banking_transactions.csv,SUM(is_cash_withdrawal) per atm_id,[T-30d T),occurred_at < cutoff_time,SAFE
+base_cw_rate_daily,activity,Derived from base_cw_count_30d,base_cw_count_30d / 30.0,Derived,occurred_at < cutoff_time,SAFE
+recent_cw_count_24h,activity,indian_banking_transactions.csv,SUM(is_cash_withdrawal) per atm_id,[T-24h T),occurred_at < cutoff_time,SAFE
+recent_cw_count_7d,activity,indian_banking_transactions.csv,SUM(is_cash_withdrawal) per atm_id,[T-7d T),occurred_at < cutoff_time,SAFE
+cw_volatility_7d,activity,indian_banking_transactions.csv,STDDEV of daily withdrawal counts per atm_id,[T-7d T),occurred_at < cutoff_time,SAFE
+amount_avg_per_tx_30d,activity,indian_banking_transactions.csv,AVG(transaction_amount) per atm_id,[T-30d T),occurred_at < cutoff_time,SAFE
+activity_ratio_24h,anomaly,Derived from activity features,recent_cw_count_24h / (base_cw_rate_daily + 1e-4),[T-24h T) vs [T-30d T),Both inputs strictly before T,SAFE
+activity_delta_24h,anomaly,Derived from activity features,recent_cw_count_24h - base_cw_rate_daily,Derived,Both inputs strictly before T,SAFE
+activity_ratio_7d,anomaly,Derived from activity features,(recent_cw_count_7d/7) / (base_cw_rate_daily + 1e-4),[T-7d T) vs [T-30d T),Both inputs strictly before T,SAFE
+amount_ratio_24h,anomaly,Derived from activity features,24h avg amount / 30d avg amount,[T-24h T) vs [T-30d T),Both inputs strictly before T,SAFE
+velocity_surge_24h_vs_7d,anomaly,Derived from activity features,recent_cw_count_24h / ((recent_cw_count_7d/7) + 1e-4),[T-24h T) vs [T-7d T),Both inputs strictly before T,SAFE
+unique_account_surge_24h,anomaly,indian_banking_transactions.csv,NUNIQUE(customer_id in 24h) / max(1 recent_cw_24h),[T-24h T),occurred_at < cutoff_time,SAFE
+fraud_tx_count_atm_30d,cybercrime,indian_banking_transactions.csv,SUM(is_fraud) per atm_id,[T-30d T),occurred_at < cutoff_time,SAFE
+fraud_tx_count_atm_7d,cybercrime,indian_banking_transactions.csv,SUM(is_fraud) per atm_id,[T-7d T),occurred_at < cutoff_time,SAFE
+fraud_tx_count_atm_24h,cybercrime,indian_banking_transactions.csv,SUM(is_fraud) per atm_id,[T-24h T),occurred_at < cutoff_time,SAFE
+fraud_cashout_atm_30d,cybercrime,indian_banking_transactions.csv,SUM(is_fraud_cashout) per atm_id,[T-30d T),occurred_at < cutoff_time,SAFE
+fraud_cashout_atm_7d,cybercrime,indian_banking_transactions.csv,SUM(is_fraud_cashout) per atm_id,[T-7d T),occurred_at < cutoff_time,SAFE
+fraud_cashout_atm_24h,cybercrime,indian_banking_transactions.csv,SUM(is_fraud_cashout) per atm_id,[T-24h T),occurred_at < cutoff_time,SAFE
+suspicious_density_city_7d,cybercrime,indian_banking_transactions.csv,COUNT(is_fraud==1) per city (not per ATM),[T-7d T),occurred_at < cutoff_time,SAFE
+suspicious_density_city_24h,cybercrime,indian_banking_transactions.csv,COUNT(is_fraud==1) per city (not per ATM),[T-24h T),occurred_at < cutoff_time,SAFE
+fraud_to_normal_ratio_30d,cybercrime,Derived from cybercrime features,fraud_tx_count_atm_30d / (base_tx_count_30d + 1e-4),[T-30d T),Both inputs strictly before T,SAFE
+fraud_activity_change,cybercrime,Derived from cybercrime features,fraud_tx_count_atm_7d / ((fraud_tx_count_atm_30d/4.28) + 1e-4),[T-7d T) vs [T-30d T),Both inputs strictly before T,SAFE
+connected_mule_accounts_7d,cybercrime,indian_banking_transactions.csv,NUNIQUE(customer_id where is_fraud==1) per atm_id,[T-7d T),occurred_at < cutoff_time,SAFE
+hours_since_last_fraud,cybercrime,indian_banking_transactions.csv,(T - max(occurred_at where is_fraud==1)) / 3600,[T-30d T),occurred_at < cutoff_time (default 720h if no fraud),SAFE
+atm_lat,spatial,canonical_atms.parquet,Canonical ATM latitude (fixed),Static,N/A (static geometry),SAFE
+atm_lon,spatial,canonical_atms.parquet,Canonical ATM longitude (fixed),Static,N/A (static geometry),SAFE
+atm_cluster_density,spatial,canonical_atms.parquet,COUNT(ATMs within 2km radius using Euclidean approx),Static,N/A (static geometry),SAFE
+hour_of_day,temporal,cutoff_time,cutoff_time.hour (integer 0-23),cutoff_time T only,= T (not post-T),SAFE
+day_of_week,temporal,cutoff_time,cutoff_time.weekday() (0=Monday),cutoff_time T only,= T (not post-T),SAFE
+is_weekend,temporal,cutoff_time,1 if weekday in [5 6] else 0,cutoff_time T only,= T (not post-T),SAFE

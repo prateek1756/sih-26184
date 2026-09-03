@@ -1,0 +1,2 @@
+approach,method,global_pr_auc,global_roc_auc,pos_cutoff_hit5_pct,pos_cutoff_hit10_pct,pos_cutoff_hit20_pct,pos_cutoff_mean_p5,pos_cutoff_mean_p10,pos_cutoff_mean_p20,all_cutoff_mean_p5,all_cutoff_mean_p10,all_cutoff_mean_p20
+Approach D: Deterministic Graph Risk,Multi-Hop Mule Network & Proximity Topology,0.00313,0.57404,6.67,13.33,20.0,0.013333,0.013333,0.01,0.003922,0.003922,0.002941

@@ -1,0 +1,2 @@
+approach,method,mae,rmse,mape_pct,global_pr_auc,global_roc_auc,pos_cutoff_hit5_pct,pos_cutoff_hit10_pct,pos_cutoff_hit20_pct,pos_cutoff_mean_p5,pos_cutoff_mean_p10,pos_cutoff_mean_p20,all_cutoff_mean_p5,all_cutoff_mean_p10,all_cutoff_mean_p20
+Approach B: Activity Forecasting,HistGradientBoostingRegressor + Residual Anomaly Ratio,0.0022,0.0049,206.44,0.002528,0.544734,13.33,13.33,13.33,0.026667,0.013333,0.006667,0.007843,0.003922,0.001961

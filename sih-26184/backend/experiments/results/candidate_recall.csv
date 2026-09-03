@@ -1,0 +1,5 @@
+candidate_percentile,candidate_count_per_cutoff,events_captured,candidate_recall_pct,pos_cutoff_hit5_pct,pos_cutoff_hit10_pct,pos_cutoff_hit20_pct
+Top 5%,7,1/16,6.25,6.67,6.67,6.67
+Top 10%,15,1/16,6.25,6.67,6.67,6.67
+Top 20%,30,1/16,6.25,6.67,6.67,6.67
+Top 50%,75,8/16,50.0,6.67,6.67,6.67

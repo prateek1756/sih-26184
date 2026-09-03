@@ -1,0 +1,9 @@
+ablation_configuration,pos_cutoff_hit5_pct,pos_cutoff_hit10_pct,pos_cutoff_hit20_pct,events_recovered_top10,events_recovered_top20,pos_cutoff_mean_p5,pos_cutoff_mean_p10,pos_cutoff_mean_p20,all_cutoff_mean_p5,all_cutoff_mean_p10,all_cutoff_mean_p20
+1. Anomaly Signal Only,6.67,13.33,13.33,2/16,2/16,0.013333,0.013333,0.006667,0.003922,0.003922,0.001961
+2. Activity Forecast Residual Only,0.0,13.33,13.33,2/16,2/16,0.0,0.013333,0.006667,0.0,0.003922,0.001961
+3. Transaction Velocity Only,0.0,6.67,13.33,1/16,2/16,0.0,0.006667,0.006667,0.0,0.001961,0.001961
+4. Account / Mule Behavior Only,0.0,13.33,33.33,2/16,5/16,0.0,0.013333,0.016667,0.0,0.003922,0.004902
+5. Graph Proximity & 2-Hop Only,0.0,0.0,13.33,0/16,2/16,0.0,0.0,0.006667,0.0,0.0,0.001961
+6. Spatial & Temporal Hotspot Only,0.0,0.0,0.0,0/16,0/16,0.0,0.0,0.0,0.0,0.0,0.0
+7. Deterministic Network/Spatial Engine (No ML/Anomaly),6.67,6.67,20.0,1/16,3/16,0.013333,0.006667,0.01,0.003922,0.001961,0.002941
+8. Full Composite Risk Intelligence Engine,6.67,13.33,26.67,2/16,4/16,0.013333,0.013333,0.013333,0.003922,0.003922,0.003922

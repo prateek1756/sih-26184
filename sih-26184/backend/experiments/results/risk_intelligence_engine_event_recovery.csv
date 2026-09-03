@@ -1,0 +1,17 @@
+event_id,cutoff_date,city,atm_id,cold_start,A1_rank,B_rank,A+B_rank,RF_v1_0_rank,engine_rank,engine_risk_score,engine_confidence,mapping_confidence,engine_severity,diagnostic_reason
+1,2023-01-27,Hyderabad,dce0c68a-90e...,YES,92,95,92,92,94,0.0724,0.6843,0.95,LOW,"Cold-start event missed (Engine Rank 94): isolated destination, zero pre-cutoff signal"
+2,2023-02-03,Mumbai,fceef9b3-981...,NO,27,51,28,27,30,0.2247,0.6753,0.95,LOW,"History-positive event (A1 Rank 27, Engine Rank 30): flagged mule links/velocity surge"
+3,2023-03-10,Jaipur,644ec086-7a2...,YES,89,130,89,89,127,0.0469,0.2987,0.95,LOW,"Cold-start event missed (Engine Rank 127): isolated destination, zero pre-cutoff signal"
+4,2023-04-14,Bengaluru,1ceabaf4-936...,YES,84,39,84,84,38,0.1726,0.6721,0.95,LOW,"Cold-start event missed (Engine Rank 38): isolated destination, zero pre-cutoff signal"
+5,2023-05-19,Mumbai,6ded4d28-8bc...,NO,5,4,5,5,28,0.2069,0.634,0.95,LOW,"History-positive event (A1 Rank 5, Engine Rank 28): flagged mule links/velocity surge"
+6,2023-06-09,Hyderabad,6e2eb94c-abe...,NO,9,23,13,9,97,0.0765,0.6854,0.95,LOW,"History-positive event (A1 Rank 9, Engine Rank 97): flagged mule links/velocity surge"
+7,2023-06-30,Chennai,41174545-6f8...,NO,61,56,61,61,53,0.127,0.6542,0.95,LOW,"History-positive event (A1 Rank 61, Engine Rank 53): flagged mule links/velocity surge"
+8,2023-07-14,Hyderabad,6e2eb94c-abe...,YES,77,99,77,77,97,0.0839,0.6609,0.95,LOW,"Cold-start event missed (Engine Rank 97): isolated destination, zero pre-cutoff signal"
+9,2023-07-21,Chennai,14e22c3d-550...,NO,30,59,32,30,48,0.1828,0.7633,0.95,LOW,"History-positive event (A1 Rank 30, Engine Rank 48): flagged mule links/velocity surge"
+10,2023-09-15,Jaipur,c5ebb465-883...,YES,97,125,97,97,121,0.0473,0.6989,0.95,LOW,"Cold-start event missed (Engine Rank 121): isolated destination, zero pre-cutoff signal"
+11,2023-09-29,Ahmedabad,67107270-efc...,YES,148,76,148,148,65,0.1294,0.5372,0.95,LOW,"Cold-start event missed (Engine Rank 65): isolated destination, zero pre-cutoff signal"
+12,2023-09-29,Hyderabad,dce0c68a-90e...,NO,8,4,6,8,94,0.0805,0.7229,0.95,LOW,"History-positive event (A1 Rank 8, Engine Rank 94): flagged mule links/velocity surge"
+13,2023-11-03,Ahmedabad,de2d188a-a43...,YES,71,75,71,71,75,0.1053,0.5739,0.95,LOW,"Cold-start event missed (Engine Rank 75): isolated destination, zero pre-cutoff signal"
+14,2023-11-24,Mumbai,7aee3f20-61f...,YES,143,85,143,143,29,0.2159,0.5884,0.95,LOW,"Cold-start event missed (Engine Rank 29): isolated destination, zero pre-cutoff signal"
+15,2023-12-01,New Delhi,e3c72b40-457...,YES,79,44,79,79,12,0.4403,0.4681,0.95,MEDIUM,Cold-start event recovered in Top-20 (Engine Rank 12): elevated metro crime density
+16,2023-12-08,New Delhi,ae9a45fc-c29...,NO,15,21,19,15,7,0.4795,0.4099,0.95,MEDIUM,"History-positive event (A1 Rank 15, Engine Rank 7): flagged mule links/velocity surge"

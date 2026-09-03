@@ -1,0 +1,616 @@
+[
+  {
+    "horizon_h": 6,
+    "total_cells": 37650,
+    "pos_A": 1665,
+    "prev_A_pct": 4.4223,
+    "pos_B": 9,
+    "prev_B_pct": 0.0239,
+    "pos_A_by_year": {
+      "2019": 295,
+      "2020": 369,
+      "2021": 376,
+      "2022": 336,
+      "2023": 289
+    },
+    "pos_B_by_year": {
+      "2020": 2,
+      "2022": 5,
+      "2023": 2
+    },
+    "pos_A_by_city": {
+      "Mumbai": 320,
+      "Bengaluru": 247,
+      "Chennai": 235,
+      "Ahmedabad": 188,
+      "Hyderabad": 175,
+      "New Delhi": 218,
+      "Kolkata": 154,
+      "Jaipur": 128
+    },
+    "pos_B_by_city": {
+      "Kolkata": 2,
+      "Hyderabad": 2,
+      "Ahmedabad": 1,
+      "Chennai": 1,
+      "Jaipur": 1,
+      "Mumbai": 2
+    },
+    "pos_A_top_atm": [
+      [
+        "5cbba4d0-3c52-5f68-9295-d2058d5ea946",
+        34
+      ],
+      [
+        "7af28f6a-7ed8-5ba7-97f0-f49875cbb077",
+        32
+      ],
+      [
+        "800f26bb-ab13-53a8-8329-4e07a6b7cf1d",
+        32
+      ],
+      [
+        "fceef9b3-9818-5d9c-9786-aa1ba0a869e2",
+        27
+      ],
+      [
+        "ae9a45fc-c291-5efa-a2ad-8e3d969953d5",
+        27
+      ],
+      [
+        "7142d25c-5954-53f9-ba18-f95055901780",
+        26
+      ],
+      [
+        "c991fb7a-f5c2-5464-b968-538bf5c140df",
+        26
+      ],
+      [
+        "9d88e52f-9303-5776-9acc-390b8ece126d",
+        25
+      ],
+      [
+        "6a5e8429-628a-5a7d-b3da-577e42cb4cd4",
+        24
+      ],
+      [
+        "2ec2dfb2-1938-5797-bf2d-736d604948cb",
+        23
+      ]
+    ],
+    "pos_B_top_atm": [
+      [
+        "8279eaa3-c5e0-5a20-9db9-075ee86efeb4",
+        2
+      ],
+      [
+        "fceef9b3-9818-5d9c-9786-aa1ba0a869e2",
+        2
+      ],
+      [
+        "642f4235-82f6-5143-8ea5-5048e8f0d80a",
+        1
+      ],
+      [
+        "07b1cb4d-de17-5ac2-a00b-02cf9e672ff0",
+        1
+      ],
+      [
+        "90bcf56f-15e8-5317-aff9-2bb508a1d03a",
+        1
+      ],
+      [
+        "d96fb612-761a-52d1-8bfd-a2368e7f9fd3",
+        1
+      ],
+      [
+        "dce0c68a-90eb-5756-908b-549f801f0816",
+        1
+      ]
+    ]
+  },
+  {
+    "horizon_h": 12,
+    "total_cells": 37650,
+    "pos_A": 3176,
+    "prev_A_pct": 8.4356,
+    "pos_B": 28,
+    "prev_B_pct": 0.0744,
+    "pos_A_by_year": {
+      "2019": 575,
+      "2020": 707,
+      "2021": 665,
+      "2022": 644,
+      "2023": 585
+    },
+    "pos_B_by_year": {
+      "2019": 1,
+      "2020": 7,
+      "2021": 3,
+      "2022": 11,
+      "2023": 6
+    },
+    "pos_A_by_city": {
+      "New Delhi": 422,
+      "Mumbai": 601,
+      "Bengaluru": 477,
+      "Chennai": 439,
+      "Ahmedabad": 360,
+      "Kolkata": 302,
+      "Hyderabad": 325,
+      "Jaipur": 250
+    },
+    "pos_B_by_city": {
+      "Bengaluru": 4,
+      "New Delhi": 6,
+      "Mumbai": 4,
+      "Kolkata": 3,
+      "Hyderabad": 3,
+      "Jaipur": 4,
+      "Ahmedabad": 1,
+      "Chennai": 3
+    },
+    "pos_A_top_atm": [
+      [
+        "5cbba4d0-3c52-5f68-9295-d2058d5ea946",
+        55
+      ],
+      [
+        "7af28f6a-7ed8-5ba7-97f0-f49875cbb077",
+        55
+      ],
+      [
+        "fceef9b3-9818-5d9c-9786-aa1ba0a869e2",
+        54
+      ],
+      [
+        "800f26bb-ab13-53a8-8329-4e07a6b7cf1d",
+        53
+      ],
+      [
+        "ae9a45fc-c291-5efa-a2ad-8e3d969953d5",
+        48
+      ],
+      [
+        "c991fb7a-f5c2-5464-b968-538bf5c140df",
+        47
+      ],
+      [
+        "f9c8bdaf-f2d5-519b-81d4-759a53bf1015",
+        45
+      ],
+      [
+        "6a5e8429-628a-5a7d-b3da-577e42cb4cd4",
+        45
+      ],
+      [
+        "7142d25c-5954-53f9-ba18-f95055901780",
+        43
+      ],
+      [
+        "c4d45e66-af66-5d62-9ec1-a719ee0110b8",
+        43
+      ]
+    ],
+    "pos_B_top_atm": [
+      [
+        "8279eaa3-c5e0-5a20-9db9-075ee86efeb4",
+        2
+      ],
+      [
+        "051674e2-a8c4-5111-bf54-2c937a9c722a",
+        2
+      ],
+      [
+        "fceef9b3-9818-5d9c-9786-aa1ba0a869e2",
+        2
+      ],
+      [
+        "d5f219b1-03da-5f87-a5da-607ea7af6899",
+        1
+      ],
+      [
+        "1ca42a9a-50ec-5a1d-99e3-81bf7c579716",
+        1
+      ],
+      [
+        "aac4fab3-2fa2-532d-b442-87ce705ae9f3",
+        1
+      ],
+      [
+        "c991fb7a-f5c2-5464-b968-538bf5c140df",
+        1
+      ],
+      [
+        "642f4235-82f6-5143-8ea5-5048e8f0d80a",
+        1
+      ],
+      [
+        "ae9a45fc-c291-5efa-a2ad-8e3d969953d5",
+        1
+      ],
+      [
+        "1b131b05-4df1-5564-b4fd-6cb5e09cfdd5",
+        1
+      ]
+    ]
+  },
+  {
+    "horizon_h": 24,
+    "total_cells": 37650,
+    "pos_A": 5956,
+    "prev_A_pct": 15.8194,
+    "pos_B": 56,
+    "prev_B_pct": 0.1487,
+    "pos_A_by_year": {
+      "2019": 1086,
+      "2020": 1234,
+      "2021": 1264,
+      "2022": 1255,
+      "2023": 1117
+    },
+    "pos_B_by_year": {
+      "2019": 3,
+      "2020": 19,
+      "2021": 5,
+      "2022": 19,
+      "2023": 10
+    },
+    "pos_A_by_city": {
+      "New Delhi": 789,
+      "Mumbai": 1115,
+      "Bengaluru": 912,
+      "Chennai": 820,
+      "Ahmedabad": 671,
+      "Kolkata": 555,
+      "Hyderabad": 608,
+      "Jaipur": 486
+    },
+    "pos_B_by_city": {
+      "Bengaluru": 7,
+      "New Delhi": 12,
+      "Ahmedabad": 4,
+      "Mumbai": 9,
+      "Jaipur": 7,
+      "Kolkata": 6,
+      "Hyderabad": 5,
+      "Chennai": 6
+    },
+    "pos_A_top_atm": [
+      [
+        "7af28f6a-7ed8-5ba7-97f0-f49875cbb077",
+        110
+      ],
+      [
+        "800f26bb-ab13-53a8-8329-4e07a6b7cf1d",
+        100
+      ],
+      [
+        "59684263-0e01-5fc5-9de6-966d650e19e5",
+        96
+      ],
+      [
+        "5cbba4d0-3c52-5f68-9295-d2058d5ea946",
+        92
+      ],
+      [
+        "c991fb7a-f5c2-5464-b968-538bf5c140df",
+        90
+      ],
+      [
+        "c4d45e66-af66-5d62-9ec1-a719ee0110b8",
+        88
+      ],
+      [
+        "7142d25c-5954-53f9-ba18-f95055901780",
+        87
+      ],
+      [
+        "f9c8bdaf-f2d5-519b-81d4-759a53bf1015",
+        86
+      ],
+      [
+        "fceef9b3-9818-5d9c-9786-aa1ba0a869e2",
+        82
+      ],
+      [
+        "6a5e8429-628a-5a7d-b3da-577e42cb4cd4",
+        78
+      ]
+    ],
+    "pos_B_top_atm": [
+      [
+        "5cbba4d0-3c52-5f68-9295-d2058d5ea946",
+        3
+      ],
+      [
+        "e3c72b40-457d-5627-b578-4da7a09c1fc1",
+        2
+      ],
+      [
+        "65a9af02-f38e-5bc1-a908-6a3a653df0fc",
+        2
+      ],
+      [
+        "1ca42a9a-50ec-5a1d-99e3-81bf7c579716",
+        2
+      ],
+      [
+        "863a1f8a-9358-5d83-a37a-ef1b3af72061",
+        2
+      ],
+      [
+        "8279eaa3-c5e0-5a20-9db9-075ee86efeb4",
+        2
+      ],
+      [
+        "051674e2-a8c4-5111-bf54-2c937a9c722a",
+        2
+      ],
+      [
+        "ae9a45fc-c291-5efa-a2ad-8e3d969953d5",
+        2
+      ],
+      [
+        "1b131b05-4df1-5564-b4fd-6cb5e09cfdd5",
+        2
+      ],
+      [
+        "644ec086-7a2f-56c1-8890-a0cf1371bb8f",
+        2
+      ]
+    ]
+  },
+  {
+    "horizon_h": 48,
+    "total_cells": 37650,
+    "pos_A": 10595,
+    "prev_A_pct": 28.1408,
+    "pos_B": 108,
+    "prev_B_pct": 0.2869,
+    "pos_A_by_year": {
+      "2019": 1860,
+      "2020": 2248,
+      "2021": 2227,
+      "2022": 2213,
+      "2023": 2047
+    },
+    "pos_B_by_year": {
+      "2019": 11,
+      "2020": 40,
+      "2021": 17,
+      "2022": 24,
+      "2023": 16
+    },
+    "pos_A_by_city": {
+      "New Delhi": 1415,
+      "Mumbai": 1888,
+      "Bengaluru": 1554,
+      "Chennai": 1481,
+      "Ahmedabad": 1230,
+      "Kolkata": 1020,
+      "Hyderabad": 1121,
+      "Jaipur": 886
+    },
+    "pos_B_by_city": {
+      "Jaipur": 16,
+      "Bengaluru": 16,
+      "Chennai": 11,
+      "Ahmedabad": 9,
+      "New Delhi": 19,
+      "Kolkata": 10,
+      "Mumbai": 19,
+      "Hyderabad": 8
+    },
+    "pos_A_top_atm": [
+      [
+        "7af28f6a-7ed8-5ba7-97f0-f49875cbb077",
+        164
+      ],
+      [
+        "800f26bb-ab13-53a8-8329-4e07a6b7cf1d",
+        161
+      ],
+      [
+        "5cbba4d0-3c52-5f68-9295-d2058d5ea946",
+        159
+      ],
+      [
+        "59684263-0e01-5fc5-9de6-966d650e19e5",
+        146
+      ],
+      [
+        "fceef9b3-9818-5d9c-9786-aa1ba0a869e2",
+        146
+      ],
+      [
+        "7142d25c-5954-53f9-ba18-f95055901780",
+        144
+      ],
+      [
+        "c991fb7a-f5c2-5464-b968-538bf5c140df",
+        139
+      ],
+      [
+        "f9c8bdaf-f2d5-519b-81d4-759a53bf1015",
+        138
+      ],
+      [
+        "9e342a67-6e23-50e0-affc-c624e2da2f70",
+        137
+      ],
+      [
+        "b8864095-68a2-5748-a216-676e811b321c",
+        137
+      ]
+    ],
+    "pos_B_top_atm": [
+      [
+        "863a1f8a-9358-5d83-a37a-ef1b3af72061",
+        4
+      ],
+      [
+        "1b131b05-4df1-5564-b4fd-6cb5e09cfdd5",
+        3
+      ],
+      [
+        "1ca42a9a-50ec-5a1d-99e3-81bf7c579716",
+        3
+      ],
+      [
+        "e3c72b40-457d-5627-b578-4da7a09c1fc1",
+        3
+      ],
+      [
+        "41adf9c7-e4f5-56f8-a964-fecf7428833b",
+        3
+      ],
+      [
+        "1ceabaf4-936c-5e09-9db4-955f82fbe69e",
+        3
+      ],
+      [
+        "5cbba4d0-3c52-5f68-9295-d2058d5ea946",
+        3
+      ],
+      [
+        "8279eaa3-c5e0-5a20-9db9-075ee86efeb4",
+        3
+      ],
+      [
+        "6a5e8429-628a-5a7d-b3da-577e42cb4cd4",
+        3
+      ],
+      [
+        "ae9a45fc-c291-5efa-a2ad-8e3d969953d5",
+        3
+      ]
+    ]
+  },
+  {
+    "horizon_h": 72,
+    "total_cells": 37650,
+    "pos_A": 14219,
+    "prev_A_pct": 37.7663,
+    "pos_B": 170,
+    "prev_B_pct": 0.4515,
+    "pos_A_by_year": {
+      "2019": 2487,
+      "2020": 2975,
+      "2021": 3026,
+      "2022": 2950,
+      "2023": 2781
+    },
+    "pos_B_by_year": {
+      "2019": 24,
+      "2020": 44,
+      "2021": 30,
+      "2022": 42,
+      "2023": 30
+    },
+    "pos_A_by_city": {
+      "New Delhi": 1876,
+      "Mumbai": 2421,
+      "Bengaluru": 2085,
+      "Chennai": 1987,
+      "Ahmedabad": 1651,
+      "Kolkata": 1429,
+      "Hyderabad": 1529,
+      "Jaipur": 1241
+    },
+    "pos_B_by_city": {
+      "Chennai": 22,
+      "Jaipur": 19,
+      "New Delhi": 32,
+      "Bengaluru": 29,
+      "Mumbai": 26,
+      "Kolkata": 14,
+      "Ahmedabad": 19,
+      "Hyderabad": 9
+    },
+    "pos_A_top_atm": [
+      [
+        "7af28f6a-7ed8-5ba7-97f0-f49875cbb077",
+        207
+      ],
+      [
+        "fceef9b3-9818-5d9c-9786-aa1ba0a869e2",
+        193
+      ],
+      [
+        "5cbba4d0-3c52-5f68-9295-d2058d5ea946",
+        191
+      ],
+      [
+        "800f26bb-ab13-53a8-8329-4e07a6b7cf1d",
+        189
+      ],
+      [
+        "7142d25c-5954-53f9-ba18-f95055901780",
+        182
+      ],
+      [
+        "59684263-0e01-5fc5-9de6-966d650e19e5",
+        180
+      ],
+      [
+        "6a5e8429-628a-5a7d-b3da-577e42cb4cd4",
+        179
+      ],
+      [
+        "ae9a45fc-c291-5efa-a2ad-8e3d969953d5",
+        176
+      ],
+      [
+        "328c3398-026a-5b82-ad02-8598a7d943ba",
+        176
+      ],
+      [
+        "9d88e52f-9303-5776-9acc-390b8ece126d",
+        175
+      ]
+    ],
+    "pos_B_top_atm": [
+      [
+        "ae9a45fc-c291-5efa-a2ad-8e3d969953d5",
+        7
+      ],
+      [
+        "1b131b05-4df1-5564-b4fd-6cb5e09cfdd5",
+        5
+      ],
+      [
+        "863a1f8a-9358-5d83-a37a-ef1b3af72061",
+        5
+      ],
+      [
+        "90bcf56f-15e8-5317-aff9-2bb508a1d03a",
+        4
+      ],
+      [
+        "c45eaf1f-d739-587d-8090-276bc5a6a01e",
+        4
+      ],
+      [
+        "0949a9d8-1c2f-5d53-bc48-6050d92fe35b",
+        4
+      ],
+      [
+        "7142d25c-5954-53f9-ba18-f95055901780",
+        4
+      ],
+      [
+        "fceef9b3-9818-5d9c-9786-aa1ba0a869e2",
+        4
+      ],
+      [
+        "b7c4c3b5-15ff-512b-bc9b-d52f3797f893",
+        3
+      ],
+      [
+        "7c8a9fea-1f01-5794-b1f8-1f33bc77651b",
+        3
+      ]
+    ]
+  }
+]

@@ -1,0 +1,143 @@
+{
+  "_comment": "SIH PS 26184 — Cybercrime-Conditioned ATM Risk Experiment Configuration",
+  "_generated": "2026-09-03",
+  "_experiment_purpose": "Distinguish normal ATM activity from unusual / cybercrime-conditioned risk",
+  "_production_modified": false,
+
+  "data": {
+    "raw_csv": "C:\\Users\\Prateek\\Desktop\\sih\\dataset\\indian_banking_transactions.csv",
+    "processed_dir": "data/processed",
+    "experiments_dir": "experiments/cybercrime_risk/data",
+    "dataset_file": "experiments/cybercrime_risk/data/exp_cybercrime_risk_dataset.parquet",
+    "canonical_atms_file": "data/processed/canonical_atms.parquet",
+    "year_range": [2019, 2023],
+    "known_states": [
+      "Delhi", "Maharashtra", "Karnataka", "Tamil Nadu",
+      "Gujarat", "West Bengal", "Telangana", "Uttar Pradesh",
+      "Rajasthan", "Kerala"
+    ]
+  },
+
+  "target": {
+    "name": "TARGET_C_CybercrimeConditionedRisk",
+    "description": "Qualifying fraud-associated cashout event in future horizon (T, T+H] conditioned on prior baseline activity and anomaly/cybercrime indicators",
+    "columns": {
+      "24h": "target_c_24h",
+      "48h": "target_c_48h"
+    },
+    "supported_horizons": ["24h", "48h"],
+    "operational_meaning": "Ranks ATMs showing elevated future cybercrime risk relative to normal baseline activity"
+  },
+
+  "feature_groups": {
+    "activity_features": [
+      "base_tx_count_30d",
+      "base_cw_count_30d",
+      "base_cw_rate_daily",
+      "recent_cw_count_24h",
+      "recent_cw_count_7d",
+      "cw_volatility_7d",
+      "amount_avg_per_tx_30d"
+    ],
+    "anomaly_features": [
+      "activity_ratio_24h",
+      "activity_delta_24h",
+      "activity_ratio_7d",
+      "amount_ratio_24h",
+      "velocity_surge_24h_vs_7d",
+      "unique_account_surge_24h"
+    ],
+    "cybercrime_features": [
+      "fraud_tx_count_atm_30d",
+      "fraud_tx_count_atm_7d",
+      "fraud_tx_count_atm_24h",
+      "fraud_cashout_atm_30d",
+      "fraud_cashout_atm_7d",
+      "fraud_cashout_atm_24h",
+      "suspicious_density_city_7d",
+      "suspicious_density_city_24h",
+      "fraud_to_normal_ratio_30d",
+      "fraud_activity_change",
+      "connected_mule_accounts_7d",
+      "hours_since_last_fraud"
+    ],
+    "spatial_features": [
+      "atm_lat",
+      "atm_lon",
+      "atm_cluster_density"
+    ],
+    "temporal_features": [
+      "hour_of_day",
+      "day_of_week",
+      "is_weekend"
+    ]
+  },
+
+  "ablation_tiers": {
+    "tier_a": {
+      "name": "Tier A: ATM Activity Features Only",
+      "groups": ["activity_features"]
+    },
+    "tier_b": {
+      "name": "Tier B: Cybercrime/Fraud Features Only",
+      "groups": ["cybercrime_features"]
+    },
+    "tier_c": {
+      "name": "Tier C: Activity + Cybercrime Features",
+      "groups": ["activity_features", "anomaly_features", "cybercrime_features"]
+    },
+    "tier_d": {
+      "name": "Tier D: Activity + Cybercrime + Spatial Features",
+      "groups": ["activity_features", "anomaly_features", "cybercrime_features", "spatial_features"]
+    },
+    "tier_e": {
+      "name": "Tier E: Full Model (Activity + Cyber + Spatial + Temporal)",
+      "groups": ["activity_features", "anomaly_features", "cybercrime_features", "spatial_features", "temporal_features"]
+    }
+  },
+
+  "models": {
+    "rf": {
+      "class": "sklearn.ensemble.RandomForestClassifier",
+      "compute_device": "CPU",
+      "params": {
+        "n_estimators": 300,
+        "max_depth": 8,
+        "min_samples_leaf": 5,
+        "class_weight": "balanced",
+        "random_state": 42,
+        "n_jobs": -1
+      }
+    },
+    "xgb": {
+      "class": "xgboost.XGBClassifier",
+      "device_preference": "cuda",
+      "device_fallback": "cpu",
+      "params": {
+        "n_estimators": 300,
+        "max_depth": 6,
+        "learning_rate": 0.05,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "eval_metric": "aucpr",
+        "tree_method": "hist",
+        "device": "cuda",
+        "random_state": 42,
+        "verbosity": 0
+      },
+      "scale_pos_weight": "auto"
+    }
+  },
+
+  "validation": {
+    "strategy": "chronological_split",
+    "train_pct": 0.60,
+    "val_pct": 0.20,
+    "test_pct": 0.20,
+    "cutoffs": {
+      "start": "2019-03-01",
+      "end": "2023-12-15",
+      "frequency": "7D"
+    }
+  }
+}

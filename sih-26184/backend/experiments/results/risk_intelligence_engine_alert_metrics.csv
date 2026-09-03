@@ -1,0 +1,4 @@
+severity_tier,threshold,total_alerts_generated,alert_rate_pct,true_positive_alerts,false_positive_alerts,alert_precision,alert_recall,operational_action
+MEDIUM (Alert >= 0.30),0.3,1199,15.67,2,1197,0.0017,0.125,"Minor anomaly surge, passive monitoring"
+HIGH (Alert >= 0.55),0.55,73,0.95,0,73,0.0,0.0,"Elevated multi-factor risk, queue for review"
+CRITICAL (Review >= 0.75),0.75,0,0.0,0,0,0.0,0.0,Investigator review required (NOT autonomous intervention)

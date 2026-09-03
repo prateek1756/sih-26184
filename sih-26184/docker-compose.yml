@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    container_name: hermes_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-hermes_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-hermes_password}
+      POSTGRES_DB: ${POSTGRES_DB:-hermes_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-hermes_user} -d ${POSTGRES_DB:-hermes_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: hermes_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: hermes_backend
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://hermes_user:hermes_password@db:5432/hermes_db
+      - SYNC_DATABASE_URL=postgresql://hermes_user:hermes_password@db:5432/hermes_db
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=hermes-ai-super-secret-production-key-change-in-prod-26184
+      - ENVIRONMENT=development
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+
+volumes:
+  pgdata:
+  redisdata:

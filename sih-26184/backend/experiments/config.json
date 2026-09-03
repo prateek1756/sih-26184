@@ -1,0 +1,130 @@
+{
+  "_comment": "SIH PS 26184 — Target Discovery Experiment Configuration",
+  "_generated": "2026-09-03",
+  "_forensic_basis": "Phases 0-5 of target_reformulation_experiment.py",
+  "_production_modified": false,
+
+  "data": {
+    "raw_csv": "C:\\Users\\Prateek\\Desktop\\sih\\dataset\\indian_banking_transactions.csv",
+    "processed_dir": "data/processed",
+    "experiments_dir": "data/experiments",
+    "dataset_file": "data/experiments/exp_atm_cutoff_multiyear.parquet",
+    "canonical_atms_file": "data/processed/canonical_atms.parquet",
+    "year_range": [2019, 2023],
+    "known_states": [
+      "Delhi", "Maharashtra", "Karnataka", "Tamil Nadu",
+      "Gujarat", "West Bengal", "Telangana", "Uttar Pradesh",
+      "Rajasthan", "Kerala"
+    ]
+  },
+
+  "targets": {
+    "target_a": {
+      "name": "TARGET_A_CashWithdrawal",
+      "description": "Any ATM_Withdrawal at this ATM in the future window (T, T+H]",
+      "definition": "transaction_type == 'ATM_Withdrawal'",
+      "column": "target_a",
+      "forensic_events_total": 50091,
+      "forensic_prevalence_48h": 28.141,
+      "learnability": "HIGH",
+      "operational_meaning": "Predicts ATM cash-out activity — feeds risk engine with activity likelihood score"
+    },
+    "target_b": {
+      "name": "TARGET_B_FraudCashout",
+      "description": "ATM_Withdrawal AND is_fraud==1 in the future window (T, T+H]",
+      "definition": "transaction_type == 'ATM_Withdrawal' AND is_fraud == 1",
+      "column": "target_b",
+      "forensic_events_total": 421,
+      "forensic_prevalence_48h": 0.2869,
+      "learnability": "LOW — insufficient positives per WF fold",
+      "operational_meaning": "Predicts fraud-specific ATM cashout — research target only"
+    }
+  },
+
+  "horizons": {
+    "6h":  {"hours": 6,  "forensic_pos_a": 1665,  "forensic_pos_b": 9,   "prevalence_a": 4.422},
+    "12h": {"hours": 12, "forensic_pos_a": 3176,  "forensic_pos_b": 28,  "prevalence_a": 8.436},
+    "24h": {"hours": 24, "forensic_pos_a": 5956,  "forensic_pos_b": 56,  "prevalence_a": 15.819},
+    "48h": {"hours": 48, "forensic_pos_a": 10595, "forensic_pos_b": 108, "prevalence_a": 28.141},
+    "72h": {"hours": 72, "forensic_pos_a": 14219, "forensic_pos_b": 170, "prevalence_a": 37.766}
+  },
+
+  "atm_association": {
+    "primary_rule": "exact_atm_id",
+    "fallback_rule": "coordinate_proximity",
+    "recommended_radius_km": 2.0,
+    "forensic_basis": "2.0km captures 83.7% of events vs 0.3% at 0.1km (original)",
+    "original_radius_km": 0.1,
+    "original_radius_match_pct": 0.3
+  },
+
+  "cutoffs": {
+    "frequency": "7D",
+    "start": "2019-03-01",
+    "end": "2023-12-15",
+    "forensic_n_cutoffs": 251,
+    "forensic_n_atms": 150,
+    "forensic_total_cells": 37650
+  },
+
+  "validation": {
+    "strategy": "chronological_split",
+    "train_pct": 0.60,
+    "val_pct": 0.20,
+    "test_pct": 0.20,
+    "walk_forward_min_train_months": 6,
+    "note": "Walk-forward viable for Target A. Target B has insufficient positives per fold."
+  },
+
+  "features": [
+    "hour_of_day", "day_of_week", "is_weekend",
+    "n_txs_atm_24h", "n_txs_atm_7d", "n_txs_atm_30d",
+    "total_amt_24h", "max_amt_24h",
+    "n_cashout_24h", "n_cashout_7d", "n_cashout_30d",
+    "n_fraud_cashout_24h", "n_fraud_cashout_7d", "n_fraud_cashout_30d",
+    "n_unique_accts_24h", "n_unique_accts_7d",
+    "hours_since_last_tx", "amount_log_24h",
+    "atm_lat", "atm_lon"
+  ],
+
+  "models": {
+    "rf": {
+      "class": "sklearn.ensemble.RandomForestClassifier",
+      "compute_device": "CPU",
+      "params": {
+        "n_estimators": 300,
+        "max_depth": 10,
+        "min_samples_leaf": 5,
+        "class_weight": "balanced",
+        "random_state": 42,
+        "n_jobs": -1
+      }
+    },
+    "xgb": {
+      "class": "xgboost.XGBClassifier",
+      "device_preference": "cuda",
+      "device_fallback": "cpu",
+      "params": {
+        "n_estimators": 300,
+        "max_depth": 6,
+        "learning_rate": 0.05,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "eval_metric": "aucpr",
+        "tree_method": "hist",
+        "device": "cuda",
+        "random_state": 42,
+        "verbosity": 0
+      },
+      "scale_pos_weight": "auto"
+    }
+  },
+
+  "artifacts": {
+    "experiments_dir": "experiments/artifacts",
+    "production_dir": "artifacts",
+    "production_model": "rf-v1.0.joblib",
+    "production_modified": false,
+    "warning": "DO NOT save experimental models over artifacts/rf-v1.0.joblib"
+  }
+}

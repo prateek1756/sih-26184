@@ -1,0 +1,121 @@
+{
+  "_comment": "SIH PS 26184 — Approved Signal Architecture Configuration",
+  "_note": "This config freezes the approved signal hierarchy. Equal-weight composite MUST NOT be used as primary ATM ranking classifier.",
+  "_production_modified": false,
+  "_version": "candidate-v0.1",
+
+  "signal_hierarchy": {
+    "PRIMARY": {
+      "signal": "a1_anomaly_zscore",
+      "description": "Robust Z-Score acute velocity anomaly detector",
+      "role": "Primary acute ATM ranking signal. Used first to rank ATMs.",
+      "weight": 0.40,
+      "note": "Experimental weight, not calibrated"
+    },
+    "SECONDARY": {
+      "signal": "account_mule_behavior",
+      "description": "Mule account links and unique account diversity surge",
+      "role": "Secondary intelligence corroborating primary signal",
+      "weight": 0.25,
+      "note": "Experimental weight, not calibrated"
+    },
+    "SUPPORTING": [
+      {
+        "signal": "activity_forecast_residual",
+        "description": "Continuous demand baseline residual",
+        "role": "Supporting signal for demand normalization",
+        "weight": 0.15,
+        "note": "Experimental weight, not calibrated"
+      },
+      {
+        "signal": "transaction_velocity",
+        "description": "24h burst ratio and amount surge",
+        "role": "Supporting signal for acute velocity surges",
+        "weight": 0.10,
+        "note": "Experimental weight, not calibrated"
+      }
+    ],
+    "CONTEXTUAL_EVIDENCE": [
+      {
+        "signal": "graph_proximity",
+        "description": "2-hop metro network exposure and recency decay",
+        "role": "Contextual evidence only, not primary discriminator",
+        "weight": 0.05,
+        "note": "Experimental weight, not calibrated"
+      },
+      {
+        "signal": "spatial_cluster",
+        "description": "Configurable-radius ATM cluster density",
+        "role": "Contextual evidence only",
+        "weight": 0.025,
+        "note": "Experimental weight, not calibrated"
+      },
+      {
+        "signal": "temporal_window",
+        "description": "Late-night and weekend time-of-day windows",
+        "role": "Contextual evidence only",
+        "weight": 0.025,
+        "note": "Experimental weight, not calibrated"
+      },
+      {
+        "signal": "complaint_intelligence",
+        "description": "Cybercrime complaint density proximity",
+        "role": "Contextual evidence only",
+        "weight": 0.00,
+        "note": "Reserved for future integration when complaint geospatial data available"
+      }
+    ]
+  },
+
+  "composite_ranking": {
+    "primary_ranker": "a1_anomaly_zscore",
+    "tiebreak": "account_mule_behavior",
+    "forbidden": "equal_weight_composite_as_primary_ranker",
+    "note": "Full composite risk score is used for audit/alert evidence only, not as primary ATM ranking discriminator"
+  },
+
+  "data": {
+    "raw_csv": "C:\\Users\\Prateek\\Desktop\\sih\\dataset\\indian_banking_transactions.csv",
+    "parquet_dataset": "experiments/cybercrime_risk/exp_cybercrime_risk_dataset.parquet",
+    "canonical_atms": "data/processed/canonical_atms.parquet",
+    "year_range": [2019, 2023]
+  },
+
+  "evaluation": {
+    "protocol": "chronological_per_cutoff_ranking",
+    "target_column": "target_c_48h",
+    "k_values": [5, 10, 20],
+    "spatial_radii_km": [0.5, 1.0, 2.0, 5.0],
+    "default_spatial_radius_km": 2.0
+  },
+
+  "alert_gate": {
+    "note": "All thresholds are configurable operational defaults, NOT calibrated thresholds",
+    "primary_anomaly_min_signal": 0.25,
+    "primary_activity_min_signal": 0.30,
+    "secondary_mule_min_signal": 0.20,
+    "secondary_velocity_min_signal": 0.25,
+    "min_confidence": 0.40,
+    "min_data_quality": 0.35,
+    "min_risk_score_for_alert": 0.30
+  },
+
+  "severity_thresholds": {
+    "note": "Operational defaults, NOT calibrated. CRITICAL means investigator review required, NEVER autonomous intervention.",
+    "LOW": 0.0,
+    "MEDIUM": 0.30,
+    "HIGH": 0.55,
+    "CRITICAL": 0.75
+  },
+
+  "severity_definitions": {
+    "LOW": "Normal background activity; passive monitoring",
+    "MEDIUM": "Minor anomaly detected; passive monitoring, no action required",
+    "HIGH": "Elevated multi-signal convergence; queue for investigator review",
+    "CRITICAL": "Investigator review required — NOT autonomous field intervention"
+  },
+
+  "replay_simulator": {
+    "causality_invariant": "strict event-time causal: at timestamp T, no information from >T is accessible"
+  }
+}

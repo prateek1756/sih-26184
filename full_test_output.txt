@@ -1,0 +1,47 @@
+=== FULL TEST SUITE: exit_code=0 elapsed=48.6s ===
+CMD: C:\Python314\python.exe -m pytest tests/ -v --tb=short --no-header -p no:randomly
+
+=== STDOUT (last 800 lines) ===
+============================= test session starts =============================
+collecting ... collected 29 items
+
+tests/e2e/test_e2e_real_pipeline.py::test_real_database_end_to_end_intelligence_pipeline PASSED [  3%]
+tests/integration/test_api_endpoints.py::test_health_check_endpoint PASSED [  6%]
+tests/integration/test_api_endpoints.py::test_unauthorized_access_to_protected_endpoint PASSED [ 10%]
+tests/integration/test_api_endpoints.py::test_openapi_spec_has_all_core_routes PASSED [ 13%]
+tests/integration/test_api_real.py::test_health_check PASSED             [ 17%]
+tests/integration/test_api_real.py::test_register_viewer_and_login PASSED [ 20%]
+tests/integration/test_api_real.py::test_register_with_admin_role_must_not_produce_admin PASSED [ 24%]
+tests/integration/test_api_real.py::test_viewer_cannot_trigger_prediction_run PASSED [ 27%]
+tests/integration/test_api_real.py::test_unauthorized_access_without_token PASSED [ 31%]
+tests/integration/test_api_real.py::test_complaints_endpoint_returns_database_data PASSED [ 34%]
+tests/integration/test_api_real.py::test_complaints_city_filter PASSED   [ 37%]
+tests/integration/test_api_real.py::test_transaction_detail_endpoint PASSED [ 41%]
+tests/integration/test_api_real.py::test_me_endpoint_returns_current_user PASSED [ 44%]
+tests/integration/test_ml_pipeline.py::test_ml_pipeline_build_train_evaluate_reload PASSED [ 48%]
+tests/integration/test_postgis_real.py::test_postgis_real_database_extension_and_spatial_queries PASSED [ 51%]
+tests/unit/test_auth_security.py::test_password_hashing_and_verification PASSED [ 55%]
+tests/unit/test_auth_security.py::test_jwt_access_and_refresh_token_creation PASSED [ 58%]
+tests/unit/test_feature_builder.py::test_feature_builder_strict_temporal_cutoff PASSED [ 62%]
+tests/unit/test_feature_builder.py::test_feature_builder_atm_density_and_mule_indicators PASSED [ 65%]
+tests/unit/test_feature_builder.py::test_training_and_inference_feature_parity PASSED [ 68%]
+tests/unit/test_geospatial.py::test_haversine_distance PASSED            [ 72%]
+tests/unit/test_geospatial.py::test_dbscan_clustering PASSED             [ 75%]
+tests/unit/test_geospatial.py::test_risk_polygon_geojson_generation PASSED [ 79%]
+tests/unit/test_metrics_evaluation.py::test_precision_and_recall_at_k PASSED [ 82%]
+tests/unit/test_metrics_evaluation.py::test_metrics_empty_inputs_edge_cases PASSED [ 86%]
+tests/unit/test_risk_engine.py::test_rule_evaluation_r01_velocity PASSED [ 89%]
+tests/unit/test_risk_engine.py::test_rule_evaluation_multi_triggers PASSED [ 93%]
+tests/unit/test_risk_engine.py::test_composite_risk_scoring_severity_critical PASSED [ 96%]
+tests/unit/test_risk_engine.py::test_composite_risk_scoring_severity_low PASSED [100%]
+
+============================== warnings summary ===============================
+..\..\..\..\AppData\Roaming\Python\Python314\site-packages\fastapi\testclient.py:1
+  C:\Users\Prateek\AppData\Roaming\Python\Python314\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 29 passed, 1 warning in 41.65s ========================
+=== STDERR (last 400 lines) ===
+C:\Users\Prateek\AppData\Roaming\Python\Python314\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.6.0) or chardet (7.4.3)/charset_normalizer (3.4.4) doesn't match a supported version!
+  warnings.warn(

@@ -1,0 +1,8 @@
+baseline_name,roc_auc,pr_auc,precision_at_5,precision_at_10,precision_at_20,recall_at_5,recall_at_10,recall_at_20,notes
+Baseline 1: Random Ranking,0.4687,0.003214,0.0,0.0,0.0,0.0,0.0,0.0,Shuffled scores on test set
+Baseline 2: Historical ATM Fraud Rate (Train),0.5401,0.002996,0.0,0.0,0.0,0.0,0.0,0.0,Train-set fraud_tx_count_atm_30d / base_tx_count_30d
+Baseline 3: Recent Fraud Activity (7d),0.5716,0.002811,0.0,0.0,0.0,0.0,0.0,0.0,fraud_tx_count_atm_7d at cutoff
+Baseline 4: ATM Activity Baseline (30d),0.6231,0.002840,0.0,0.0,0.0,0.0,0.0,0.0,base_cw_count_30d at cutoff
+Baseline 5: Activity Anomaly Score,0.5513,0.002926,0.0,0.0,0.0,0.0,0.0,0.0,activity_ratio_24h at cutoff
+Target B XGBoost (prev baseline),N/A,0.0027,0.0,0.0,0.0,0.0,0.0,0.0,Standalone fraud cashout — too sparse
+Target C XGBoost Tier E (best),0.6084,0.034142,0.2,0.1,0.05,0.0625,0.0625,0.03125,Cybercrime-conditioned full model

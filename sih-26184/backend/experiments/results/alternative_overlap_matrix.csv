@@ -1,0 +1,25 @@
+threshold,approach_1,total_hits,Approach A1 (Robust Z-Score),Approach B (Activity Residual),Approach C (Candidate Trigger),Approach D (Graph Risk),Approach E (Hybrid 5-Way),Combo A+B,Combo A+B+D,Baseline: Random
+Top-5,Approach A1 (Robust Z-Score),1,1,1,1,0,0,1,1,0
+Top-5,Approach B (Activity Residual),2,1,2,1,0,0,1,1,0
+Top-5,Approach C (Candidate Trigger),2,1,1,2,0,0,1,1,1
+Top-5,Approach D (Graph Risk),1,0,0,0,1,0,0,0,0
+Top-5,Approach E (Hybrid 5-Way),0,0,0,0,0,0,0,0,0
+Top-5,Combo A+B,1,1,1,1,0,0,1,1,0
+Top-5,Combo A+B+D,1,1,1,1,0,0,1,1,0
+Top-5,Baseline: Random,1,0,0,1,0,0,0,0,1
+Top-10,Approach A1 (Robust Z-Score),3,3,2,1,2,1,2,2,0
+Top-10,Approach B (Activity Residual),2,2,2,1,1,1,2,2,0
+Top-10,Approach C (Candidate Trigger),2,1,1,2,1,1,1,1,1
+Top-10,Approach D (Graph Risk),2,2,1,1,2,1,1,1,0
+Top-10,Approach E (Hybrid 5-Way),1,1,1,1,1,1,1,1,0
+Top-10,Combo A+B,2,2,2,1,1,1,2,2,0
+Top-10,Combo A+B+D,2,2,2,1,1,1,2,2,0
+Top-10,Baseline: Random,2,0,0,1,0,0,0,0,2
+Top-20,Approach A1 (Robust Z-Score),4,4,2,3,3,3,4,4,2
+Top-20,Approach B (Activity Residual),2,2,2,1,1,1,2,2,1
+Top-20,Approach C (Candidate Trigger),3,3,1,3,3,3,3,3,1
+Top-20,Approach D (Graph Risk),3,3,1,3,3,3,3,3,1
+Top-20,Approach E (Hybrid 5-Way),3,3,1,3,3,3,3,3,1
+Top-20,Combo A+B,4,4,2,3,3,3,4,4,2
+Top-20,Combo A+B+D,4,4,2,3,3,3,4,4,2
+Top-20,Baseline: Random,4,2,1,1,1,1,2,2,4

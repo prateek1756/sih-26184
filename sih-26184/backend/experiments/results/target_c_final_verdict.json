@@ -1,0 +1,132 @@
+{
+  "_audit_date": "2026-09-03",
+  "_sih_problem_statement": "PS 26184",
+  "_production_modified": false,
+  "_rf_v1_0_intact": true,
+
+  "target_definition": {
+    "name": "TARGET_C_CybercrimeConditionedRisk",
+    "label_event": "ATM_Withdrawal AND is_fraud == 1",
+    "horizon": "48h",
+    "label_formula": "1 IFF exists t: t.atm_id == ATM AND t.occurred_at > cutoff_time AND t.occurred_at <= cutoff_time + 48h AND t.transaction_type == 'ATM_Withdrawal' AND t.is_fraud == 1",
+    "cutoff_frequency": "7D (weekly)",
+    "cutoff_range": "2019-03-01 to 2023-12-15",
+    "total_cutoffs": 251,
+    "atms": 150,
+    "total_rows": 37650
+  },
+
+  "dataset_statistics": {
+    "source": "live parquet probe (target_c_forensic_probe.py)",
+    "target_c_24h_positives": 56,
+    "target_c_24h_prevalence_pct": 0.1487,
+    "target_c_48h_positives": 108,
+    "target_c_48h_prevalence_pct": 0.2869,
+    "train_rows": 22500,
+    "train_positives_48h": 68,
+    "train_prevalence_pct": 0.3022,
+    "train_start": "2019-03-01",
+    "train_end": "2022-01-07",
+    "val_rows": 7500,
+    "val_positives_48h": 24,
+    "val_prevalence_pct": 0.3200,
+    "val_start": "2022-01-14",
+    "val_end": "2022-12-23",
+    "test_rows": 7650,
+    "test_positives_48h": 16,
+    "test_prevalence_pct": 0.2092,
+    "test_start": "2022-12-30",
+    "test_end": "2023-12-15",
+    "test_cutoffs": 51,
+    "test_cutoffs_with_positive": 15
+  },
+
+  "best_model": {
+    "type": "XGBoost",
+    "tier": "tier_e",
+    "horizon": "48h",
+    "compute_device": "CUDA (RTX 3050 6GB)",
+    "n_features": 31
+  },
+
+  "verified_metrics": {
+    "source": "compute_cybercrime_risk.py task-437 stdout",
+    "pr_auc": 0.034142,
+    "roc_auc": 0.6084,
+    "precision_at_5": 0.20,
+    "precision_at_10": 0.10,
+    "precision_at_20": 0.05,
+    "recall_at_5": 0.125,
+    "recall_at_10": 0.0625,
+    "recall_at_20": 0.03125,
+    "f1_score": 0.0625,
+    "true_positives_in_top_5": 1,
+    "true_positives_in_top_10": 1,
+    "true_positives_in_top_20": 1
+  },
+
+  "baseline_comparison": {
+    "strongest_heuristic_baseline": "Baseline 4: ATM Activity Baseline (30d)",
+    "strongest_heuristic_pr_auc": 0.002840,
+    "target_c_pr_auc": 0.034142,
+    "relative_improvement_ratio": 12.02,
+    "absolute_improvement": 0.031302,
+    "previously_reported_ratio": 12.6,
+    "correction_note": "12.6x was computed vs target-B baseline (0.0027). Correct comparison vs strongest heuristic is 12.02x"
+  },
+
+  "enrichment_check": {
+    "p_at_5": 0.20,
+    "test_prevalence": 0.002092,
+    "enrichment_factor": 95.6,
+    "interpretation": "Ranking statistic only. Not prediction accuracy. 1 true positive in top 5 vs 0.0105 expected at random."
+  },
+
+  "leakage_audit": {
+    "features_audited": 31,
+    "features_safe": 31,
+    "features_unsafe": 0,
+    "verdict": "PASS",
+    "method": "Source code review of build_dataset.py boundary conditions",
+    "boundary_enforced": "occurred_at < cutoff_time for all historical features"
+  },
+
+  "fold_level_evidence": {
+    "available": false,
+    "reason": "Per-cutoff AUC undefined with 0-2 positives per 150-sample fold",
+    "cutoffs_with_zero_positives": 36,
+    "cutoffs_with_one_positive": 14,
+    "cutoffs_with_two_positives": 1
+  },
+
+  "top_k_forensics": {
+    "model_artifact_present": false,
+    "artifact_paths_checked": [
+      "experiments/cybercrime_risk/artifacts/48h_xgb_tier_e/model.joblib",
+      "experiments/cybercrime_risk/artifacts/48h_rf_tier_e/model.joblib"
+    ],
+    "note": "Ablation computed scores in-memory without saving artifacts. P@K values from task-437 stdout are confirmed via integer arithmetic (0.20 * 5 = 1 TP, etc.)"
+  },
+
+  "production_readiness": {
+    "data_validity": "PASS",
+    "leakage": "PASS",
+    "temporal_stability": "UNKNOWN",
+    "baseline_improvement": true,
+    "operational_usefulness": "MODERATE",
+    "production_readiness": "NOT READY",
+    "production_status": "NO CHANGE"
+  },
+
+  "final_recommendation": {
+    "decision": "B",
+    "text": "Target C should be used only as a supporting risk signal",
+    "rationale": [
+      "PR-AUC improvement real and verified (12.02x over strongest heuristic)",
+      "Leakage audit clean — all 31 features proven safe",
+      "Only 16 test positives — single misranking shifts P@10 from 0.10 to 0.00",
+      "Temporal stability unknown — no fold-level model scores available",
+      "Absolute PR-AUC (0.034) remains low for standalone operational use"
+    ]
+  }
+}

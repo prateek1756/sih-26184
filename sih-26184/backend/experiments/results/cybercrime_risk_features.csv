@@ -1,0 +1,32 @@
+feature_name,feature_group,tier_first_included,description,temporal_boundary
+base_tx_count_30d,activity,tier_a,Total transactions at ATM in [T-30d T),strictly t<T
+base_cw_count_30d,activity,tier_a,Total ATM withdrawals in [T-30d T),strictly t<T
+base_cw_rate_daily,activity,tier_a,base_cw_count_30d / 30.0,strictly t<T
+recent_cw_count_24h,activity,tier_a,ATM withdrawals in [T-24h T),strictly t<T
+recent_cw_count_7d,activity,tier_a,ATM withdrawals in [T-7d T),strictly t<T
+cw_volatility_7d,activity,tier_a,Std dev of daily withdrawal counts over 7d,strictly t<T
+amount_avg_per_tx_30d,activity,tier_a,Mean transaction amount in [T-30d T),strictly t<T
+activity_ratio_24h,anomaly,tier_c,recent_cw_count_24h / (base_cw_rate_daily + eps),strictly t<T
+activity_delta_24h,anomaly,tier_c,recent_cw_count_24h - base_cw_rate_daily,strictly t<T
+activity_ratio_7d,anomaly,tier_c,(recent_cw_count_7d/7) / (base_cw_rate_daily + eps),strictly t<T
+amount_ratio_24h,anomaly,tier_c,24h avg amount / 30d avg amount,strictly t<T
+velocity_surge_24h_vs_7d,anomaly,tier_c,recent_cw_count_24h / (recent_cw_count_7d/7 + eps),strictly t<T
+unique_account_surge_24h,anomaly,tier_c,unique accounts in 24h / max(1 recent_cw_count_24h),strictly t<T
+fraud_tx_count_atm_30d,cybercrime,tier_b,is_fraud==1 transactions at ATM in [T-30d T),strictly t<T
+fraud_tx_count_atm_7d,cybercrime,tier_b,is_fraud==1 transactions at ATM in [T-7d T),strictly t<T
+fraud_tx_count_atm_24h,cybercrime,tier_b,is_fraud==1 transactions at ATM in [T-24h T),strictly t<T
+fraud_cashout_atm_30d,cybercrime,tier_b,ATM_Withdrawal + is_fraud==1 in [T-30d T),strictly t<T
+fraud_cashout_atm_7d,cybercrime,tier_b,ATM_Withdrawal + is_fraud==1 in [T-7d T),strictly t<T
+fraud_cashout_atm_24h,cybercrime,tier_b,ATM_Withdrawal + is_fraud==1 in [T-24h T),strictly t<T
+suspicious_density_city_7d,cybercrime,tier_b,City-wide is_fraud==1 count in [T-7d T),strictly t<T
+suspicious_density_city_24h,cybercrime,tier_b,City-wide is_fraud==1 count in [T-24h T),strictly t<T
+fraud_to_normal_ratio_30d,cybercrime,tier_b,fraud_tx_count_atm_30d / (base_tx_count_30d + eps),strictly t<T
+fraud_activity_change,cybercrime,tier_b,7d fraud rate vs 30d baseline ratio,strictly t<T
+connected_mule_accounts_7d,cybercrime,tier_b,Unique flagged customer_ids at ATM in 7d,strictly t<T
+hours_since_last_fraud,cybercrime,tier_b,(T - last fraud timestamp) / 3600 (default 720h),strictly t<T
+atm_lat,spatial,tier_d,ATM latitude,static
+atm_lon,spatial,tier_d,ATM longitude,static
+atm_cluster_density,spatial,tier_d,ATM count within 2.0km radius,static
+hour_of_day,temporal,tier_e,Cutoff timestamp hour (0-23),cutoff T
+day_of_week,temporal,tier_e,Cutoff weekday (0=Monday),cutoff T
+is_weekend,temporal,tier_e,1 if Saturday/Sunday else 0,cutoff T

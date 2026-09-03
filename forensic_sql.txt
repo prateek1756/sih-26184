@@ -1,0 +1,89 @@
+================================================================================
+FORENSIC SQL AUDIT OF SIH_26184 MAIN DATABASE + TEST DATABASE
+================================================================================
+
+==== MAIN DB ====
+URL: postgresql://hermes_user:hermes_password@localhost:5500/sih_26184
+
+[1] PostGIS_Version(): 3.6 USE_GEOS=1 USE_PROJ=1 USE_STATS=1
+[2] pg_extension entries:
+    plpgsql 1.0
+    postgis 3.6.2
+[3] Public tables (13): accounts, alembic_version, alerts, atm_locations, audit_events, complaints, investigation_notes, investigations, model_runs, risk_predictions, spatial_ref_sys, suspicious_transactions, users
+[4] geometry_columns catalog (3):
+    tbl=atm_locations col=location type=POINT srid=4326
+    tbl=risk_predictions col=risk_zone type=POLYGON srid=4326
+    tbl=suspicious_transactions col=location type=POINT srid=4326
+[5] GIST indexes (3):
+    tbl=atm_locations idx=idx_atm_locations_location col=location
+    tbl=risk_predictions idx=idx_risk_predictions_zone col=risk_zone
+    tbl=suspicious_transactions idx=idx_suspicious_tx_location col=location
+[6] Row counts:
+    accounts: 205
+    alembic_version: 1
+    alerts: 4
+    atm_locations: 115
+    audit_events: 61
+    complaints: 422
+    investigation_notes: 6
+    investigations: 6
+    model_runs: 1
+    risk_predictions: 130
+    spatial_ref_sys: 8500
+    suspicious_transactions: 1402
+    users: 38
+[7] risk_predictions.risk_zone (POLYGON Geometry) population: 0/130 NOT NULL
+    risk_predictions columns:
+      id (uuid)
+      predicted_at (timestamp with time zone)
+      model_version (character varying)
+      location_id (uuid)
+      latitude (double precision)
+      longitude (double precision)
+      risk_score (numeric)
+      severity (character varying)
+      confidence (numeric)
+      predicted_window_start (timestamp with time zone)
+      predicted_window_end (timestamp with time zone)
+      risk_zone (USER-DEFINED/geometry)
+      reasons (json)
+      model_run_id (uuid)
+      is_active (boolean)
+    Sample recent 5 risk_predictions:
+      ('620cd0b2-6357-491d-a47e-a449440f48bb', 'df8d65cb-97b0-467f-8393-3b9c9a8f4edc', Decimal('0.4358'), 'MEDIUM', Decimal('0.7889'), 28.6315, 77.2167, 'rf-v1.0', datetime.datetime(2026, 9, 3, 9, 44, 46, 280098, tzinfo=datetime.timezone(datetime.timedelta(seconds=19800))), None)
+      ('35adad4f-d5f6-486a-9a00-e61a9f8101df', 'fd0e0926-602a-43a7-9c44-bc3f0f95757f', Decimal('0.5078'), 'MEDIUM', Decimal('0.7446'), 28.627, 77.218, 'rf-v1.0', datetime.datetime(2026, 9, 3, 0, 12, 10, 294693, tzinfo=datetime.timezone(datetime.timedelta(seconds=19800))), None)
+      ('fd13e02c-4725-47e1-8373-1321edef59c6', 'fecb56b8-ad66-4cc0-b226-830a6011a94a', Decimal('0.4421'), 'MEDIUM', Decimal('0.8533'), 28.6315, 77.2167, 'rf-v1.0', datetime.datetime(2026, 9, 3, 0, 12, 10, 294692, tzinfo=datetime.timezone(datetime.timedelta(seconds=19800))), None)
+      ('9c417a50-f83d-47a9-b594-47935910be8b', '51898ecc-9a15-483f-9b30-a3336118eeb2', Decimal('0.4137'), 'MEDIUM', Decimal('0.7764'), 28.6139, 77.209, 'rf-v1.0', datetime.datetime(2026, 9, 3, 0, 12, 10, 294690, tzinfo=datetime.timezone(datetime.timedelta(seconds=19800))), None)
+      ('3940fe96-5a4c-4a5f-a179-08111cd90c9c', '4a2d478e-4c2a-4d2d-a88f-76fdb363e89c', Decimal('0.4137'), 'MEDIUM', Decimal('0.7764'), 28.6139, 77.209, 'rf-v1.0', datetime.datetime(2026, 9, 3, 0, 12, 10, 294689, tzinfo=datetime.timezone(datetime.timedelta(seconds=19800))), None)
+[8] atm_locations.location (POINT Geometry) population: 110/115 NOT NULL
+    Sample atms (id, latitude, longitude, ST_AsText(location) geom_wkt, ST_SRID(location) srid):
+      ('2392ef62-262e-40c6-bc3f-7a5b8a3f9e84', 28.633769, 77.203469, 'POINT(77.203469 28.633769)', 4326)
+      ('e98ab337-55b9-4087-b714-c1b56ea6a3f0', 28.639808, 77.269921, 'POINT(77.269921 28.639808)', 4326)
+      ('faf8688b-552f-4a37-8f29-2e4caa1ab8f0', 28.604534, 77.199635, 'POINT(77.199635 28.604534)', 4326)
+      ('6a9fe77d-0e89-44e7-99bc-714b44c3a779', 28.677069, 77.239697, 'POINT(77.239697 28.677069)', 4326)
+      ('89745346-336d-4fed-a511-638837d69f89', 28.595121, 77.230702, 'POINT(77.230702 28.595121)', 4326)
+[9] PostGIS ST_DWithin GEOGRAPHY(20km radius from Delhi CP) ON atm_locations.location: 20 HITS (uses GIST index if possible)
+[10] suspicious_transactions.location (POINT Geometry) population: 1397/1402 NOT NULL
+    Sample txs:
+      ('e4807aaf-5278-4055-8d15-ab123e7dbced', 23.065018, 72.538967, 'POINT(72.538967 23.065018)', 4326)
+      ('09aef8f7-6b2c-4a88-a156-6a5d4bb3ad68', 23.05506, 72.548431, 'POINT(72.548431 23.05506)', 4326)
+      ('5e2818bb-daef-4ae9-9725-2793c9dadc06', 23.054141, 72.535025, 'POINT(72.535025 23.054141)', 4326)
+[11] atm_locations: Geometry.X vs longitude / Geometry.Y vs latitude DISAGREEING rows (>1e-5): 0
+[12] model_runs rows: 1
+[12] users rows: 38
+[12] audit_events rows: 61
+[12] alerts rows: 4
+[12] investigations rows: 6
+
+==== TEST DB ====
+URL: postgresql://hermes_user:hermes_password@localhost:5500/sih26184_test
+
+[1] PostGIS_Version(): 3.6 USE_GEOS=1 USE_PROJ=1 USE_STATS=1
+[2] pg_extension entries:
+    plpgsql 1.0
+    postgis 3.6.2
+[3] Public tables (1): spatial_ref_sys
+[4] geometry_columns catalog (0):
+[5] GIST indexes (0):
+[6] Row counts:
+    spatial_ref_sys: 8500

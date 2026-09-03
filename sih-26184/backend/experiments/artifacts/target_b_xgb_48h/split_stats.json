@@ -1,0 +1,19 @@
+{
+  "train_cutoffs": 150,
+  "val_cutoffs": 50,
+  "test_cutoffs": 51,
+  "train_start": "2019-03-01T00:00:00",
+  "train_end": "2022-01-07T00:00:00",
+  "val_start": "2022-01-14T00:00:00",
+  "val_end": "2022-12-23T00:00:00",
+  "test_start": "2022-12-30T00:00:00",
+  "test_end": "2023-12-15T00:00:00",
+  "train_samples": 22500,
+  "train_positives": 68,
+  "val_samples": 7500,
+  "val_positives": 24,
+  "test_samples": 7650,
+  "test_positives": 16,
+  "train_prevalence_pct": 0.3022,
+  "test_prevalence_pct": 0.2092
+}

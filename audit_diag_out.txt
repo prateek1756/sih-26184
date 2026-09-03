@@ -1,0 +1,6 @@
+PORT 5500: OPEN
+psycopg2: AVAILABLE
+geoalchemy2: AVAILABLE
+joblib: AVAILABLE
+CWD: c:\Users\Prateek\Desktop\sih\sih-26184\backend
+SYNC_DB: NOT SET

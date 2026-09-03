@@ -1,0 +1,5 @@
+approach,candidate_tier,candidate_size_per_cutoff,overall_candidate_recall,pos_cutoff_hit5_pct,pos_cutoff_hit10_pct,pos_cutoff_hit20_pct,pos_cutoff_mean_p5,pos_cutoff_mean_p10,pos_cutoff_mean_p20,all_cutoff_mean_p5,all_cutoff_mean_p10,all_cutoff_mean_p20
+Approach C: Candidate Gen + Ranking,Top 10% Candidate Set,15,18.75,13.33,13.33,20.0,0.026667,0.013333,0.01,0.007843,0.003922,0.002941
+Approach C: Candidate Gen + Ranking,Top 20% Candidate Set,30,25.0,13.33,13.33,20.0,0.026667,0.013333,0.01,0.007843,0.003922,0.002941
+Approach C: Candidate Gen + Ranking,Top 30% Candidate Set,45,25.0,13.33,13.33,20.0,0.026667,0.013333,0.01,0.007843,0.003922,0.002941
+Approach C: Candidate Gen + Ranking,Top 50% Candidate Set,75,43.75,13.33,13.33,20.0,0.026667,0.013333,0.01,0.007843,0.003922,0.002941

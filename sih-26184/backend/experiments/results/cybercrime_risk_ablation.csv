@@ -1,0 +1,11 @@
+ablation_tier,ablation_name,feature_count,model,horizon,roc_auc,pr_auc,precision_at_5,precision_at_10,precision_at_20,recall_at_5,recall_at_10,recall_at_20,f1_score
+tier_a,ATM Activity Features Only,7,rf,48h,0.6031,0.002723,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+tier_a,ATM Activity Features Only,7,xgb,48h,0.5758,0.002628,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+tier_b,Cybercrime/Fraud Features Only,12,rf,48h,0.5959,0.002594,0.0,0.0,0.0,0.0,0.0,0.0,0.0042
+tier_b,Cybercrime/Fraud Features Only,12,xgb,48h,0.5495,0.002448,0.0,0.0,0.0,0.0,0.0,0.0,0.0046
+tier_c,Activity + Cybercrime Features,25,rf,48h,0.6270,0.003144,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+tier_c,Activity + Cybercrime Features,25,xgb,48h,0.6330,0.010679,0.0,0.1,0.05,0.0,0.0625,0.0313,0.0526
+tier_d,Activity + Cybercrime + Spatial,28,rf,48h,0.6280,0.003599,0.0,0.0,0.0,0.0,0.0,0.0,0.0155
+tier_d,Activity + Cybercrime + Spatial,28,xgb,48h,0.5877,0.023434,0.2,0.1,0.05,0.125,0.0625,0.0313,0.0741
+tier_e,Full Model (Activity + Cyber + Spatial + Temporal),31,rf,48h,0.6337,0.005138,0.0,0.0,0.0,0.0,0.0,0.0,0.0174
+tier_e,Full Model (Activity + Cyber + Spatial + Temporal),31,xgb,48h,0.6084,0.034142,0.2,0.1,0.05,0.125,0.0625,0.0313,0.0625

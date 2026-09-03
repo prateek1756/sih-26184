@@ -1,0 +1,2 @@
+approach,method,global_pr_auc,global_roc_auc,pos_cutoff_hit5_pct,pos_cutoff_hit10_pct,pos_cutoff_hit20_pct,pos_cutoff_mean_p5,pos_cutoff_mean_p10,pos_cutoff_mean_p20,all_cutoff_mean_p5,all_cutoff_mean_p10,all_cutoff_mean_p20
+Approach 2: Account -> ATM Behavior,Mule Surge + Unique Accounts + Amount Anomaly,0.003747,0.579488,6.67,6.67,13.33,0.013333,0.006667,0.006667,0.003922,0.001961,0.001961

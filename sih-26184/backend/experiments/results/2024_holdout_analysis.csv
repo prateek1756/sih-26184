@@ -1,0 +1,2 @@
+total_raw_rows_2024,date_span,duration_hours,unique_days,atm_withdrawals,fraud_atm_withdrawals,usable_weekly_cutoffs,verdict
+295,2024-01-01 00:04:00 to 2024-01-01 23:58:00,23.9,1,33,0,0,INSUFFICIENT (Dataset terminates on 2024-01-01 00:00:00 with only 295 rows recorded in first hour/day of 2024. No multi-week time-series exists for 2024).

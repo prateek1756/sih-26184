@@ -1,0 +1,38 @@
+{
+  "_comment": "SIH PS 26184 — Cold-Start Crime-to-Cashout Candidate Intelligence Configuration",
+  "_experiment_purpose": "Target cold-start ATM fraud cashouts using transaction, account, and graph propagation signals",
+  "_production_modified": false,
+
+  "data": {
+    "raw_csv": "C:\\Users\\Prateek\\Desktop\\sih\\dataset\\indian_banking_transactions.csv",
+    "parquet_dataset": "experiments/cybercrime_risk/exp_cybercrime_risk_dataset.parquet",
+    "canonical_atms": "data/processed/canonical_atms.parquet",
+    "year_range": [2019, 2023]
+  },
+
+  "evaluation": {
+    "protocol": "per_cutoff_ranking",
+    "target_column": "target_c_48h",
+    "k_values": [5, 10, 20],
+    "candidate_percentiles": [0.05, 0.10, 0.20, 0.50]
+  },
+
+  "cold_start_definition": {
+    "history_positive_criteria": [
+      "fraud_tx_count_atm_30d > 0",
+      "fraud_cashout_atm_30d > 0",
+      "connected_mule_accounts_7d > 0",
+      "velocity_surge_24h_vs_7d > 1.5",
+      "activity_ratio_24h > 1.5"
+    ],
+    "cold_start_criteria": "All history-positive indicators are zero"
+  },
+
+  "propagation_weights": {
+    "geographic_proximity": 0.30,
+    "suspicious_recency": 0.25,
+    "account_historical_link": 0.20,
+    "graph_connectivity": 0.15,
+    "activity_anomaly": 0.10
+  }
+}

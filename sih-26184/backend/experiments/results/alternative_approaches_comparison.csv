@@ -1,0 +1,15 @@
+approach,method,global_pr_auc,pos_cutoff_hit5_pct,pos_cutoff_hit10_pct,pos_cutoff_hit20_pct,pos_cutoff_mean_p5,pos_cutoff_mean_p10,candidate_recall_pct
+Approach A: Anomaly Detection,Statistical Robust Z-Score,0.003273,6.67,20.0,26.67,0.013333,0.02,
+Approach B: Activity Forecasting,HistGradientBoostingRegressor + Residual Anomaly Ratio,0.002528,13.33,13.33,13.33,0.026667,0.013333,
+Approach C: Candidate Gen + Ranking,Top 10% Candidate Set,,13.33,13.33,20.0,0.026667,0.013333,18.75
+Approach C: Candidate Gen + Ranking,Top 20% Candidate Set,,13.33,13.33,20.0,0.026667,0.013333,25.0
+Approach C: Candidate Gen + Ranking,Top 30% Candidate Set,,13.33,13.33,20.0,0.026667,0.013333,25.0
+Approach C: Candidate Gen + Ranking,Top 50% Candidate Set,,13.33,13.33,20.0,0.026667,0.013333,43.75
+Baseline,1. Random Ranking,0.003214,6.67,13.33,26.67,0.013333,0.013333,100.0
+Approach D: Deterministic Graph Risk,Multi-Hop Mule Network & Proximity Topology,0.00313,6.67,13.33,20.0,0.013333,0.013333,
+Baseline,2. 30-Day ATM Tx Volume,0.002666,6.67,6.67,6.67,0.013333,0.006667,100.0
+Approach A: Anomaly Detection,Isolation Forest,0.00307,0.0,6.67,26.67,0.0,0.006667,
+Baseline,5. Recent 7-Day Fraud Count,0.002811,0.0,6.67,33.33,0.0,0.006667,100.0
+Baseline,3. 7-Day ATM Withdrawal Count,0.002732,0.0,6.67,13.33,0.0,0.006667,100.0
+Approach E: Normalized Hybrid Risk,Equal-Weight (0.20 * 5 Components: Anomaly+Graph+Suspicious+Spatial+Fraud),0.002694,0.0,6.67,20.0,0.0,0.006667,
+Baseline,4. Historical ATM Fraud Rate,0.002004,0.0,0.0,6.67,0.0,0.0,100.0

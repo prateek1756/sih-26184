@@ -1,0 +1,22 @@
+{
+  "features": [
+    "hour_of_day",
+    "day_of_week",
+    "is_weekend",
+    "recent_activity_count_24h",
+    "recent_activity_count_7d",
+    "recent_amount_24h",
+    "max_single_amount_24h",
+    "historical_cashout_count_30d",
+    "historical_incident_count_500m",
+    "historical_incident_count_2km",
+    "atm_density_1km",
+    "connected_mule_accounts_count",
+    "unique_accounts_24h",
+    "hours_since_last_activity",
+    "amount_log_24h"
+  ],
+  "num_features": 15,
+  "prediction_unit": "ATM_LOCATION_AT_CUTOFF_T",
+  "horizon_hours": 24
+}

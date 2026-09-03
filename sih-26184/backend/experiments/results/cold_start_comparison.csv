@@ -1,0 +1,12 @@
+method_name,global_pr_auc,global_roc_auc,overall_hit5_pct,overall_hit10_pct,overall_hit20_pct,overall_events_top10,overall_events_top20,overall_mean_p10,cold_start_hit5_pct,cold_start_hit10_pct,cold_start_hit20_pct,cold_start_events_top10,cold_start_events_top20,hist_pos_hit10_pct,hist_pos_events_top10
+Approach 1: Transaction Propagation,0.00209,0.508785,6.67,6.67,6.67,1/16,1/16,0.006667,0.0,0.0,0.0,0/9,0/9,16.67,1/7
+Approach 2: Account Behavior,0.003747,0.579488,6.67,6.67,13.33,1/16,2/16,0.006667,0.0,0.0,11.11,0/9,1/9,16.67,1/7
+Approach 3: Graph Cashout Path,0.002452,0.546146,0.0,0.0,13.33,0/16,2/16,0.0,0.0,0.0,0.0,0/9,0/9,0.0,0/7
+Approach 5: Weighted Candidate Ranking,0.002744,0.562668,6.67,6.67,13.33,1/16,2/16,0.006667,0.0,0.0,0.0,0/9,0/9,16.67,1/7
+Approach 5: Equal-Weight Candidate Ranking,0.00321,0.591359,6.67,13.33,13.33,2/16,2/16,0.013333,0.0,0.0,0.0,0/9,0/9,33.33,2/7
+Benchmark: Approach A1 (Robust Z-Score),0.003273,0.574752,6.67,20.0,26.67,3/16,4/16,0.02,0.0,11.11,11.11,1/9,1/9,50.0,3/7
+Benchmark: Combo A+B,0.003169,0.57124,6.67,13.33,26.67,2/16,4/16,0.013333,0.0,11.11,11.11,1/9,1/9,33.33,2/7
+Baseline: Random,0.003214,0.468709,6.67,13.33,26.67,2/16,4/16,0.013333,0.0,0.0,22.22,0/9,2/9,33.33,2/7
+Baseline: 30d Volume,0.002666,0.569459,6.67,6.67,6.67,1/16,1/16,0.006667,0.0,0.0,0.0,0/9,0/9,16.67,1/7
+Baseline: 7d Volume,0.002732,0.599677,0.0,6.67,13.33,1/16,2/16,0.006667,0.0,11.11,11.11,1/9,1/9,0.0,0/7
+Baseline: Historical Fraud Rate,0.002004,0.491334,0.0,0.0,6.67,0/16,1/16,0.0,0.0,0.0,0.0,0/9,0/9,0.0,0/7
