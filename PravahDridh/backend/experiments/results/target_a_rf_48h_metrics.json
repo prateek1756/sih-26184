@@ -1,0 +1,86 @@
+﻿{
+  "target": "target_a",
+  "target_name": "TARGET_A_CashWithdrawal",
+  "model_type": "rf",
+  "horizon": "48h",
+  "horizon_hours": 48,
+  "artifact_dir": "C:\\Users\\Prateek\\Desktop\\sih\\PravahDridh\\backend\\experiments\\artifacts\\target_a_rf_48h",
+  "test_samples": 7650,
+  "test_positives": 2089,
+  "test_prevalence_pct": 27.307189542483663,
+  "metrics": {
+    "roc_auc": 0.7365162514120557,
+    "pr_auc": 0.46847736218171376,
+    "brier_score": 0.20400976914660657,
+    "precision": 0.40482502651113467,
+    "recall": 0.7309717568214457,
+    "f1_score": 0.5210714895069101,
+    "precision_at_5": 1.0,
+    "precision_at_10": 0.8,
+    "precision_at_20": 0.65,
+    "recall_at_5": 0.0023934897079942556,
+    "recall_at_10": 0.003829583532790809,
+    "recall_at_20": 0.006223073240785065
+  },
+  "confusion_matrix": [
+    [
+      3316,
+      2245
+    ],
+    [
+      562,
+      1527
+    ]
+  ],
+  "meta": {
+    "target": "target_a",
+    "target_name": "TARGET_A_CashWithdrawal",
+    "model_type": "rf",
+    "compute_device": "CPU",
+    "gpu_diagnostic": {},
+    "horizon_h": 48,
+    "horizon_key": "48h",
+    "feature_names": [
+      "hour_of_day",
+      "day_of_week",
+      "is_weekend",
+      "n_txs_atm_24h",
+      "n_txs_atm_7d",
+      "n_txs_atm_30d",
+      "total_amt_24h",
+      "max_amt_24h",
+      "n_cashout_24h",
+      "n_cashout_7d",
+      "n_cashout_30d",
+      "n_fraud_cashout_24h",
+      "n_fraud_cashout_7d",
+      "n_fraud_cashout_30d",
+      "n_unique_accts_24h",
+      "n_unique_accts_7d",
+      "hours_since_last_tx",
+      "amount_log_24h",
+      "atm_lat",
+      "atm_lon"
+    ],
+    "n_features": 20,
+    "train_samples": 22500,
+    "train_positives": 6373,
+    "test_samples": 7650,
+    "test_positives": 2089,
+    "trained_at": "2026-09-03T11:49:31.564066",
+    "model_params": {
+      "n_estimators": 300,
+      "max_depth": 10,
+      "min_samples_leaf": 5,
+      "class_weight": "balanced",
+      "random_state": 42,
+      "n_jobs": -1
+    },
+    "training_time_s": 1.08,
+    "production_modified": false,
+    "production_model_path": "C:\\Users\\Prateek\\Desktop\\sih\\PravahDridh\\backend\\artifacts\\rf-v1.0.joblib",
+    "experiment_model_path": "C:\\Users\\Prateek\\Desktop\\sih\\PravahDridh\\backend\\experiments\\artifacts\\target_a_rf_48h\\model.joblib",
+    "note": "EXPERIMENTAL ONLY \u2014 run evaluate_experiment.py to get metrics"
+  },
+  "production_modified": false
+}

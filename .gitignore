@@ -37,6 +37,7 @@ venv.bak/
 *.env
 
 # IDE / OS
+.agents/
 .idea/
 .vscode/
 *.swp

@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', Inter, system-ui, -apple-system, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-sans);
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 min-h-screen flex flex-col font-sans;
+    overflow-x: hidden;
+  }
+
+  #root {
+    @apply min-h-screen flex flex-col w-full;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Subtle grid pattern for cyber hero */
+.bg-grid-pattern {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+.bg-radial-gradient {
+  background: radial-gradient(circle at 50% 30%, rgba(14, 140, 233, 0.22) 0%, rgba(9, 17, 36, 0) 70%);
+}
+
+/* Accessibility: Font size adjustment classes */
+html.font-size-sm {
+  font-size: 14px;
+}
+html.font-size-base {
+  font-size: 16px;
+}
+html.font-size-lg {
+  font-size: 18px;
+}
+
+/* High Contrast Mode */
+html.high-contrast body {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+html.high-contrast a,
+html.high-contrast button {
+  outline: 2px solid #ffff00 !important;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   LOGO ANIMATIONS
+   ============================================================ */
+
+/* 1. Gentle float for the Ashoka Emblem */
+@keyframes emblem-float {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50%       { transform: translateY(-4px) scale(1.04); }
+}
+.animate-emblem-float {
+  animation: emblem-float 3.6s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+/* 2. Golden shimmer sweep across the emblem */
+@keyframes emblem-shimmer {
+  0%   { filter: drop-shadow(0 0 0px rgba(251, 191, 36, 0)); }
+  40%  { filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.75)) drop-shadow(0 0 12px rgba(251, 191, 36, 0.35)); }
+  100% { filter: drop-shadow(0 0 0px rgba(251, 191, 36, 0)); }
+}
+.animate-emblem-shimmer {
+  animation: emblem-shimmer 3.6s ease-in-out infinite;
+}
+
+/* 3. Text fade-in-up for "Government of India" lines */
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.animate-gov-title {
+  animation: slide-in-right 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 0.1s;
+}
+.animate-gov-sub {
+  animation: slide-in-right 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 0.25s;
+}
+
+/* 4. Shield logo: pulse glow ring for Pravah Setu */
+@keyframes shield-pulse {
+  0%, 100% { box-shadow: 0 0 0 0px rgba(14, 140, 233, 0.4); }
+  50%       { box-shadow: 0 0 0 8px rgba(14, 140, 233, 0); }
+}
+.animate-shield-pulse {
+  animation: shield-pulse 2.4s ease-in-out infinite;
+}
+
+/* 5. Logo brand text shimmer highlight */
+@keyframes text-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.animate-logo-shimmer {
+  background: linear-gradient(
+    90deg,
+    #1e40af 0%,
+    #0ea5e9 35%,
+    #38bdf8 50%,
+    #0ea5e9 65%,
+    #1e40af 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: text-shimmer 3s linear infinite;
+}
+
+/* 6. Separator border glow pulse */
+@keyframes border-glow {
+  0%, 100% { border-color: rgba(203, 213, 225, 1); }
+  50%       { border-color: rgba(14, 140, 233, 0.5); }
+}
+.animate-border-glow {
+  animation: border-glow 3s ease-in-out infinite;
+}
+
+/* 7. Fade-in from top for whole header brand block */
+@keyframes fade-down-in {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-down {
+  animation: fade-down-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+

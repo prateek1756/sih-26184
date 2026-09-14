@@ -1,0 +1,106 @@
+{
+  "model_name": "RandomForest-v2.0 (Calibrated)",
+  "model_version": "v2.0",
+  "algorithm": "RandomForest-v2.0",
+  "created_at": "2026-09-12T17:10:39.997195+00:00",
+  "artifact_path": "C:\\Users\\Prateek\\Desktop\\sih\\PravahDridh\\backend\\artifacts\\production-v2.0.joblib",
+  "prediction_horizon_hours": 24,
+  "features": [
+    "hour_of_day",
+    "day_of_week",
+    "is_weekend",
+    "recent_activity_count_24h",
+    "recent_activity_count_7d",
+    "recent_amount_24h",
+    "max_single_amount_24h",
+    "historical_cashout_count_30d",
+    "historical_incident_count_500m",
+    "historical_incident_count_2km",
+    "atm_density_1km",
+    "connected_mule_accounts_count",
+    "unique_accounts_24h",
+    "hours_since_last_activity",
+    "amount_log_24h"
+  ],
+  "dataset_path": "C:\\Users\\Prateek\\Desktop\\sih\\PravahDridh\\backend\\data\\ml\\v2_training_dataset_24h_132atms.parquet",
+  "train_samples": 23100,
+  "val_samples": 4884,
+  "test_samples": 5148,
+  "train_positives": 3793,
+  "test_positives": 788,
+  "metrics": {
+    "model_name": "RandomForest-v2.0 (Calibrated)",
+    "pr_auc": 0.4677,
+    "roc_auc": 0.8425,
+    "brier_score": 0.1021,
+    "optimal_threshold": 0.2068,
+    "metrics_at_05": {
+      "precision": 0.6215,
+      "recall": 0.1396,
+      "f1": 0.228
+    },
+    "metrics_at_optimal": {
+      "precision": 0.3609,
+      "recall": 0.7195,
+      "f1": 0.4807
+    },
+    "ranking_metrics": {
+      "evaluated_cutoffs": 39,
+      "mean_precision@5": 0.6205,
+      "median_precision@5": 0.6,
+      "mean_recall@5": 0.1538,
+      "median_recall@5": 0.1481,
+      "mean_precision@10": 0.541,
+      "median_precision@10": 0.6,
+      "mean_recall@10": 0.2677,
+      "median_recall@10": 0.2667,
+      "mean_precision@20": 0.4526,
+      "median_precision@20": 0.45,
+      "mean_recall@20": 0.4493,
+      "median_recall@20": 0.4667
+    },
+    "temporal_stability": {
+      "early_test_period": {
+        "start_cutoff": "2023-03-24 00:00:00",
+        "end_cutoff": "2023-06-16 00:00:00",
+        "cutoffs": 13,
+        "samples": 1716,
+        "positives": 257,
+        "pr_auc": 0.4509,
+        "roc_auc": 0.8431,
+        "mean_precision@5": 0.5846,
+        "mean_precision@10": 0.5077,
+        "mean_precision@20": 0.45,
+        "mean_recall@20": 0.4599
+      },
+      "middle_test_period": {
+        "start_cutoff": "2023-06-23 00:00:00",
+        "end_cutoff": "2023-09-15 00:00:00",
+        "cutoffs": 13,
+        "samples": 1716,
+        "positives": 268,
+        "pr_auc": 0.4592,
+        "roc_auc": 0.8249,
+        "mean_precision@5": 0.6308,
+        "mean_precision@10": 0.5308,
+        "mean_precision@20": 0.4308,
+        "mean_recall@20": 0.4207
+      },
+      "late_test_period": {
+        "start_cutoff": "2023-09-22 00:00:00",
+        "end_cutoff": "2023-12-15 00:00:00",
+        "cutoffs": 13,
+        "samples": 1716,
+        "positives": 263,
+        "pr_auc": 0.4939,
+        "roc_auc": 0.8591,
+        "mean_precision@5": 0.6462,
+        "mean_precision@10": 0.5846,
+        "mean_precision@20": 0.4769,
+        "mean_recall@20": 0.4673
+      }
+    }
+  },
+  "selection_rationale": "RandomForest-v2.0 achieved the highest operational dispatch accuracy with Mean Precision@5 of 0.6205 (vs 0.6000 for XGBoost) and Mean Precision@10 of 0.5410 (vs 0.5154 for XGBoost). Platt sigmoid calibration reduced Brier loss from 0.1625 to 0.1021 while preserving exact monotonic ranking order.",
+  "rollback_target": "rf-v1.0"
+}

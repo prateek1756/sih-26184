@@ -1,0 +1,91 @@
+{
+  "dataset_name": "SIH_PS_26184_V2_Point_In_Time_24h",
+  "generated_at": "2026-09-11T17:55:07.885803+00:00",
+  "prediction_horizon_hours": 24,
+  "matching_radius_km": 2.0,
+  "primary_target": {
+    "name": "target_cashout_24h",
+    "definition": "Any qualifying ATM withdrawal at this ATM in (T, T+24h]",
+    "total_samples": 33132,
+    "positives": 5356,
+    "prevalence_pct": 16.17
+  },
+  "secondary_target": {
+    "name": "target_fraud_cashout_24h",
+    "definition": "ATM withdrawal AND is_fraud==1 at this ATM in (T, T+24h]",
+    "total_samples": 33132,
+    "positives": 56,
+    "prevalence_pct": 0.17,
+    "operational_role": "Secondary research / diagnostic target only"
+  },
+  "atm_node_inventory": {
+    "postgresql_production_atms": {
+      "count": 132,
+      "file": "data/processed/canonical_atms_132_db.parquet",
+      "city_breakdown": {
+        "Delhi": 42,
+        "Mumbai": 10,
+        "Bengaluru": 10,
+        "Hyderabad": 10,
+        "Kolkata": 10,
+        "Chennai": 10,
+        "Ahmedabad": 10,
+        "Pune": 10,
+        "Jaipur": 10,
+        "Lucknow": 10
+      },
+      "operational_status": "Real physical ATMs seeded in PostgreSQL database used by live inference API"
+    },
+    "synthetic_grid_nodes": {
+      "count": 150,
+      "file": "data/processed/canonical_atms.parquet",
+      "city_breakdown": {
+        "New Delhi": 15,
+        "Mumbai": 15,
+        "Bengaluru": 15,
+        "Chennai": 15,
+        "Ahmedabad": 15,
+        "Kolkata": 15,
+        "Hyderabad": 15,
+        "Lucknow": 15,
+        "Jaipur": 15,
+        "Kochi": 15
+      },
+      "operational_status": "Synthetic regular geometric grid (10 cities x 15 nodes) for high-density spatial research"
+    }
+  },
+  "feature_contract_v2": {
+    "feature_count": 18,
+    "features": [
+      "hour_of_day",
+      "day_of_week",
+      "is_weekend",
+      "recent_activity_count_24h",
+      "recent_activity_count_7d",
+      "recent_amount_24h",
+      "max_single_amount_24h",
+      "historical_cashout_count_30d",
+      "historical_incident_count_500m",
+      "historical_incident_count_2km",
+      "atm_density_1km",
+      "connected_mule_accounts_count",
+      "unique_accounts_24h",
+      "hours_since_last_activity",
+      "amount_log_24h",
+      "velocity_surge_ratio",
+      "night_activity_ratio_7d",
+      "state_crime_risk_index"
+    ],
+    "point_in_time_guarantees": {
+      "all_features_filter": "event.occurred_at < T",
+      "velocity_surge_ratio_safe": true,
+      "night_activity_ratio_7d_safe": true,
+      "state_crime_risk_index_safe": true
+    }
+  },
+  "split_strategy": "Chronological (Train 70%, Val 15%, Test 15%)",
+  "production_safety": {
+    "rf_v1_joblib_preserved": true,
+    "live_endpoint_untouched": true
+  }
+}
