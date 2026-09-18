@@ -8,21 +8,27 @@ import { ZoomIn, ZoomOut, RotateCcw, ArrowRight, MapPin, Zap, Lock, Unlock, Plus
 import { mockGraphNodes, mockGraphEdges, GraphNode, GraphEdge } from '../services/mockData';
 import { graphApi } from '../api';
 import { SeverityBadge } from '../components/common/SeverityBadge';
+import {
+  renderRealImageNode,
+  preloadAllGraphImages,
+  resolveNodeImage,
+  NODE_IMAGES,
+} from '../services/graphImageResolver';
 
 // ── Visual config per entity type ─────────────────────────────────────────────
 const TYPE_CFG: Record<string, { color: string; radius: number; icon: string }> = {
-  Person:        { color: '#c084fc', radius: 28, icon: '👤' },
-  Account:       { color: '#00d4ff', radius: 24, icon: '🏦' },
-  ATM:           { color: '#f97316', radius: 26, icon: '🏧' },
-  Device:        { color: '#4ade80', radius: 22, icon: '📱' },
-  Phone:         { color: '#facc15', radius: 22, icon: '📞' },
-  Case:          { color: '#ef4444', radius: 26, icon: '⚖️' },
-  Complaint:     { color: '#ef4444', radius: 26, icon: '📋' },
-  Investigation: { color: '#8b5cf6', radius: 26, icon: '🔍' },
-  Alert:         { color: '#eab308', radius: 22, icon: '⚡' },
-  Prediction:    { color: '#06b6d4', radius: 24, icon: '🎯' },
-  Location:      { color: '#38bdf8', radius: 24, icon: '📍' },
-  Transaction:   { color: '#f43f5e', radius: 20, icon: '💸' },
+  Person:        { color: '#c084fc', radius: 30, icon: '👤' },
+  Account:       { color: '#00d4ff', radius: 28, icon: '🏦' },
+  ATM:           { color: '#f97316', radius: 28, icon: '🏧' },
+  Device:        { color: '#4ade80', radius: 26, icon: '📱' },
+  Phone:         { color: '#facc15', radius: 26, icon: '📞' },
+  Case:          { color: '#ef4444', radius: 28, icon: '⚖️' },
+  Complaint:     { color: '#ef4444', radius: 28, icon: '📋' },
+  Investigation: { color: '#8b5cf6', radius: 28, icon: '🔍' },
+  Alert:         { color: '#eab308', radius: 26, icon: '⚡' },
+  Prediction:    { color: '#06b6d4', radius: 26, icon: '🎯' },
+  Location:      { color: '#38bdf8', radius: 28, icon: '📍' },
+  Transaction:   { color: '#f43f5e', radius: 24, icon: '💸' },
 };
 
 interface Particle { id: number; edgeIdx: number; progress: number; speed: number; }
@@ -78,6 +84,7 @@ export const KnowledgeGraph: React.FC = () => {
               details: nd.subType || nd.properties?.category || nd.properties?.bank_name || nd.properties?.atm_code || '',
               subNetwork: nd.properties?.victim_city || nd.properties?.city || 'NCR Network',
               status: nd.properties?.status || (nd.isSuspicious ? 'SUSPICIOUS' : 'ACTIVE'),
+              imageUrl: resolveNodeImage(nd),
             };
           });
 
@@ -299,63 +306,29 @@ export const KnowledgeGraph: React.FC = () => {
 
       // ── Draw Nodes ─────────────────────────────────────────────────────
       snap.forEach(node => {
-        if (node.x === undefined) return;
-        const cfg     = TYPE_CFG[node.type] ?? { color: '#00d4ff', radius: 22, icon: '●' };
-        const r       = cfg.radius;
-        const isSel   = node.id === selectedId;
-        const isConn  = connectedIds.has(node.id);
-        const fade    = connectedIds.size > 1 && !isConn;
+        if (node.x === undefined || node.y === undefined) return;
+        const cfg    = TYPE_CFG[node.type] ?? { color: '#00d4ff', radius: 28, icon: '●' };
+        const isSel  = node.id === selectedId;
+        const isConn = connectedIds.has(node.id);
+        const fade   = connectedIds.size > 1 && !isConn;
 
-        ctx.save();
-        ctx.globalAlpha = fade ? 0.2 : 1;
-
-        // Outer glow ring for selected
-        if (isSel) {
-          ctx.beginPath(); ctx.arc(node.x, node.y!, r + 12, 0, Math.PI * 2);
-          ctx.fillStyle = cfg.color + '22'; ctx.fill();
-          ctx.beginPath(); ctx.arc(node.x, node.y!, r + 6, 0, Math.PI * 2);
-          ctx.strokeStyle = cfg.color; ctx.lineWidth = 1.5;
-          ctx.setLineDash([4, 5]); ctx.stroke(); ctx.setLineDash([]);
-        }
-
-        // High-risk pulse halo
-        if (!isSel && node.riskScore > 88) {
-          ctx.beginPath(); ctx.arc(node.x, node.y!, r + 5, 0, Math.PI * 2);
-          ctx.strokeStyle = '#ef444455'; ctx.lineWidth = 1.5; ctx.stroke();
-        }
-
-        // Node body
-        ctx.beginPath(); ctx.arc(node.x, node.y!, r, 0, Math.PI * 2);
-        const grad = ctx.createRadialGradient(node.x - r * 0.3, node.y! - r * 0.3, 0, node.x, node.y!, r);
-        grad.addColorStop(0, cfg.color + 'aa');
-        grad.addColorStop(1, '#0f172a');
-        ctx.fillStyle   = grad;
-        ctx.shadowColor = cfg.color;
-        ctx.shadowBlur  = isSel ? 24 : isConn ? 12 : 4;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-        ctx.strokeStyle = isSel ? '#ffffff' : cfg.color;
-        ctx.lineWidth   = isSel ? 2.5 : 1.5;
-        ctx.stroke();
-
-        // Icon
-        ctx.font      = `${r * 0.75}px serif`;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(cfg.icon, node.x, node.y!);
-
-        // Name label
-        ctx.font      = isSel ? 'bold 11px Inter,sans-serif' : '10px Inter,sans-serif';
-        ctx.fillStyle = isSel ? '#ffffff' : '#cbd5e1';
-        ctx.textBaseline = 'top';
-        ctx.fillText(node.label, node.x, node.y! + r + 6);
-
-        // Risk score sub-label
-        ctx.font      = '8px JetBrains Mono,monospace';
-        ctx.fillStyle = node.riskScore > 85 ? '#f87171' : '#64748b';
-        ctx.fillText(`${node.riskScore}%  ${node.type}`, node.x, node.y! + r + 18);
-
-        ctx.restore();
+        renderRealImageNode({
+          ctx,
+          node: {
+            id: node.id,
+            label: node.label,
+            type: node.type,
+            riskScore: node.riskScore,
+            x: node.x,
+            y: node.y,
+            imageUrl: node.imageUrl,
+          },
+          radius: cfg.radius,
+          color: cfg.color,
+          isSelected: isSel,
+          isConnected: isConn,
+          isFaded: fade,
+        });
       });
 
       ctx.restore();
@@ -510,31 +483,52 @@ export const KnowledgeGraph: React.FC = () => {
         {/* Node List */}
         <div style={{ flex: 1, overflowY: 'auto', padding: '8px' }}>
           {nodes.map(n => {
-            const cfg = TYPE_CFG[n.type] ?? { color: '#00d4ff' };
+            const cfg = TYPE_CFG[n.type] ?? { color: '#00d4ff', radius: 28, icon: '●' };
             const isSel = n.id === selectedId;
+            const imgSrc = resolveNodeImage(n);
+            const meta = NODE_IMAGES[n.id];
             return (
               <div
                 key={n.id}
                 onClick={() => setSelectedId(n.id)}
                 style={{
                   display: 'flex', alignItems: 'center', gap: '10px',
-                  padding: '9px 10px', borderRadius: '6px', cursor: 'pointer',
+                  padding: '7px 10px', borderRadius: '6px', cursor: 'pointer',
                   marginBottom: '3px',
                   background: isSel ? `${cfg.color}18` : 'transparent',
-                  border: `1px solid ${isSel ? cfg.color + '55' : 'transparent'}`,
+                  border: `1px solid ${isSel ? cfg.color + '66' : 'transparent'}`,
                   transition: 'all 0.15s ease',
                 }}
               >
-                <span style={{
-                  width: 10, height: 10, borderRadius: '50%',
-                  background: cfg.color, flexShrink: 0,
-                  boxShadow: isSel ? `0 0 8px ${cfg.color}` : 'none',
-                }} />
+                <div style={{ position: 'relative', width: 30, height: 30, flexShrink: 0 }}>
+                  <img
+                    src={imgSrc}
+                    alt={n.label}
+                    style={{
+                      width: 30,
+                      height: 30,
+                      borderRadius: '50%',
+                      objectFit: 'cover',
+                      border: `1.5px solid ${isSel ? '#ffffff' : cfg.color}`,
+                      boxShadow: isSel ? `0 0 10px ${cfg.color}` : '0 2px 5px rgba(0,0,0,0.5)',
+                    }}
+                  />
+                  <span style={{
+                    position: 'absolute', bottom: -2, right: -2,
+                    fontSize: '9px', background: meta?.badgeBg || cfg.color,
+                    borderRadius: '50%', width: 13, height: 13,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    border: '1px solid #ffffff',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.6)',
+                  }}>
+                    {meta?.badge || cfg.icon}
+                  </span>
+                </div>
                 <div style={{ overflow: 'hidden' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                  <div style={{ fontSize: '0.75rem', fontWeight: 600, color: isSel ? '#ffffff' : 'var(--text-primary)', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
                     {n.label}
                   </div>
-                  <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'JetBrains Mono' }}>
+                  <div style={{ fontSize: '0.65rem', color: isSel ? cfg.color : 'var(--text-muted)', fontFamily: 'JetBrains Mono' }}>
                     {n.type} · {n.riskScore}%
                   </div>
                 </div>
@@ -634,6 +628,45 @@ export const KnowledgeGraph: React.FC = () => {
           display: 'flex', flexDirection: 'column', gap: 14,
           padding: '20px', overflowY: 'auto',
         }}>
+          {/* Real Entity Photographic Profile Card */}
+          <div style={{
+            borderRadius: 8, overflow: 'hidden',
+            border: `1px solid ${TYPE_CFG[selectedNode.type]?.color || 'var(--accent-cyan)'}55`,
+            background: 'var(--bg-card)', position: 'relative',
+            boxShadow: `0 4px 16px ${TYPE_CFG[selectedNode.type]?.color || 'var(--accent-cyan)'}18`,
+          }}>
+            <div style={{ position: 'relative', width: '100%', height: 135 }}>
+              <img
+                src={resolveNodeImage(selectedNode)}
+                alt={selectedNode.label}
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: 'linear-gradient(to top, rgba(10,14,26,0.96) 0%, rgba(10,14,26,0.35) 60%, rgba(0,0,0,0.1) 100%)',
+              }} />
+              <div style={{
+                position: 'absolute', top: 8, right: 8,
+                padding: '2px 8px', borderRadius: 4,
+                background: 'rgba(10,14,26,0.85)', backdropFilter: 'blur(6px)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                fontSize: '0.62rem', fontFamily: 'JetBrains Mono', color: '#fff',
+                display: 'flex', alignItems: 'center', gap: 5,
+              }}>
+                <span>{NODE_IMAGES[selectedNode.id]?.badge || '●'}</span>
+                <span>REAL ASSET</span>
+              </div>
+              <div style={{ position: 'absolute', bottom: 8, left: 12, right: 12 }}>
+                <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#ffffff', textShadow: '0 2px 4px rgba(0,0,0,0.9)' }}>
+                  {NODE_IMAGES[selectedNode.id]?.realEntityName || selectedNode.label}
+                </div>
+                <div style={{ fontSize: '0.64rem', color: 'var(--accent-cyan)', fontFamily: 'JetBrains Mono', marginTop: 2 }}>
+                  {NODE_IMAGES[selectedNode.id]?.categoryLabel || `${selectedNode.type} Verified Node`}
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Header */}
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
@@ -703,6 +736,7 @@ export const KnowledgeGraph: React.FC = () => {
                   const otherId = e.source === selectedNode.id ? e.target : e.source;
                   const other   = nodes.find(n => n.id === otherId);
                   const out     = e.source === selectedNode.id;
+                  const otherImg = resolveNodeImage(other || { id: otherId });
                   return (
                     <div
                       key={idx}
@@ -711,15 +745,26 @@ export const KnowledgeGraph: React.FC = () => {
                         padding: '8px 10px', borderRadius: 4, cursor: 'pointer',
                         background: 'var(--bg-tertiary)', border: '1px solid var(--border-subtle)',
                         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                        fontSize: '0.72rem',
+                        fontSize: '0.72rem', gap: 8,
                       }}
                       onMouseEnter={el => (el.currentTarget.style.borderColor = 'var(--accent-cyan)')}
                       onMouseLeave={el => (el.currentTarget.style.borderColor = 'var(--border-subtle)')}
                     >
-                      <div>
-                        <div style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{other?.label || otherId}</div>
-                        <div style={{ color: out ? '#38bdf8' : '#a855f7', fontSize: '0.65rem', marginTop: 2 }}>
-                          {out ? '→ outbound' : '← inbound'}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <img
+                          src={otherImg}
+                          alt={other?.label || otherId}
+                          style={{
+                            width: 22, height: 22, borderRadius: '50%',
+                            objectFit: 'cover', flexShrink: 0,
+                            border: '1px solid var(--border-subtle)',
+                          }}
+                        />
+                        <div>
+                          <div style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{other?.label || otherId}</div>
+                          <div style={{ color: out ? '#38bdf8' : '#a855f7', fontSize: '0.65rem', marginTop: 1 }}>
+                            {out ? '→ outbound' : '← inbound'}
+                          </div>
                         </div>
                       </div>
                       <div style={{ textAlign: 'right' }}>

@@ -1,0 +1,6 @@
+{
+  "name": "PravahDridh Cybercrime Predictive Platform",
+  "description": "Predictive Analytics Framework for Cybercrime Complaints to Forecast Likely Cash Withdrawal Locations in Advance (SIH PS 26184)",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

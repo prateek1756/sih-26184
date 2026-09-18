@@ -24,7 +24,7 @@ export interface PatternRecord {
 export interface GraphNode {
   id: string;
   label: string;
-  type: 'Person' | 'Account' | 'Transaction' | 'ATM' | 'Location' | 'Device' | 'Phone' | 'Case';
+  type: 'Person' | 'Account' | 'Transaction' | 'ATM' | 'Location' | 'Device' | 'Phone' | 'Case' | 'Complaint' | 'Investigation' | 'Alert' | 'Prediction';
   riskScore: number;
   x?: number;
   y?: number;
@@ -37,6 +37,7 @@ export interface GraphNode {
   details?: string;
   subNetwork?: string;
   status?: string;
+  imageUrl?: string;
 }
 
 export interface GraphEdge {
@@ -249,16 +250,16 @@ export const mockComplaints: ComplaintRecord[] = [
 ];
 
 export const mockGraphNodes: GraphNode[] = [
-  { id: 'PER-001', label: 'Vikas Verma', type: 'Person',   riskScore: 98, details: 'Kingpin — operates Telegram mule network across Delhi-NCR & Haryana', subNetwork: 'Alpha Syndicate', status: 'WANTED' },
-  { id: 'PER-401', label: 'Ramesh K.', type: 'Person',     riskScore: 94, details: 'Primary mule; linked to 3 digital arrest incidents; final cash-out handler', subNetwork: 'Alpha Syndicate', status: 'FLAGGED' },
-  { id: 'ACC-3341', label: 'HDFC-9912-3341', type: 'Account', riskScore: 91, amount: 820000, details: 'Intermediary layering account; splits funds across 4 private banks within minutes', subNetwork: 'Layer-2', status: 'SUSPICIOUS' },
-  { id: 'ACC-8819', label: 'SBIN-0442-8819', type: 'Account', riskScore: 94, amount: 495000, details: 'Primary cash-out account; ₹4.95L inflow spike in 30 mins', subNetwork: 'Layer-3', status: 'FREEZE_PENDING' },
-  { id: 'ACC-7721', label: 'ICIC-1102-7721', type: 'Account', riskScore: 88, amount: 650000, details: 'Direct victim fund recipient — Digital Arrest complaint #88190', subNetwork: 'Layer-1', status: 'MONITORED' },
-  { id: 'ATM-04',  label: 'Rohini ATM-04',  type: 'ATM',    riskScore: 92, details: 'Off-site kiosk; sequential sub-₹50K withdrawals to stay under reporting radar', subNetwork: 'Cash-out Zone 1', status: 'HIGH_ALERT' },
-  { id: 'DEV-704', label: 'Redmi Note 12',  type: 'Device', riskScore: 90, details: 'Command device running UPI spoofing scripts & remote screen-share for mule control', subNetwork: 'Alpha Syndicate', status: 'ACTIVE' },
-  { id: 'PHN-771', label: '+91-98102-88190', type: 'Phone', riskScore: 92, details: 'VoIP line spoofed as CBI Control Room; initiated digital arrest call on Sunita Mehra', subNetwork: 'Alpha Syndicate', status: 'DISCONNECTED' },
-  { id: 'CAS-142', label: 'FIR #2026-00142', type: 'Case', riskScore: 96, details: 'CBI Cyber Crime case — impersonation + extortion of ₹45,00,000', subNetwork: 'Legal', status: 'INVESTIGATION' },
-  { id: 'LOC-DEL', label: 'Rohini Corridor', type: 'Location', riskScore: 85, details: 'Geographic hotspot with 8 flagged ATMs within 1.5 km radius', subNetwork: 'Delhi NCR', status: 'HOTSPOT' },
+  { id: 'PER-001', label: 'Vikas Verma', type: 'Person',   riskScore: 98, details: 'Kingpin — operates Telegram mule network across Delhi-NCR & Haryana', subNetwork: 'Alpha Syndicate', status: 'WANTED', imageUrl: '/images/vikas_verma.jpg' },
+  { id: 'PER-401', label: 'Ramesh K.', type: 'Person',     riskScore: 94, details: 'Primary mule; linked to 3 digital arrest incidents; final cash-out handler', subNetwork: 'Alpha Syndicate', status: 'FLAGGED', imageUrl: '/images/ramesh_mule.jpg' },
+  { id: 'ACC-3341', label: 'HDFC-9912-3341', type: 'Account', riskScore: 91, amount: 820000, details: 'Intermediary layering account; splits funds across 4 private banks within minutes', subNetwork: 'Layer-2', status: 'SUSPICIOUS', imageUrl: '/images/bank_hdfc.jpg' },
+  { id: 'ACC-8819', label: 'SBIN-0442-8819', type: 'Account', riskScore: 94, amount: 495000, details: 'Primary cash-out account; ₹4.95L inflow spike in 30 mins', subNetwork: 'Layer-3', status: 'FREEZE_PENDING', imageUrl: '/images/bank_sbi.jpg' },
+  { id: 'ACC-7721', label: 'ICIC-1102-7721', type: 'Account', riskScore: 88, amount: 650000, details: 'Direct victim fund recipient — Digital Arrest complaint #88190', subNetwork: 'Layer-1', status: 'MONITORED', imageUrl: '/images/bank_icici.jpg' },
+  { id: 'ATM-04',  label: 'Rohini ATM-04',  type: 'ATM',    riskScore: 92, details: 'Off-site kiosk; sequential sub-₹50K withdrawals to stay under reporting radar', subNetwork: 'Cash-out Zone 1', status: 'HIGH_ALERT', imageUrl: '/images/atm_kiosk.jpg' },
+  { id: 'DEV-704', label: 'Redmi Note 12',  type: 'Device', riskScore: 90, details: 'Command device running UPI spoofing scripts & remote screen-share for mule control', subNetwork: 'Alpha Syndicate', status: 'ACTIVE', imageUrl: '/images/device_redmi.jpg' },
+  { id: 'PHN-771', label: '+91-98102-88190', type: 'Phone', riskScore: 92, details: 'VoIP line spoofed as CBI Control Room; initiated digital arrest call on Sunita Mehra', subNetwork: 'Alpha Syndicate', status: 'DISCONNECTED', imageUrl: '/images/phone_sim.jpg' },
+  { id: 'CAS-142', label: 'FIR #2026-00142', type: 'Case', riskScore: 96, details: 'CBI Cyber Crime case — impersonation + extortion of ₹45,00,000', subNetwork: 'Legal', status: 'INVESTIGATION', imageUrl: '/images/fir_case.jpg' },
+  { id: 'LOC-DEL', label: 'Rohini Corridor', type: 'Location', riskScore: 85, details: 'Geographic hotspot with 8 flagged ATMs within 1.5 km radius', subNetwork: 'Delhi NCR', status: 'HOTSPOT', imageUrl: '/images/location_corridor.jpg' },
 ];
 
 export const mockGraphEdges: GraphEdge[] = [

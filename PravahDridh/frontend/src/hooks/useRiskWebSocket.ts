@@ -29,14 +29,14 @@ export function useRiskWebSocket(options: UseRiskWebSocketOptions = {}) {
 
   const wsRef = useRef<WebSocket | null>(null);
   const reconnectAttemptsRef = useRef<number>(0);
-  const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const heartbeatIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const reconnectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const heartbeatIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const WS_URL =
     import.meta.env.VITE_WS_BASE_URL ||
     (window.location.protocol === 'https:'
       ? `wss://${window.location.host}/api/v1/risk/ws`
-      : `ws://localhost:8000/api/v1/risk/ws`);
+      : `ws://${window.location.host}/api/v1/risk/ws`);
 
   const connect = useCallback(() => {
     if (!enabled) return;
